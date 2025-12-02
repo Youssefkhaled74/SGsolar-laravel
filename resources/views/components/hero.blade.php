@@ -2,14 +2,14 @@
     <div class="hero-overlay"></div>
     <div class="container">
         <div class="hero-content">
-            <h1 class="hero-title">{{ config('website.hero.title') }}</h1>
-            <p class="hero-subtitle">{{ config('website.hero.subtitle') }}</p>
+            <h1 class="hero-title">{{ __('website.hero.title') }}</h1>
+            <p class="hero-subtitle">{{ __('website.hero.subtitle') }}</p>
             <div class="hero-actions">
-                <a href="{{ config('website.hero.cta_link') }}" class="btn btn-primary btn-lg">
-                    {{ config('website.hero.cta_text') }}
+                <a href="/contact" class="btn btn-primary btn-lg">
+                    {{ __('website.hero.cta') }}
                 </a>
                 <a href="/contact" class="btn btn-outline btn-lg">
-                    Contact Us
+                    {{ __('website.contact_us') }}
                 </a>
             </div>
         </div>

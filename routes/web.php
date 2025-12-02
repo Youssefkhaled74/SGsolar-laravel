@@ -7,6 +7,10 @@ use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\LocaleController;
+
+// Language Switcher
+Route::get('/locale/{locale}', [LocaleController::class, 'switch'])->name('locale.switch');
 
 // Home Page
 Route::get('/', [HomeController::class, 'index'])->name('home');

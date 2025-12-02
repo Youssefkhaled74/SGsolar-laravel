@@ -14,13 +14,28 @@
             </button>
 
             <div class="navbar-menu" id="navMenu">
-                @foreach(config('website.menu') as $item)
-                    <a href="{{ $item['url'] }}" class="navbar-link {{ request()->is(trim($item['url'], '/') ?: '/') ? 'active' : '' }}">
-                        {{ $item['name'] }}
-                    </a>
-                @endforeach>
+                <a href="/" class="navbar-link {{ request()->is('/') ? 'active' : '' }}">
+                    {{ __('website.nav.home') }}
+                </a>
+                <a href="/about" class="navbar-link {{ request()->is('about') ? 'active' : '' }}">
+                    {{ __('website.nav.about') }}
+                </a>
+                <a href="/products" class="navbar-link {{ request()->is('products') ? 'active' : '' }}">
+                    {{ __('website.nav.products') }}
+                </a>
+                <a href="/services" class="navbar-link {{ request()->is('services') ? 'active' : '' }}">
+                    {{ __('website.nav.services') }}
+                </a>
+                <a href="/gallery" class="navbar-link {{ request()->is('gallery') ? 'active' : '' }}">
+                    {{ __('website.nav.gallery') }}
+                </a>
+                <a href="/contact" class="navbar-link {{ request()->is('contact') ? 'active' : '' }}">
+                    {{ __('website.nav.contact') }}
+                </a>
                 
-                <a href="/contact" class="btn btn-primary navbar-cta">Get a Quote</a>
+                <x-language-switcher />
+                
+                <a href="/contact" class="btn btn-primary navbar-cta">{{ __('website.hero.cta') }}</a>
             </div>
         </div>
     </div>

@@ -4,7 +4,7 @@
             <!-- Company Info -->
             <div class="footer-column">
                 <x-logo />
-                <p class="footer-description">{{ config('website.slogan') }}</p>
+                <p class="footer-description">{{ __('website.slogan') }}</p>
                 <div class="footer-social">
                     @foreach(config('website.social') as $platform => $url)
                         @if($url)
@@ -18,17 +18,20 @@
 
             <!-- Quick Links -->
             <div class="footer-column">
-                <h4 class="footer-title">Quick Links</h4>
+                <h4 class="footer-title">{{ __('website.footer.quick_links') }}</h4>
                 <ul class="footer-links">
-                    @foreach(config('website.footer.quick_links') as $link)
-                        <li><a href="{{ $link['url'] }}">{{ $link['name'] }}</a></li>
-                    @endforeach
+                    <li><a href="/">{{ __('website.nav.home') }}</a></li>
+                    <li><a href="/about">{{ __('website.nav.about') }}</a></li>
+                    <li><a href="/products">{{ __('website.nav.products') }}</a></li>
+                    <li><a href="/services">{{ __('website.nav.services') }}</a></li>
+                    <li><a href="/gallery">{{ __('website.nav.gallery') }}</a></li>
+                    <li><a href="/contact">{{ __('website.nav.contact') }}</a></li>
                 </ul>
             </div>
 
             <!-- Contact Info -->
             <div class="footer-column">
-                <h4 class="footer-title">Contact Us</h4>
+                <h4 class="footer-title">{{ __('website.footer.contact_us') }}</h4>
                 <ul class="footer-contact">
                     <li>
                         <i class="fas fa-phone"></i>
@@ -36,7 +39,7 @@
                     </li>
                     <li>
                         <i class="fab fa-whatsapp"></i>
-                        <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', config('website.contact.whatsapp')) }}" target="_blank" rel="noopener">WhatsApp</a>
+                        <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', config('website.contact.whatsapp')) }}" target="_blank" rel="noopener">{{ __('website.contact.whatsapp') }}</a>
                     </li>
                     <li>
                         <i class="fas fa-envelope"></i>
@@ -51,17 +54,17 @@
 
             <!-- Newsletter -->
             <div class="footer-column">
-                <h4 class="footer-title">Stay Updated</h4>
-                <p class="footer-text">Get the latest news on solar technology and special offers.</p>
+                <h4 class="footer-title">{{ __('website.footer.stay_updated') }}</h4>
+                <p class="footer-text">{{ __('website.footer.newsletter_text') }}</p>
                 <form class="newsletter-form">
-                    <input type="email" placeholder="Your email address" class="newsletter-input">
-                    <button type="submit" class="btn btn-primary">Subscribe</button>
+                    <input type="email" placeholder="{{ __('website.footer.email_placeholder') }}" class="newsletter-input">
+                    <button type="submit" class="btn btn-primary">{{ __('website.footer.subscribe') }}</button>
                 </form>
             </div>
         </div>
 
         <div class="footer-bottom">
-            <p>{{ config('website.footer.copyright') }}</p>
+            <p>{{ __('website.footer.copyright') }}</p>
         </div>
     </div>
 </footer>

@@ -1,0 +1,174 @@
+<?php
+
+return [
+    // Company Info
+    'company_name' => 'SgSolar',
+    'slogan' => 'Powering Tomorrow with Clean Energy Today',
+    'mission' => 'At SgSolar, we are committed to providing sustainable, eco-friendly solar water heating solutions that reduce energy costs and environmental impact. Our mission is to harness the power of the sun to deliver efficient, reliable, and affordable heating systems for homes and businesses.',
+
+    // Navigation
+    'nav' => [
+        'home' => 'Home',
+        'about' => 'About',
+        'products' => 'Products',
+        'services' => 'Services',
+        'gallery' => 'Gallery',
+        'contact' => 'Contact',
+    ],
+
+    // Hero Section
+    'hero' => [
+        'title' => 'Powering Tomorrow with Clean Energy Today',
+        'subtitle' => 'Reliable solar water heating solutions for your home and business',
+        'cta' => 'Get Free Quote',
+    ],
+
+    // About Section
+    'about' => [
+        'title' => 'About SgSolar',
+        'subtitle' => 'Your Trusted Partner in Solar Energy',
+        'learn_more' => 'Learn More About Us',
+        'our_story' => 'Our Story',
+        'our_mission' => 'Our Mission',
+        'our_vision' => 'Our Vision',
+    ],
+
+    // Products Section
+    'products' => [
+        'title' => 'Our Solar Water Heaters',
+        'subtitle' => 'Clean, efficient, and built to last',
+        'view_all' => 'View All Products',
+        'residential' => 'Residential Solar Water Heater',
+        'residential_desc' => 'Perfect for family homes, this efficient solar heater provides hot water year-round with minimal maintenance.',
+        'residential_features' => [
+            'High heat retention technology',
+            'Corrosion-resistant tank',
+            'Eco-friendly refrigerant-free system',
+            '5-year warranty',
+            'Easy installation',
+        ],
+        'commercial' => 'Commercial Solar Heater System',
+        'commercial_desc' => 'Designed for businesses and large buildings, delivering reliable hot water supply at scale.',
+        'commercial_features' => [
+            'High-capacity thermal storage',
+            'Weather-resistant panels',
+            'Smart temperature control',
+            'Energy-efficient design',
+            'Low operational costs',
+        ],
+        'compact' => 'Compact Solar Heater',
+        'compact_desc' => 'Ideal for apartments and small spaces without compromising on performance.',
+        'compact_features' => [
+            'Space-saving design',
+            'Quick heating technology',
+            'Durable aluminum frame',
+            'All-season performance',
+            '3-year warranty',
+        ],
+    ],
+
+    // Services Section
+    'services' => [
+        'title' => 'Our Services',
+        'subtitle' => 'Comprehensive Solar Energy Solutions',
+        'installation' => 'Solar Heater Installation',
+        'installation_desc' => 'Professional installation of solar water heaters with guaranteed optimal performance and safety.',
+        'maintenance' => 'Maintenance & Repair',
+        'maintenance_desc' => 'Regular maintenance and repair services to keep your system running efficiently for years.',
+        'consultation' => 'Solar System Consultancy',
+        'consultation_desc' => 'Expert advice to choose the right solar solution for your needs.',
+        'inspection' => 'Energy Efficiency Inspection',
+        'inspection_desc' => 'Comprehensive assessment of your current energy usage and potential savings.',
+        'sizing' => 'Custom Heater Sizing',
+        'sizing_desc' => 'Precise system capacity recommendation based on your hot water needs.',
+    ],
+
+    // Why Solar Section
+    'why_solar' => [
+        'title' => 'Why Choose Solar Energy?',
+        'subtitle' => 'The smart choice for your home and the planet',
+        'eco_friendly' => [
+            'title' => 'Eco-Friendly',
+            'description' => 'Reduce your carbon footprint and use clean, renewable energy from the sun.',
+        ],
+        'cost_saving' => [
+            'title' => 'Cost Savings',
+            'description' => 'Save up to 80% on your monthly electricity bills with free solar power.',
+        ],
+        'reliable' => [
+            'title' => 'Reliable & Durable',
+            'description' => 'Systems designed to last 15-20 years with minimal maintenance required.',
+        ],
+        'efficient' => [
+            'title' => 'High Efficiency',
+            'description' => 'Advanced technology converts sunlight into thermal energy with maximum efficiency.',
+        ],
+    ],
+
+    // Why Choose Us Section
+    'why_us' => [
+        'title' => 'Why Choose SgSolar?',
+        'subtitle' => 'Excellence in every installation',
+        'expertise' => [
+            'title' => 'Proven Expertise',
+            'description' => 'Over 10 years of experience in solar energy system installations.',
+        ],
+        'quality' => [
+            'title' => 'High-Quality Products',
+            'description' => 'We use only premium, certified components.',
+        ],
+        'support' => [
+            'title' => 'Excellent Support',
+            'description' => '24/7 customer service team available to help you.',
+        ],
+        'warranty' => [
+            'title' => 'Comprehensive Warranty',
+            'description' => 'All installations covered by full product and performance warranty.',
+        ],
+    ],
+
+    // CTA Section
+    'cta' => [
+        'title' => 'Ready to Switch to Solar?',
+        'subtitle' => 'Join thousands of satisfied customers who are saving money and protecting the planet',
+        'button' => 'Get Free Consultation',
+    ],
+
+    // Contact Section
+    'contact' => [
+        'title' => 'Contact Us',
+        'subtitle' => 'Have questions? We\'re here to help',
+        'phone' => 'Phone',
+        'whatsapp' => 'WhatsApp',
+        'email' => 'Email',
+        'address' => 'Address',
+        'send_message' => 'Send Message',
+        'name' => 'Name',
+        'email_address' => 'Email Address',
+        'message' => 'Message',
+        'submit' => 'Submit',
+    ],
+
+    // Footer
+    'footer' => [
+        'quick_links' => 'Quick Links',
+        'contact_us' => 'Contact Us',
+        'stay_updated' => 'Stay Updated',
+        'newsletter_text' => 'Get the latest news on solar technology and special offers.',
+        'email_placeholder' => 'Your email address',
+        'subscribe' => 'Subscribe',
+        'copyright' => '© 2025 SgSolar. All rights reserved. Powering the future with clean solar energy.',
+    ],
+
+    // Gallery
+    'gallery' => [
+        'title' => 'Gallery',
+        'subtitle' => 'See our projects and installations',
+    ],
+
+    // Common
+    'learn_more' => 'Learn More',
+    'read_more' => 'Read More',
+    'get_started' => 'Get Started',
+    'contact_us' => 'Contact Us',
+];

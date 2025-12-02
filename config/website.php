@@ -40,6 +40,30 @@ return [
     ],
 
     // ============================================
+    // PRODUCTS (Single Source)
+    // ============================================
+    'products' => [
+        [
+            'name_key' => 'products.residential',
+            'image' => 'https://images.unsplash.com/photo-1509395176047-4a66953fd231?auto=format&fit=crop&w=1200&q=80',
+            'description_key' => 'products.residential_desc',
+            'features_key' => 'products.residential_features',
+        ],
+        [
+            'name_key' => 'products.commercial',
+            'image' => 'https://images.unsplash.com/photo-1509395062183-67c5ad6faff9?auto=format&fit=crop&w=1200&q=80',
+            'description_key' => 'products.commercial_desc',
+            'features_key' => 'products.commercial_features',
+        ],
+        [
+            'name_key' => 'products.compact',
+            'image' => 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1200&q=80',
+            'description_key' => 'products.compact_desc',
+            'features_key' => 'products.compact_features',
+        ],
+    ],
+
+    // ============================================
     // HERO SECTION
     // ============================================
     'hero' => [
@@ -156,52 +180,20 @@ return [
     // WHY CHOOSE SOLAR ENERGY
     // ============================================
     'why_solar' => [
-        [
-            'title' => 'Renewable & Sustainable',
-            'description' => 'Solar energy is infinite and completely renewable, reducing your carbon footprint significantly.',
-        ],
-        [
-            'title' => 'Cost Savings',
-            'description' => 'Cut your water heating costs by up to 70% and enjoy lower energy bills year-round.',
-        ],
-        [
-            'title' => 'Eco-Friendly',
-            'description' => 'Zero emissions, zero pollution. Help protect the environment for future generations.',
-        ],
-        [
-            'title' => 'Energy Independence',
-            'description' => 'Reduce reliance on grid electricity and fossil fuels with clean solar thermal technology.',
-        ],
+        'eco_friendly',
+        'cost_saving',
+        'reliable',
+        'efficient',
     ],
 
     // ============================================
     // WHY CHOOSE SGSOLAR
     // ============================================
     'why_us' => [
-        [
-            'title' => 'Expert Installation',
-            'description' => 'Our certified technicians ensure perfect installation every time.',
-        ],
-        [
-            'title' => 'Quality Products',
-            'description' => 'We use only premium materials built to last in all weather conditions.',
-        ],
-        [
-            'title' => 'Proven Track Record',
-            'description' => 'Hundreds of satisfied customers enjoying clean, efficient solar heating.',
-        ],
-        [
-            'title' => 'Comprehensive Warranty',
-            'description' => 'All systems come with extended warranties for your peace of mind.',
-        ],
-        [
-            'title' => '24/7 Support',
-            'description' => 'Our customer service team is always ready to assist you.',
-        ],
-        [
-            'title' => 'Competitive Pricing',
-            'description' => 'Best value solar solutions without compromising on quality.',
-        ],
+        'expertise',
+        'quality',
+        'support',
+        'warranty',
     ],
 
     // ============================================
