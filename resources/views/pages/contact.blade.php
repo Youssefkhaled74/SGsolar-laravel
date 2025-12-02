@@ -78,7 +78,13 @@
                 <div class="contact-form-card">
                     <h2 class="form-title">{{ __('website.contact.send_message') }}</h2>
                     
-                    <form action="#" method="POST" class="contact-form">
+                    @if(session('success'))
+                        <div style="background: #D1FAE5; color: #065F46; padding: 1rem; border-radius: 10px; margin-bottom: 1.5rem; text-align: center; font-weight: 600;">
+                            ✓ {{ session('success') }}
+                        </div>
+                    @endif
+                    
+                    <form action="{{ route('contact.submit') }}" method="POST" class="contact-form">
                         @csrf
                         
                         <div class="form-row">
