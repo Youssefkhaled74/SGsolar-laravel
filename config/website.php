@@ -45,19 +45,19 @@ return [
     'products' => [
         [
             'name_key' => 'products.residential',
-            'image' => 'https://images.unsplash.com/photo-1509395176047-4a66953fd231?auto=format&fit=crop&w=1200&q=80',
+            'image' => 'https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?auto=format&fit=crop&w=1200&q=80',
             'description_key' => 'products.residential_desc',
             'features_key' => 'products.residential_features',
         ],
         [
             'name_key' => 'products.commercial',
-            'image' => 'https://images.unsplash.com/photo-1509395062183-67c5ad6faff9?auto=format&fit=crop&w=1200&q=80',
+            'image' => 'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&w=1200&q=80',
             'description_key' => 'products.commercial_desc',
             'features_key' => 'products.commercial_features',
         ],
         [
             'name_key' => 'products.compact',
-            'image' => 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1200&q=80',
+            'image' => 'https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?auto=format&fit=crop&w=1200&q=80',
             'description_key' => 'products.compact_desc',
             'features_key' => 'products.compact_features',
         ],
