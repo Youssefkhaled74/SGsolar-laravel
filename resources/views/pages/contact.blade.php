@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
-@section('title', 'Contact Us - ' . config('website.name'))
+@section('title', __('website.contact.title'))
 
 @section('content')
 
 <!-- Page Header -->
 <section class="page-header">
     <div class="container">
-        <h1 class="page-title">Contact Us</h1>
-        <p class="page-subtitle">Get in touch with our team</p>
+        <h1 class="page-title">{{ __('website.contact.title') }}</h1>
+        <p class="page-subtitle">{{ __('website.contact.get_in_touch') }}</p>
     </div>
 </section>
 
@@ -18,8 +18,8 @@
         <div class="contact-wrapper">
             <!-- Contact Information -->
             <div class="contact-info">
-                <h2 class="contact-info-title">Let's Talk</h2>
-                <p class="contact-info-text">Have questions about our solar water heaters? Our team is here to help you find the perfect solution.</p>
+                <h2 class="contact-info-title">{{ __('website.contact.lets_talk') }}</h2>
+                <p class="contact-info-text">{{ __('website.contact.have_questions') }}</p>
                 
                 <div class="contact-methods">
                     <div class="contact-method">
@@ -29,7 +29,7 @@
                             </svg>
                         </div>
                         <div class="contact-method-content">
-                            <h3>Phone</h3>
+                            <h3>{{ __('website.contact.phone') }}</h3>
                             <a href="tel:{{ $data['contact']['phone'] }}">{{ $data['contact']['phone'] }}</a>
                         </div>
                     </div>
@@ -41,7 +41,7 @@
                             </svg>
                         </div>
                         <div class="contact-method-content">
-                            <h3>WhatsApp</h3>
+                            <h3>{{ __('website.contact.whatsapp') }}</h3>
                             <a href="https://wa.me/{{ str_replace(['+', ' '], '', $data['contact']['whatsapp']) }}" target="_blank">{{ $data['contact']['whatsapp'] }}</a>
                         </div>
                     </div>
@@ -53,7 +53,7 @@
                             </svg>
                         </div>
                         <div class="contact-method-content">
-                            <h3>Email</h3>
+                            <h3>{{ __('website.contact.email') }}</h3>
                             <a href="mailto:{{ $data['contact']['email'] }}">{{ $data['contact']['email'] }}</a>
                         </div>
                     </div>
@@ -66,7 +66,7 @@
                             </svg>
                         </div>
                         <div class="contact-method-content">
-                            <h3>Location</h3>
+                            <h3>{{ __('website.contact.location') }}</h3>
                             <p>{{ $data['contact']['address'] }}</p>
                         </div>
                     </div>
@@ -75,79 +75,87 @@
             
             <!-- Contact Form -->
             <div class="contact-form-wrapper">
-                <h2 class="contact-form-title">Send Us a Message</h2>
-                <form class="contact-form" id="contactForm">
-                    <div class="form-group">
-                        <label for="name">Full Name</label>
-                        <input type="text" id="name" name="name" required>
-                    </div>
+                <div class="contact-form-card">
+                    <h2 class="form-title">{{ __('website.contact.send_message') }}</h2>
                     
-                    <div class="form-group">
-                        <label for="email">Email Address</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="phone">Phone Number</label>
-                        <input type="tel" id="phone" name="phone">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="subject">Subject</label>
-                        <select id="subject" name="subject" required>
-                            <option value="">Select a topic</option>
-                            <option value="product-inquiry">Product Inquiry</option>
-                            <option value="quote">Request a Quote</option>
-                            <option value="installation">Installation Question</option>
-                            <option value="maintenance">Maintenance & Support</option>
-                            <option value="other">Other</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="message">Message</label>
-                        <textarea id="message" name="message" rows="5" required></textarea>
-                    </div>
-                    
-                    <button type="submit" class="btn btn-primary btn-lg btn-block">Send Message</button>
-                </form>
+                    <form action="#" method="POST" class="contact-form">
+                        @csrf
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="name">{{ __('website.contact.full_name') }}</label>
+                                <input type="text" id="name" name="name" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="email">{{ __('website.contact.email_address') }}</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="phone">{{ __('website.contact.phone_number') }}</label>
+                                <input type="tel" id="phone" name="phone">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="subject">{{ __('website.contact.subject') }}</label>
+                                <select id="subject" name="subject" required>
+                                    <option value="">{{ __('website.contact.select_topic') }}</option>
+                                    <option value="product">{{ __('website.contact.product_inquiry') }}</option>
+                                    <option value="quote">{{ __('website.contact.quote') }}</option>
+                                    <option value="installation">{{ __('website.contact.installation') }}</option>
+                                    <option value="maintenance">{{ __('website.contact.maintenance') }}</option>
+                                    <option value="other">{{ __('website.contact.other') }}</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">{{ __('website.contact.message') }}</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+                            </svg>
+                            {{ __('website.contact.send_message') }}
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Quick Contact Banner -->
-<section class="section bg-gradient">
+<!-- Call to Action Banner -->
+<section class="cta-banner">
     <div class="container">
-        <div class="quick-contact-banner">
-            <h2>Prefer to Talk Directly?</h2>
-            <p>Our team is available to answer your questions and schedule consultations.</p>
-            <div class="quick-contact-buttons">
-                <a href="tel:{{ $data['contact']['phone'] }}" class="btn btn-white btn-lg">
+        <div class="cta-content">
+            <div class="cta-text">
+                <h2>{{ __('website.contact.prefer_talk') }}</h2>
+                <p>{{ __('website.contact.team_available') }}</p>
+            </div>
+            
+            <div class="cta-buttons">
+                <a href="tel:{{ $data['contact']['phone'] }}" class="cta-btn cta-btn-primary">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
                     </svg>
-                    Call Now
+                    {{ __('website.contact.call_now') }}
                 </a>
-                <a href="https://wa.me/{{ str_replace(['+', ' '], '', $data['contact']['whatsapp']) }}" class="btn btn-white btn-lg" target="_blank">
+                
+                <a href="https://wa.me/{{ str_replace(['+', ' '], '', $data['contact']['whatsapp']) }}" class="cta-btn cta-btn-secondary" target="_blank">
                     <svg viewBox="0 0 24 24" fill="currentColor">
                         <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
                     </svg>
-                    WhatsApp
+                    {{ __('website.contact.whatsapp') }}
                 </a>
             </div>
         </div>
     </div>
 </section>
 
-@endsection
-
-@section('extra-scripts')
-<script>
-document.getElementById('contactForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    alert('Thank you for your message! We will get back to you soon.');
-    this.reset();
-});
-</script>
 @endsection

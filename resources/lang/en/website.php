@@ -150,7 +150,7 @@ return [
     // Contact Section
     'contact' => [
         'title' => 'Contact Us',
-        'subtitle' => 'Have questions? We\'re here to help',
+        'subtitle' => 'Get in touch with our team',
         'phone' => 'Phone',
         'whatsapp' => 'WhatsApp',
         'email' => 'Email',
@@ -160,6 +160,22 @@ return [
         'email_address' => 'Email Address',
         'message' => 'Message',
         'submit' => 'Submit',
+        'lets_talk' => "Let's Talk",
+        'have_questions' => 'Have questions about our solar water heaters? Our team is here to help you find the perfect solution.',
+        'full_name' => 'Full Name',
+        'phone_number' => 'Phone Number',
+        'subject' => 'Subject',
+        'select_topic' => 'Select a topic',
+        'product_inquiry' => 'Product Inquiry',
+        'quote' => 'Request a Quote',
+        'installation' => 'Installation Question',
+        'maintenance' => 'Maintenance & Support',
+        'other' => 'Other',
+        'prefer_talk' => 'Prefer to Talk Directly?',
+        'team_available' => 'Our team is available to answer your questions and schedule consultations.',
+        'call_now' => 'Call Now',
+        'get_in_touch' => 'Get in touch with our team',
+        'location' => 'Location',
     ],
 
     // Footer

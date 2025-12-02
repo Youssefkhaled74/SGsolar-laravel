@@ -255,7 +255,7 @@ ul {
 }
 
 .navbar-brand .logo {
-    height: 50px;
+    height: 70px;
     width: auto;
 }
 
@@ -333,34 +333,44 @@ ul {
     border: none;
     cursor: pointer;
     padding: 0.5rem;
+    z-index: 1001;
+    position: relative;
 }
 
 .navbar-toggle span {
-    width: 25px;
+    width: 28px;
     height: 3px;
     background-color: #0C2D1C;
-    margin: 3px 0;
+    margin: 4px 0;
     transition: all 0.3s ease;
+    border-radius: 2px;
 }
 
 /* Mobile Menu */
-@media (max-width: 768px) {
+@media (max-width: 992px) {
+    .navbar-brand .logo {
+        height: 50px;
+    }
+    
     .navbar-toggle {
         display: flex;
+        z-index: 1001;
     }
 
     .navbar-menu {
         position: fixed;
-        top: 70px;
+        top: 0;
         left: -100%;
-        width: 100%;
-        height: calc(100vh - 70px);
+        width: 280px;
+        height: 100vh;
         background-color: white;
         flex-direction: column;
         justify-content: flex-start;
-        padding: 2rem;
+        align-items: flex-start;
+        padding: 5rem 2rem 2rem;
         transition: left 0.3s ease;
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        box-shadow: 2px 0 20px rgba(0, 0, 0, 0.15);
+        overflow-y: auto;
     }
 
     .navbar-menu.active {
@@ -368,15 +378,59 @@ ul {
     }
 
     .navbar-link {
-        font-size: 1.25rem;
+        font-size: 1.1rem;
         padding: 1rem 0;
         width: 100%;
-        text-align: center;
+        text-align: left;
+        border-bottom: 1px solid #F3F4F6;
+    }
+    
+    .navbar-link.active::after {
+        display: none;
+    }
+
+    .language-switcher {
+        margin: 1.5rem 0;
+        padding: 1rem 0;
+        border-top: 1px solid #F3F4F6;
+        border-bottom: 1px solid #F3F4F6;
+        width: 100%;
     }
 
     .navbar-cta {
         margin-left: 0;
         margin-top: 1rem;
+        width: 100%;
+        text-align: center;
+    }
+    
+    .navbar-toggle.active span:nth-child(1) {
+        transform: rotate(45deg) translate(8px, 8px);
+    }
+    
+    .navbar-toggle.active span:nth-child(2) {
+        opacity: 0;
+    }
+    
+    .navbar-toggle.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -7px);
+    }
+}
+
+/* RTL Support for Mobile Menu */
+@media (max-width: 992px) {
+    [dir="rtl"] .navbar-menu {
+        left: auto;
+        right: -100%;
+    }
+    
+    [dir="rtl"] .navbar-menu.active {
+        right: 0;
+        left: auto;
+    }
+    
+    [dir="rtl"] .navbar-link {
+        text-align: right;
     }
 }
 
