@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
-@section('title', 'Our Products - ' . config('website.name'))
+@section('title', __('website.products.title') . ' - ' . __('website.company_name'))
 
 @section('content')
 
 <!-- Page Header -->
 <section class="page-header bg-gradient">
     <div class="container">
-        <h1 class="page-title">Solar Water Heaters</h1>
-        <p class="page-subtitle">Premium quality systems for every need</p>
+        <h1 class="page-title">{{ __('website.products.page_title') }}</h1>
+        <p class="page-subtitle">{{ __('website.products.page_subtitle') }}</p>
     </div>
 </section>
 
@@ -16,8 +16,8 @@
 <section class="section">
     <div class="container">
         <x-section-title 
-            title="Our Product Range" 
-            subtitle="Choose the perfect solar water heater for your home or business"
+            title="{{ __('website.products.our_range') }}" 
+            subtitle="{{ __('website.products.choose_perfect') }}"
         />
         
         <div class="products-grid products-page-grid">
@@ -32,8 +32,8 @@
 <section class="section bg-light">
     <div class="container">
         <x-section-title 
-            title="Why Our Products Stand Out" 
-            subtitle="Quality, efficiency, and reliability in every unit"
+            title="{{ __('website.products.why_stand_out') }}" 
+            subtitle="{{ __('website.products.quality_efficiency') }}"
         />
         
         <div class="benefits-list">
@@ -44,8 +44,8 @@
                     </svg>
                 </div>
                 <div class="benefit-content">
-                    <h3>Premium Materials</h3>
-                    <p>All our solar heaters use corrosion-resistant materials built to withstand harsh weather conditions for years.</p>
+                    <h3>{{ __('website.products.premium_materials') }}</h3>
+                    <p>{{ __('website.products.premium_materials_desc') }}</p>
                 </div>
             </div>
             
@@ -56,8 +56,8 @@
                     </svg>
                 </div>
                 <div class="benefit-content">
-                    <h3>Maximum Efficiency</h3>
-                    <p>Advanced thermal collector technology ensures optimal heat absorption and retention in all seasons.</p>
+                    <h3>{{ __('website.products.max_efficiency') }}</h3>
+                    <p>{{ __('website.products.max_efficiency_desc') }}</p>
                 </div>
             </div>
             
@@ -68,8 +68,8 @@
                     </svg>
                 </div>
                 <div class="benefit-content">
-                    <h3>Long Lifespan</h3>
-                    <p>With proper maintenance, our systems provide reliable hot water for 15-20 years or more.</p>
+                    <h3>{{ __('website.products.long_lifespan') }}</h3>
+                    <p>{{ __('website.products.long_lifespan_desc') }}</p>
                 </div>
             </div>
             
@@ -80,8 +80,8 @@
                     </svg>
                 </div>
                 <div class="benefit-content">
-                    <h3>Easy Installation</h3>
-                    <p>Our expert team ensures quick, professional installation with minimal disruption to your daily routine.</p>
+                    <h3>{{ __('website.products.easy_install') }}</h3>
+                    <p>{{ __('website.products.easy_install_desc') }}</p>
                 </div>
             </div>
         </div>
@@ -92,9 +92,9 @@
 <section class="section section-cta">
     <div class="container">
         <div class="cta-box">
-            <h2 class="cta-title">Need Help Choosing?</h2>
-            <p class="cta-subtitle">Our experts are ready to help you find the perfect solar water heater for your needs.</p>
-            <a href="/contact" class="btn btn-primary btn-lg">Contact Our Team</a>
+            <h2 class="cta-title">{{ __('website.products.need_help') }}</h2>
+            <p class="cta-subtitle">{{ __('website.products.experts_ready') }}</p>
+            <a href="/contact" class="btn btn-primary btn-lg">{{ __('website.products.contact_team') }}</a>
         </div>
     </div>
 </section>

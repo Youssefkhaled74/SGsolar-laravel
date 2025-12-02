@@ -10,11 +10,19 @@
             $nameKey = $product['name_key'] ?? '';
             $descKey = $product['description_key'] ?? '';
             $featuresKey = $product['features_key'] ?? '';
+            $price = $product['price'] ?? null;
+            $currency = $product['currency'] ?? 'EGP';
         @endphp
         @if($isExternal)
             <img src="{{ $img }}" alt="{{ $nameKey ? __('website.' . $nameKey) : '' }}">
         @else
             <img src="{{ asset($img) }}" alt="{{ $nameKey ? __('website.' . $nameKey) : '' }}">
+        @endif
+        @if($price)
+            <div class="product-price-badge">
+                <span class="price-amount">{{ $price }}</span>
+                <span class="price-currency">{{ $currency }}</span>
+            </div>
         @endif
     </div>
     <div class="product-card-content">
@@ -33,5 +41,15 @@
                 @endforeach
             </ul>
         @endif
+        
+        <div class="product-card-footer">
+            @if($price)
+                <div class="product-price-main">
+                    <span class="price-label">{{ __('website.price') }}</span>
+                    <span class="price-value">{{ $price }} <small>{{ $currency }}</small></span>
+                </div>
+            @endif
+            <a href="/contact" class="btn btn-primary btn-block product-cta">{{ __('website.get_quote') }}</a>
+        </div>
     </div>
 </div>
