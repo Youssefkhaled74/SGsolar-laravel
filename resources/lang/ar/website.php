@@ -201,6 +201,7 @@ return [
         'call_now' => 'اتصل الآن',
         'get_in_touch' => 'تواصل مع فريقنا',
         'location' => 'الموقع',
+        'message_sent' => 'تم إرسال رسالتك بنجاح!',
     ],
 
     // Footer

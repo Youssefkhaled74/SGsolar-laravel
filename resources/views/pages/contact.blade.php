@@ -4,6 +4,161 @@
 
 @section('content')
 
+@if(session('success'))
+<!-- Success Alert Modal -->
+<div class="success-overlay" id="successAlert">
+    <div class="success-modal">
+        <div class="success-icon">
+            <svg viewBox="0 0 52 52">
+                <circle cx="26" cy="26" r="25" fill="none"/>
+                <path fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+            </svg>
+        </div>
+        <h2>{{ __('website.contact.message_sent', 'تم إرسال رسالتك بنجاح!') }}</h2>
+        <p>سنتواصل معك في أقرب وقت ممكن</p>
+        <button onclick="closeAlert()" class="close-alert-btn">حسناً</button>
+    </div>
+</div>
+
+<style>
+.success-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.success-modal {
+    background: white;
+    padding: 3rem;
+    border-radius: 20px;
+    text-align: center;
+    max-width: 450px;
+    animation: slideDown 0.5s ease;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-100px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.success-icon {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 2rem;
+}
+
+.success-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.success-icon circle {
+    stroke: #10B981;
+    stroke-width: 2;
+    stroke-dasharray: 166;
+    stroke-dashoffset: 166;
+    animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+
+.success-icon path {
+    stroke: #10B981;
+    stroke-width: 3;
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+    animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.5s forwards;
+}
+
+@keyframes stroke {
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+.success-modal h2 {
+    color: #0C2D1C;
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.success-modal p {
+    color: #6B7280;
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+}
+
+.close-alert-btn {
+    background: linear-gradient(135deg, #FFDF41 0%, #E3A000 100%);
+    color: #0C2D1C;
+    padding: 1rem 3rem;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(227, 160, 0, 0.3);
+}
+
+.close-alert-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(227, 160, 0, 0.5);
+}
+
+@media (max-width: 768px) {
+    .success-modal {
+        margin: 1rem;
+        padding: 2rem;
+    }
+    
+    .success-modal h2 {
+        font-size: 1.5rem;
+    }
+}
+</style>
+
+<script>
+function closeAlert() {
+    const alert = document.getElementById('successAlert');
+    alert.style.animation = 'fadeOut 0.3s ease';
+    setTimeout(() => {
+        alert.remove();
+    }, 300);
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+// Auto close after 5 seconds
+setTimeout(() => {
+    const alert = document.getElementById('successAlert');
+    if (alert) closeAlert();
+}, 5000);
+</script>
+@endif
+
 <!-- Page Header -->
 <section class="page-header">
     <div class="container">

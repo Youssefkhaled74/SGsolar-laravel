@@ -201,6 +201,7 @@ return [
         'call_now' => 'Call Now',
         'get_in_touch' => 'Get in touch with our team',
         'location' => 'Location',
+        'message_sent' => 'Your message has been sent successfully!',
     ],
 
     // Footer
