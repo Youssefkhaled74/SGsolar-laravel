@@ -118,6 +118,7 @@
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 4px 12px rgba(227, 160, 0, 0.3);
+    font-family: 'Cairo', sans-serif;
 }
 
 .close-alert-btn:hover {
@@ -140,23 +141,41 @@
 <script>
 function closeAlert() {
     const alert = document.getElementById('successAlert');
-    alert.style.animation = 'fadeOut 0.3s ease';
-    setTimeout(() => {
-        alert.remove();
-    }, 300);
-}
-
-@keyframes fadeOut {
-    from { opacity: 1; }
-    to { opacity: 0; }
+    if (alert) {
+        alert.style.animation = 'fadeOut 0.3s ease';
+        setTimeout(() => {
+            alert.remove();
+        }, 300);
+    }
 }
 
 // Auto close after 5 seconds
 setTimeout(() => {
     const alert = document.getElementById('successAlert');
-    if (alert) closeAlert();
+    if (alert) {
+        closeAlert();
+    }
 }, 5000);
+
+// Close on clicking overlay
+document.addEventListener('DOMContentLoaded', function() {
+    const overlay = document.getElementById('successAlert');
+    if (overlay) {
+        overlay.addEventListener('click', function(e) {
+            if (e.target === overlay) {
+                closeAlert();
+            }
+        });
+    }
+});
 </script>
+
+<style>
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+</style>
 @endif
 
 <!-- Page Header -->

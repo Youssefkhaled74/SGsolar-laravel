@@ -171,6 +171,7 @@ ul {
     transition: all 0.3s ease;
     border: 2px solid transparent;
     font-size: 1rem;
+    font-family: inherit;
 }
 
 .btn-primary {
@@ -1477,6 +1478,7 @@ ul {
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 4px 12px rgba(227, 160, 0, 0.3);
+    font-family: inherit;
 }
 
 .submit-btn:hover {
@@ -1695,11 +1697,13 @@ ul {
     border: none;
     border-radius: 8px;
     font-size: 0.95rem;
+    font-family: inherit;
 }
 
 .newsletter-form .btn {
     padding: 0.75rem 1.25rem;
     font-size: 0.95rem;
+    font-family: inherit;
 }
 
 .footer-bottom {
