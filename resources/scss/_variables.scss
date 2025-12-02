@@ -1,0 +1,88 @@
+// ============================================
+// SGSOLAR BRAND COLORS
+// ============================================
+
+// Primary Colors
+$yellow: #FFDF41;
+$orange: #E3A000;
+$dark-green: #0C2D1C;
+$forest-green: #115F45;
+$light-green: #8CC63F;
+
+// Semantic Colors
+$primary-color: $yellow;
+$secondary-color: $orange;
+$text-color: $dark-green;
+$bg-color: #FFFFFF;
+$border-color: rgba(12, 45, 28, 0.1);
+
+// ============================================
+// GRADIENTS
+// ============================================
+$gradient-yellow-orange: linear-gradient(135deg, #FFDF41 0%, #E3A000 100%);
+$gradient-green: linear-gradient(135deg, #8CC63F 0%, #115F45 100%);
+
+// ============================================
+// TYPOGRAPHY
+// ============================================
+$font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+$font-size-base: 16px;
+$font-size-sm: 14px;
+$font-size-lg: 18px;
+$font-size-xl: 24px;
+$font-size-2xl: 32px;
+$font-size-3xl: 48px;
+
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+
+// ============================================
+// SPACING
+// ============================================
+$spacing-xs: 0.5rem;
+$spacing-sm: 1rem;
+$spacing-md: 1.5rem;
+$spacing-lg: 2rem;
+$spacing-xl: 3rem;
+$spacing-2xl: 4rem;
+$spacing-3xl: 6rem;
+
+// ============================================
+// LAYOUT
+// ============================================
+$container-max-width: 1200px;
+$container-padding: 1.5rem;
+
+// ============================================
+// BORDERS & RADIUS
+// ============================================
+$border-radius-sm: 4px;
+$border-radius-md: 8px;
+$border-radius-lg: 12px;
+$border-radius-xl: 16px;
+$border-radius-full: 9999px;
+
+// ============================================
+// SHADOWS
+// ============================================
+$shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+$shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+$shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+$shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+
+// ============================================
+// TRANSITIONS
+// ============================================
+$transition-fast: 150ms ease;
+$transition-base: 300ms ease;
+$transition-slow: 500ms ease;
+
+// ============================================
+// BREAKPOINTS
+// ============================================
+$breakpoint-sm: 640px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 1024px;
+$breakpoint-xl: 1280px;
