@@ -1356,6 +1356,7 @@ ul {
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+    font-size: 20px;
 }
 
 .contact-method-icon svg {
@@ -1364,12 +1365,31 @@ ul {
     color: #0C2D1C;
 }
 
-.contact-method-icon-whatsapp {
-    background: #25D366;
+.contact-method-icon i {
+    color: white;
 }
 
-.contact-method-icon-whatsapp svg {
-    color: white;
+.contact-method-icon-phone {
+    background: linear-gradient(135deg, #FFDF41 0%, #E3A000 100%);
+}
+
+.contact-method-icon-phone i {
+    color: #0C2D1C;
+}
+
+.contact-method-icon-whatsapp {
+    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+}
+
+.contact-method-icon-gmail {
+    background: linear-gradient(135deg, #EA4335 0%, #C5221F 100%);
+    box-shadow: 0 4px 12px rgba(234, 67, 53, 0.3);
+}
+
+.contact-method-icon-location {
+    background: linear-gradient(135deg, #4285F4 0%, #1967D2 100%);
+    box-shadow: 0 4px 12px rgba(66, 133, 244, 0.3);
 }
 
 .contact-method-content {
