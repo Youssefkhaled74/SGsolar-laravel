@@ -14,7 +14,7 @@
                 <path fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
             </svg>
         </div>
-        <h2>{{ __('website.contact.message_sent', 'تم إرسال رسالتك بنجاح!') }}</h2>
+        <h2>{{ __('website.contact.message_sent') }}</h2>
         <p>سنتواصل معك في أقرب وقت ممكن</p>
         <button onclick="closeAlert()" class="close-alert-btn">حسناً</button>
     </div>
