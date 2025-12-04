@@ -6,6 +6,10 @@
     <meta name="description" content="{{ __('website.slogan') }}">
     <title>@yield('title', __('website.company_name') . ' - ' . __('website.slogan'))</title>
     
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+    
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
