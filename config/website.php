@@ -101,7 +101,7 @@ return [
         'subtitle' => 'Reduce your energy bills by up to 70% with eco-friendly solar thermal technology. Clean energy, maximum efficiency, lasting reliability.',
         'cta_text' => 'Explore Our Solutions',
         'cta_link' => '/products',
-        'background_image' => 'png/SG-02.png',
+        'background_image' => 'https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1920&h=1080&fit=crop&q=90',
     ],
 
     // ============================================

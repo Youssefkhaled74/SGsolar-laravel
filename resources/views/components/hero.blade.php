@@ -1,4 +1,4 @@
-<section class="hero" style="background-image: url('{{ asset(config('website.hero.background_image')) }}');">
+<section class="hero" style="background-image: url('https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1920&h=1080&fit=crop&q=90');">
     <div class="hero-overlay"></div>
     <div class="container">
         <div class="hero-content">
