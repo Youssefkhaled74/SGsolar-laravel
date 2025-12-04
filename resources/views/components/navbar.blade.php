@@ -29,6 +29,9 @@
                 <a href="/projects" class="navbar-link {{ request()->is('projects') ? 'active' : '' }}">
                     {{ __('website.nav.projects') }}
                 </a>
+                <a href="/news" class="navbar-link {{ request()->is('news') ? 'active' : '' }}">
+                    {{ __('website.nav.news') }}
+                </a>
                 <a href="/services" class="navbar-link {{ request()->is('services') ? 'active' : '' }}">
                     {{ __('website.nav.services') }}
                 </a>
@@ -40,8 +43,6 @@
                 </a>
                 
                 <x-language-switcher />
-                
-                <a href="/contact" class="btn btn-primary navbar-cta">{{ __('website.hero.cta') }}</a>
             </div>
         </div>
     </div>
@@ -49,13 +50,30 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    const navbar = document.querySelector('.navbar');
     const navToggle = document.getElementById('navToggle');
     const navMenu = document.getElementById('navMenu');
     
+    // Scroll effect for navbar
+    let lastScroll = 0;
+    window.addEventListener('scroll', function() {
+        const currentScroll = window.pageYOffset;
+        
+        if (currentScroll > 100) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+        
+        lastScroll = currentScroll;
+    });
+    
+    // Mobile menu toggle
     if (navToggle && navMenu) {
         navToggle.addEventListener('click', function() {
             navMenu.classList.toggle('active');
             navToggle.classList.toggle('active');
+            document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
         });
         
         // Close menu when clicking outside
@@ -66,6 +84,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!isClickInsideNav && !isClickOnToggle && navMenu.classList.contains('active')) {
                 navMenu.classList.remove('active');
                 navToggle.classList.remove('active');
+                document.body.style.overflow = '';
             }
         });
         
@@ -75,6 +94,7 @@ document.addEventListener('DOMContentLoaded', function() {
             link.addEventListener('click', function() {
                 navMenu.classList.remove('active');
                 navToggle.classList.remove('active');
+                document.body.style.overflow = '';
             });
         });
     }

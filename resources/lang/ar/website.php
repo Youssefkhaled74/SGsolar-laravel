@@ -13,6 +13,7 @@ return [
         'solutions' => 'الحلول',
         'products' => 'المنتجات',
         'projects' => 'مشاريعنا',
+        'news' => 'المقالات',
         'services' => 'الخدمات',
         'gallery' => 'معرض الصور',
         'contact' => 'اتصل بنا',
@@ -443,6 +444,27 @@ return [
         'get_in_touch' => 'تواصل مع فريقنا',
         'location' => 'الموقع',
         'message_sent' => 'تم إرسال رسالتك بنجاح!',
+    ],
+
+    // News/Articles Page (NEW)
+    'news' => [
+        'title' => 'المقالات والأخبار',
+        'subtitle' => 'آخر المستجدات والمعلومات التقنية في عالم الطاقة الشمسية',
+        'read_more' => 'اقرأ المزيد',
+        
+        'cta_title' => 'لماذا تختار SG Solar؟',
+        'cta_text' => 'خمسة ضمانات لنجاح استثمارك الشمسي',
+        'cta_button' => 'احصل على استشارة مجانية',
+        
+        'cta_guarantees' => [
+            ['icon' => 'fas fa-bolt', 'title' => 'الكفاءة القصوى والتعويض السريع'],
+            ['icon' => 'fas fa-user-shield', 'title' => 'ضمانة الموثوقية وعمق الخبرة'],
+            ['icon' => 'fas fa-hand-holding-dollar', 'title' => 'الأمان المالي والشفافية التامة'],
+            ['icon' => 'fas fa-award', 'title' => 'المتانة والجودة الهندسية المُطلقة'],
+            ['icon' => 'fas fa-leaf', 'title' => 'الاستثمار المُراعي للمستقبل والبيئة'],
+        ],
+        
+        'articles' => require __DIR__ . '/news_articles.php',
     ],
 
     // Footer
