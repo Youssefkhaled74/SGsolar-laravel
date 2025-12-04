@@ -48,6 +48,32 @@
     
     <x-footer />
     
+    <!-- Scroll Animation Script -->
+    <script>
+        // Intersection Observer for scroll animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const observerOptions = {
+                threshold: 0.15,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all elements with animation classes
+            const animateElements = document.querySelectorAll(
+                '.scroll-animate, .scroll-slide-left, .scroll-slide-right, .scroll-fade, .scroll-scale'
+            );
+            
+            animateElements.forEach(el => observer.observe(el));
+        });
+    </script>
+    
     @yield('extra-scripts')
 </body>
 </html>
