@@ -26,6 +26,9 @@
                 <a href="/products" class="navbar-link {{ request()->is('products') ? 'active' : '' }}">
                     {{ __('website.nav.products') }}
                 </a>
+                <a href="/projects" class="navbar-link {{ request()->is('projects') ? 'active' : '' }}">
+                    {{ __('website.nav.projects') }}
+                </a>
                 <a href="/services" class="navbar-link {{ request()->is('services') ? 'active' : '' }}">
                     {{ __('website.nav.services') }}
                 </a>

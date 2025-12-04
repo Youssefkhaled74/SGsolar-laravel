@@ -12,6 +12,7 @@ return [
         'about' => 'About',
         'solutions' => 'Solutions',
         'products' => 'Products',
+        'projects' => 'Projects',
         'services' => 'Services',
         'gallery' => 'Gallery',
         'contact' => 'Contact',
@@ -442,6 +443,180 @@ return [
         'get_in_touch' => 'Get in touch with our team',
         'location' => 'Location',
         'message_sent' => 'Your message has been sent successfully!',
+    ],
+
+    // Products Page (NEW)
+    'products' => [
+        'title' => 'Our Products',
+        'subtitle' => 'Complete solar solutions with highest standards',
+        'download_datasheet' => 'Download Datasheet',
+        
+        'swh' => [
+            'title' => 'Solar Water Heaters',
+            'description' => 'High-efficiency water heating systems for all needs',
+            'items' => [
+                [
+                    'name' => '200L Solar Water Heater',
+                    'capacity' => '200 Liters',
+                    'image' => 'swh-200.jpg',
+                    'description' => 'Perfect for small to medium families',
+                    'features' => [
+                        'High-efficiency solar collector',
+                        'Thermally insulated tank',
+                        '5-year warranty',
+                        'Corrosion resistant',
+                    ],
+                    'badge' => 'Best Seller',
+                    'datasheet' => 'swh-200-datasheet.pdf',
+                ],
+            ],
+        ],
+        
+        'solar_lights' => [
+            'title' => 'Solar Lighting Systems',
+            'description' => 'Solar-powered outdoor lights and fixtures',
+            'items' => [
+                [
+                    'name' => '100W LED Street Light',
+                    'power' => '100 Watts',
+                    'image' => 'street-light-100w.jpg',
+                    'description' => 'Powerful lighting for streets and roads',
+                    'features' => [
+                        '150W solar panel',
+                        '40Ah Lithium battery',
+                        'Automatic operation',
+                        'IP66 waterproof',
+                    ],
+                    'datasheet' => 'street-light-100w.pdf',
+                ],
+            ],
+        ],
+        
+        'solar_panels' => [
+            'title' => 'Solar Panels',
+            'description' => 'High-efficiency photovoltaic panels',
+            'items' => [
+                [
+                    'name' => '550W Mono Solar Panel',
+                    'power' => '550 Watts',
+                    'image' => 'panel-550w.jpg',
+                    'description' => 'Monocrystalline technology for maximum efficiency',
+                    'features' => [
+                        '21%+ efficiency',
+                        '25-year warranty',
+                        'Harsh weather resistant',
+                        'Easy installation',
+                    ],
+                    'badge' => 'Highest Efficiency',
+                    'datasheet' => 'panel-550w.pdf',
+                ],
+            ],
+        ],
+    ],
+
+    // Projects Page (NEW)
+    'projects' => [
+        'title' => 'Our Projects',
+        'subtitle' => 'Proud of our achievements in solar energy',
+        'view_details' => 'View Details',
+        'project_type' => 'Project Type',
+        'capacity' => 'Capacity',
+        'completion_date' => 'Completion Date',
+        'description' => 'Project Description',
+        'project_features' => 'Project Features',
+        
+        'items' => [
+            [
+                'title' => 'Residential Solar Plant',
+                'location' => 'Cairo, Egypt',
+                'type' => 'On-Grid System',
+                'capacity' => '10 kW',
+                'date' => 'December 2024',
+                'image' => 'https://images.unsplash.com/photo-1509391366360-2e959784a276?w=800&h=600&fit=crop',
+                'description' => 'On-grid solar system installation for residential home, providing 80% of electricity needs.',
+                'features' => [
+                    '18x 550W solar panels',
+                    '10kW Hybrid inverter',
+                    'Smart monitoring system',
+                    'Annual savings: EGP 15,000',
+                ],
+            ],
+            [
+                'title' => 'Solar Water Pumping System',
+                'location' => 'Fayoum, Egypt',
+                'type' => 'Solar Pumping',
+                'capacity' => '7.5 kW',
+                'date' => 'November 2024',
+                'image' => 'https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=800&h=600&fit=crop',
+                'description' => 'Off-grid agricultural irrigation system pumping water from 60m depth.',
+                'features' => [
+                    '7.5HP submersible pump',
+                    '12x 550W solar panels',
+                    'DC/AC frequency converter',
+                    'Daily flow: 120 cubic meters',
+                ],
+            ],
+            [
+                'title' => 'Commercial Solar Plant',
+                'location' => 'Alexandria, Egypt',
+                'type' => 'Hybrid System',
+                'capacity' => '50 kW',
+                'date' => 'October 2024',
+                'image' => 'https://images.unsplash.com/photo-1497440001374-f26997328c1b?w=800&h=600&fit=crop',
+                'description' => 'Hybrid system for commercial building with battery storage for continuous power.',
+                'features' => [
+                    '90x 550W solar panels',
+                    '50kW Hybrid inverter',
+                    '100kWh Lithium batteries',
+                    'Integrated UPS system',
+                ],
+            ],
+            [
+                'title' => 'Solar Street Lighting',
+                'location' => 'Hurghada, Egypt',
+                'type' => 'Solar Street Lights',
+                'capacity' => '15 kW',
+                'date' => 'September 2024',
+                'image' => 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=600&fit=crop',
+                'description' => 'Installation of 100 solar street lights for residential complex and main roads.',
+                'features' => [
+                    '100x 150W LED lights',
+                    'Lithium battery per pole',
+                    'Smart motion sensors',
+                    'Automatic operation',
+                ],
+            ],
+            [
+                'title' => 'Off-Grid Power System',
+                'location' => 'Siwa, Egypt',
+                'type' => 'Off-Grid System',
+                'capacity' => '12 kW',
+                'date' => 'August 2024',
+                'image' => 'https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=800&h=600&fit=crop',
+                'description' => 'Completely independent power system for tourist resort in remote area.',
+                'features' => [
+                    '24x 550W solar panels',
+                    '12kW Off-Grid inverter',
+                    '24x 200Ah Gel batteries',
+                    '3-day autonomy',
+                ],
+            ],
+            [
+                'title' => 'Solar Water Heaters - Residential Complex',
+                'location' => 'Sharm El Sheikh, Egypt',
+                'type' => 'Solar Water Heaters',
+                'capacity' => '30 Units',
+                'date' => 'July 2024',
+                'image' => 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=600&fit=crop',
+                'description' => 'Installation of solar water heaters for 30 residential units in tourist complex.',
+                'features' => [
+                    '30x 300L water heaters',
+                    'Evacuated tube collectors',
+                    'Forced circulation system',
+                    '70% energy savings',
+                ],
+            ],
+        ],
     ],
 
     // Footer
