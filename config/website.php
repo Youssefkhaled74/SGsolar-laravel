@@ -230,10 +230,167 @@ return [
     // ABOUT PAGE CONTENT
     // ============================================
     'about' => [
-        'story' => 'Founded with a vision to make renewable energy accessible to everyone, SgSolar has become a trusted name in solar water heating solutions. We combine cutting-edge technology with traditional craftsmanship to deliver systems that work efficiently year after year.',
-        'mission_extended' => 'Our mission goes beyond selling products. We aim to educate communities about the benefits of solar energy, reduce environmental impact, and provide sustainable heating solutions that make economic sense. Every installation is a step toward a cleaner, greener future.',
-        'technology' => 'Our solar water heaters use advanced thermal collectors that absorb sunlight and convert it to heat with exceptional efficiency. The insulated storage tanks retain heat for extended periods, ensuring hot water availability even during cloudy days. All systems are designed for longevity, efficiency, and minimal maintenance.',
+        'intro_key' => 'about.intro',
+        'vision_key' => 'about.vision',
+        'mission_key' => 'about.mission',
         'image' => 'png/SG-02.png',
+        
+        // 5 Guarantees - Why Choose SG Solar
+        'guarantees' => [
+            [
+                'icon' => 'fa-bolt',
+                'title_key' => 'about.guarantee_1_title',
+                'desc_key' => 'about.guarantee_1_desc',
+            ],
+            [
+                'icon' => 'fa-shield-alt',
+                'title_key' => 'about.guarantee_2_title',
+                'desc_key' => 'about.guarantee_2_desc',
+            ],
+            [
+                'icon' => 'fa-hand-holding-usd',
+                'title_key' => 'about.guarantee_3_title',
+                'desc_key' => 'about.guarantee_3_desc',
+            ],
+            [
+                'icon' => 'fa-cogs',
+                'title_key' => 'about.guarantee_4_title',
+                'desc_key' => 'about.guarantee_4_desc',
+            ],
+            [
+                'icon' => 'fa-leaf',
+                'title_key' => 'about.guarantee_5_title',
+                'desc_key' => 'about.guarantee_5_desc',
+            ],
+        ],
+        
+        // Animated Statistics
+        'stats' => [
+            ['number' => '10', 'suffix' => '+', 'label_key' => 'about.stats.years'],
+            ['number' => '500', 'suffix' => '+', 'label_key' => 'about.stats.projects'],
+            ['number' => '95', 'suffix' => '%', 'label_key' => 'about.stats.satisfaction'],
+            ['number' => '24', 'suffix' => '/7', 'label_key' => 'about.stats.support'],
+        ],
+    ],
+    
+    // ============================================
+    // SOLUTIONS PAGE CONTENT
+    // ============================================
+    'solutions' => [
+        'solar_energy' => [
+            [
+                'type' => 'on_grid',
+                'icon' => 'fa-plug',
+                'title_key' => 'solutions.on_grid_title',
+                'desc_key' => 'solutions.on_grid_desc',
+                'how_it_works_key' => 'solutions.on_grid_how',
+                'benefits_key' => 'solutions.on_grid_benefits',
+            ],
+            [
+                'type' => 'off_grid',
+                'icon' => 'fa-battery-full',
+                'title_key' => 'solutions.off_grid_title',
+                'desc_key' => 'solutions.off_grid_desc',
+                'how_it_works_key' => 'solutions.off_grid_how',
+                'benefits_key' => 'solutions.off_grid_benefits',
+            ],
+            [
+                'type' => 'hybrid',
+                'icon' => 'fa-sync-alt',
+                'title_key' => 'solutions.hybrid_title',
+                'desc_key' => 'solutions.hybrid_desc',
+                'how_it_works_key' => 'solutions.hybrid_how',
+                'benefits_key' => 'solutions.hybrid_benefits',
+            ],
+            [
+                'type' => 'pumping',
+                'icon' => 'fa-tint',
+                'title_key' => 'solutions.pumping_title',
+                'desc_key' => 'solutions.pumping_desc',
+                'how_it_works_key' => 'solutions.pumping_how',
+                'benefits_key' => 'solutions.pumping_benefits',
+            ],
+        ],
+        'swh' => [
+            'intro_key' => 'solutions.swh_intro',
+            'types' => [
+                [
+                    'type' => 'flat_plate',
+                    'title_key' => 'solutions.swh_flat_title',
+                    'desc_key' => 'solutions.swh_flat_desc',
+                ],
+                [
+                    'type' => 'evacuated_tube',
+                    'title_key' => 'solutions.swh_evacuated_title',
+                    'desc_key' => 'solutions.swh_evacuated_desc',
+                ],
+            ],
+            'how_it_works_key' => 'solutions.swh_how_it_works',
+        ],
+        'solar_lights' => [
+            'intro_key' => 'solutions.solar_lights_intro',
+            'types' => [
+                [
+                    'type' => 'residential',
+                    'icon' => 'fa-home',
+                    'title_key' => 'solutions.lights_residential_title',
+                    'desc_key' => 'solutions.lights_residential_desc',
+                ],
+                [
+                    'type' => 'street',
+                    'icon' => 'fa-road',
+                    'title_key' => 'solutions.lights_street_title',
+                    'desc_key' => 'solutions.lights_street_desc',
+                ],
+                [
+                    'type' => 'security',
+                    'icon' => 'fa-shield-alt',
+                    'title_key' => 'solutions.lights_security_title',
+                    'desc_key' => 'solutions.lights_security_desc',
+                ],
+            ],
+        ],
+    ],
+    
+    // ============================================
+    // NEWS/BLOG ARTICLES
+    // ============================================
+    'news' => [
+        [
+            'id' => 1,
+            'slug' => 'pv-systems-classification',
+            'title_key' => 'news.article_1_title',
+            'excerpt_key' => 'news.article_1_excerpt',
+            'content_key' => 'news.article_1_content',
+            'date' => '2025-01-15',
+            'image' => '/images/news/pv-systems.jpg',
+        ],
+        [
+            'id' => 2,
+            'slug' => 'solar-water-heaters-guide',
+            'title_key' => 'news.article_2_title',
+            'excerpt_key' => 'news.article_2_excerpt',
+            'content_key' => 'news.article_2_content',
+            'date' => '2025-01-10',
+            'image' => '/images/news/swh-guide.jpg',
+        ],
+        [
+            'id' => 3,
+            'slug' => 'solar-energy-faq',
+            'title_key' => 'news.article_3_title',
+            'excerpt_key' => 'news.article_3_excerpt',
+            'content_key' => 'news.article_3_content',
+            'date' => '2025-01-05',
+            'image' => '/images/news/solar-faq.jpg',
+        ],
+    ],
+    
+    // ============================================
+    // PROJECTS GALLERY
+    // ============================================
+    'projects' => [
+        // Will be populated with real project images
+        // Each project will have: title, location, capacity, image, description
     ],
 
     // ============================================

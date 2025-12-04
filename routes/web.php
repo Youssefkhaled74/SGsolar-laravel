@@ -28,6 +28,16 @@ Route::get('/services', [ServicesController::class, 'index'])->name('services');
 // Gallery Page
 Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery');
 
+// Solutions Page
+Route::view('/solutions', 'pages.solutions')->name('solutions');
+
+// Projects Page
+Route::view('/projects', 'pages.projects')->name('projects');
+
+// News/Blog Pages
+Route::view('/news', 'pages.news')->name('news');
+Route::view('/news/{slug}', 'pages.news-single')->name('news.single');
+
 // Contact Page
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');

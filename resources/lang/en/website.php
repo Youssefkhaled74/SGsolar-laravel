@@ -10,6 +10,7 @@ return [
     'nav' => [
         'home' => 'Home',
         'about' => 'About',
+        'solutions' => 'Solutions',
         'products' => 'Products',
         'services' => 'Services',
         'gallery' => 'Gallery',
@@ -25,7 +26,79 @@ return [
 
     // About Section
     'about' => [
-        'title' => 'About SgSolar',
+        'title' => 'About SG Solar',
+        'intro' => 'Driven by our vision to empower individuals and businesses to achieve self-sufficiency, SG Solar was established as a legal entity in 2021. What sets us apart in the industry is that we rely on a deep understanding and accumulated expertise of over ten years (10+) within our founding and specialized teams in the solar energy sector. This unique blend of modern structure and long-standing experience enables us to be your trusted consultant and technical partner, guaranteeing the optimal choice for your solar plants and water heaters with the highest levels of efficiency and clarity.',
+        
+        'vision_title' => 'Vision',
+        'vision_text' => 'To be the first choice in solar energy, empowering individuals and businesses to achieve self-sufficiency and access a clean, reliable energy future, led by our expert teams.',
+        
+        'mission_title' => 'Mission',
+        'mission_text' => 'To be the trusted consultant and technical partner who facilitates our clients\' transition to solar energy. We leverage the expertise of our teams to offer the optimal choice for solar plants and water heaters with the highest degree of clarity and transparency.',
+        
+        'why_choose_title' => 'Why Choose SG Solar?',
+        'why_choose_subtitle' => 'Five Guarantees for Your Solar Investment Success',
+        'why_choose_intro' => 'When you invest in solar energy, you are looking for a partner that guarantees performance and savings in the long term. At SG Solar, we provide you with five solid guarantees that ensure the best possible decision:',
+        
+        'guarantees' => [
+            [
+                'icon' => 'fa-bolt',
+                'title' => 'Maximum Efficiency and Fast ROI',
+                'subtitle' => 'Innovation in Efficiency',
+                'description' => 'We don\'t offer ordinary systems; we deliver the highest levels of productivity. Our team focuses on designing solutions that generate the maximum amount of energy from every square meter, meaning you will get the highest energy return and the fastest financial payback for your system cost. Our goal is to turn your investment into profit in the shortest possible time.',
+            ],
+            [
+                'icon' => 'fa-user-shield',
+                'title' => 'Reliability and Deep Expertise Guarantee',
+                'subtitle' => 'Experience and Consultancy',
+                'description' => 'Your investment is protected by a collective expertise of over ten years in the energy sector. This reservoir of knowledge ensures that our consulting team will analyze your actual needs with utmost precision and propose the most suitable system technically and financially, removing any ambiguity and giving you complete certainty in your decision.',
+            ],
+            [
+                'icon' => 'fa-hand-holding-dollar',
+                'title' => 'Financial Security and Full Transparency',
+                'subtitle' => 'Trust and Integrity',
+                'description' => 'We put your financial interest first. You will receive clear and detailed pricing, without any hidden costs or exaggeration in system size. We are committed to absolute integrity to ensure that your investment in SG Solar is the safest and most economically sustainable choice.',
+            ],
+            [
+                'icon' => 'fa-award',
+                'title' => 'Durability and Absolute Engineering Quality',
+                'subtitle' => 'Quality First',
+                'description' => 'We carefully select our components and adhere to the highest engineering standards in installation. This commitment guarantees that your system will withstand the toughest environmental conditions, and you will enjoy a performance warranty that extends for many years, ensuring the stability and security of your energy supply without worry.',
+            ],
+            [
+                'icon' => 'fa-leaf',
+                'title' => 'Future and Environment-Conscious Investment',
+                'subtitle' => 'Commitment to Sustainability',
+                'description' => 'Choosing SG Solar is a step towards securing your children\'s future. We provide you with technology that enables you to achieve energy self-sufficiency and contributes to reducing your facility\'s carbon footprint, making you an active partner in building a clean and sustainable environment for future generations.',
+            ],
+        ],
+        
+        'stats' => [
+            [
+                'icon' => 'fa-calendar-check',
+                'number' => '10',
+                'suffix' => '+',
+                'label' => 'Years Experience',
+            ],
+            [
+                'icon' => 'fa-solar-panel',
+                'number' => '500',
+                'suffix' => '+',
+                'label' => 'Projects Completed',
+            ],
+            [
+                'icon' => 'fa-face-smile',
+                'number' => '95',
+                'suffix' => '%',
+                'label' => 'Client Satisfaction',
+            ],
+            [
+                'icon' => 'fa-headset',
+                'number' => '24',
+                'suffix' => '/7',
+                'label' => 'Technical Support',
+            ],
+        ],
+        
         'subtitle' => 'Your Trusted Partner in Solar Energy',
         'learn_more' => 'Learn More About Us',
         'our_story' => 'Our Story',
@@ -162,6 +235,173 @@ return [
         'warranty' => [
             'title' => 'Comprehensive Warranty',
             'description' => 'All installations covered by full product and performance warranty.',
+        ],
+    ],
+
+    // Solutions Section
+    'solutions' => [
+        'title' => 'Our Solar Solutions',
+        'subtitle' => 'Integrated systems for all your needs',
+        
+        'solar_energy' => [
+            'title' => 'Solar Energy',
+            'subtitle' => 'Advanced photovoltaic power plants',
+            
+            'on_grid' => [
+                'name' => 'On-Grid Solar Energy',
+                'title' => 'On-Grid Systems',
+                'subtitle' => 'Your key to achieving self-sufficiency and immediate savings',
+                'intro' => 'On-Grid solar systems (Grid-Tied Systems) are the modern and most popular solution to drastically reduce electricity bills and achieve sustainable energy investment. This system is designed to work in complete parallel and integration with the public grid.',
+                'how_it_works' => 'How does the system work?',
+                'steps' => [
+                    'Generation: Solar panels absorb sunlight and convert it into direct current (DC) electricity.',
+                    'Conversion: The inverter converts this electricity into alternating current (AC) matching the current used in your home or facility.',
+                    'Consumption & Sales: Generated energy is consumed directly. If production exceeds consumption, the surplus is directed to the public grid and credited to the client through Net Metering.',
+                ],
+                'benefits_title' => 'Key benefits of On-Grid systems',
+                'benefits' => [
+                    'Immediate and significant savings: Directly reduces monthly bills and may reach zero.',
+                    'Safe investment return: You are compensated for the surplus you produce and feed into the grid, turning your roof into a source of income.',
+                    'Low maintenance cost: These systems do not require storage batteries, reducing installation and future maintenance costs.',
+                    'Simplicity and efficiency: The optimal solution for homes and facilities looking to maximize solar energy benefits without disconnecting from the grid.',
+                ],
+            ],
+            
+            'off_grid' => [
+                'name' => 'Off-Grid Solar Energy',
+                'title' => 'Off-Grid Systems',
+                'subtitle' => 'Complete freedom: Independent and reliable energy wherever you are',
+                'intro' => 'Off-Grid solar systems represent the optimal solution for locations without public electricity grid, or those requiring complete independence to ensure continuity. This system is your sole and exclusive energy source.',
+                'how_it_works' => 'How does the system work?',
+                'steps' => [
+                    'Generation: Solar panels generate and convert electricity.',
+                    'Storage: Unlike grid-tied systems, excess energy is directed to storage batteries, which act as an energy reservoir for nighttime use or cloudy days.',
+                    'Consumption: Stored energy is drawn from batteries and passed through the inverter to power electrical loads continuously and independently.',
+                ],
+                'benefits_title' => 'Key benefits of Off-Grid systems',
+                'benefits' => [
+                    'Complete energy independence: Grants you full freedom from electricity bills and grid fluctuations.',
+                    'Ideal for remote areas: The only reliable solution for farms, camps, and projects far from basic infrastructure.',
+                    'Guaranteed operational continuity: Batteries ensure continuous power supply to electrical loads even during sun outages or at night.',
+                    'Expansion flexibility: Panel and battery capacity can be increased in the future to meet growing energy needs.',
+                ],
+            ],
+            
+            'hybrid' => [
+                'name' => 'Hybrid Solar Energy',
+                'title' => 'Hybrid Systems',
+                'subtitle' => 'Absolute flexibility: Combining savings with storage security',
+                'intro' => 'Hybrid solar systems are the optimal solution combining economic savings efficiency of grid-tied systems with storage reliability and energy continuity assurance of off-grid systems. This system provides maximum security and operational flexibility.',
+                'how_it_works' => 'How does the system work?',
+                'steps' => [
+                    'Smart Priority: The system generates energy and consumes it directly, directing surplus to storage batteries first.',
+                    'Storage and Protection: When batteries are full, any additional surplus is exported to the public grid and Net Metering is utilized.',
+                    'Continuity (Back-up): If the grid fails, the system instantly switches to stored battery energy, ensuring uninterrupted operation of essential loads, providing complete protection.',
+                ],
+                'benefits_title' => 'Key benefits of Hybrid systems',
+                'benefits' => [
+                    'Guaranteed energy continuity (Zero Downtime): Ideal for critical facilities and businesses that cannot tolerate power outages.',
+                    'Maximum savings: Benefit from self-storage (batteries) and reduce grid draw, while selling surplus to the grid when needed.',
+                    'Smart operational flexibility: Works automatically and intelligently, always choosing the best and most economical energy source.',
+                    'Best market solutions: Combines benefits of both systems in one package, giving you savings and security together.',
+                ],
+            ],
+            
+            'pumping' => [
+                'name' => 'Solar Irrigation & Pumping',
+                'title' => 'Solar Pumping Systems',
+                'subtitle' => 'Efficient and smart alternative to ensure sustainability of your water and agricultural resources',
+                'intro' => 'Solar water pumping systems are the optimal solution for farms, agricultural projects, and remote water treatment plants. This technology is designed to provide water efficiently without diesel or public grid dependence, ensuring continuous water flow at zero operating cost.',
+                'how_it_works' => 'How does the solar pumping system work?',
+                'steps' => [
+                    'Direct Generation: Solar panels generate the required power.',
+                    'Direct Drive: This energy is directed straight to a specialized water pump (usually DC or AC with special converter), typically without batteries.',
+                    'Operation: The pump starts automatically at sunrise, and pumping rate increases with solar radiation intensity, ensuring pumping proportional to daytime production hours.',
+                ],
+                'benefits_title' => 'Key benefits of solar irrigation systems',
+                'benefits' => [
+                    'Zero operating cost: Completely eliminate fuel (diesel) costs or high electricity bills associated with pumping operations.',
+                    'Sustainability and reliability: Works in the harshest environmental conditions and reduces carbon emissions, supporting your sustainability commitment.',
+                    'Simple maintenance: Features long lifespan and minimal periodic maintenance needs, ensuring irrigation operation continuity.',
+                    'Installation flexibility: Can be installed in any location regardless of distance from electricity grid or fuel stations.',
+                ],
+            ],
+        ],
+        
+        'swh' => [
+            'title' => 'Solar Water Heaters',
+            'subtitle' => 'Solar Water Heaters - SWH',
+            'intro' => 'Solar Water Heaters (SWH) are thermal systems designed to absorb solar radiation energy and convert it into heat used to raise water temperature. This technology is one of the oldest and most efficient solar energy applications.',
+            
+            'components_title' => 'Structural components of solar heating system',
+            'components' => [
+                'Solar Collectors: The unit responsible for absorbing solar radiation. Design varies by system type, where absorbed heat is transferred to working fluid (water or heat transfer fluid).',
+                'Insulated Storage Tank: A dedicated vessel for storing hot water. Features high-efficiency thermal insulation layers to minimize heat loss and maintain water temperature for extended periods until next morning.',
+                'Circulation System: The piping network connecting collectors and tank. Circulation may be natural (gravity) or forced using small electric pumps.',
+            ],
+            
+            'types_title' => 'Solar collector classification and technical differences',
+            'types' => [
+                'flat_plate' => [
+                    'name' => 'Flat Plate Collectors',
+                    'title' => 'Flat Plate Collectors',
+                    'structure' => 'Consist of an internally insulated box with transparent glass cover on top and black metal absorption plate at bottom. Heat transfer fluid flows through pipes welded or connected to the black plate.',
+                    'efficiency' => 'Considered good efficiency and suitable for areas with high solar radiation and moderate weather.',
+                    'advantage' => 'Distinguished by structural durability and ability to withstand relatively harsh environmental conditions.',
+                ],
+                'evacuated_tube' => [
+                    'name' => 'Evacuated Tube Collectors',
+                    'title' => 'Evacuated Tube Collectors',
+                    'structure' => 'Consist of rows of double-walled glass tubes, where air is evacuated between outer and inner tube walls (similar to thermos principle). This evacuation ensures superior thermal insulation.',
+                    'efficiency' => 'Shows significantly higher thermal efficiency compared to flat plate collectors, especially with large temperature differences between collector and ambient air.',
+                    'advantage' => 'Evacuation process reduces heat loss from convection and radiation, making it the optimal choice for cold regions or facilities requiring very high water temperatures.',
+                ],
+            ],
+            
+            'working_principle' => 'Water heating relies on a closed cycle where heat is continuously transferred: heat absorption when collectors are exposed to radiation, heat transfer to insulated tank, heat exchange within tank, and storage for use when needed with auxiliary heater ensuring constant temperature.',
+        ],
+        
+        'solar_lights' => [
+            'title' => 'Solar Lighting Systems',
+            'subtitle' => 'Solar Light Systems',
+            'intro' => 'Solar lighting fixtures are the ideal solution for illuminating outdoor spaces and locations far from electricity grid. These systems feature completely independent (Off-Grid) operation thanks to their integrated design, eliminating the need for electrical extensions or operating bills.',
+            
+            'components_title' => 'Structural components of solar lighting system',
+            'components' => [
+                'Small PV Panel: Captures solar radiation and charges battery during day.',
+                'Storage Battery: Stores generated energy for nighttime use (typically modern lithium batteries).',
+                'Smart Charge Controller: Manages charging and discharging operations, provides overcharge protection, and controls lighting levels.',
+                'LED Lamp: Exclusively relies on LED lamps due to high efficiency and low power consumption.',
+            ],
+            
+            'categories_title' => 'Solar fixture classification and applications',
+            'categories' => [
+                'residential' => [
+                    'name' => 'Garden & Home Lighting',
+                    'title' => 'Residential & Landscape Lighting',
+                    'usage' => 'Illuminating walkways, gardens, home patios, and exterior walls for decorative and security purposes.',
+                    'features' => 'Distinguished by aesthetic and integrated design (panel, battery, and lamp in one small unit). Features light sensors (Dusk-to-Dawn) for automatic operation.',
+                ],
+                'street' => [
+                    'name' => 'Street & Road Lighting',
+                    'title' => 'Street & Highway Lighting',
+                    'usage' => 'Illuminating highways, side streets, and large parking lots.',
+                    'features' => 'Requires large solar panels and high-capacity batteries to ensure operation for specific nighttime hours and multiple consecutive days without sun. Often contains Smart Dimming systems to save energy when no movement detected.',
+                ],
+                'security' => [
+                    'name' => 'Security & Motion Lights',
+                    'title' => 'Security & Motion Sensor Lights',
+                    'usage' => 'Entrances, warehouses, and areas requiring illumination only upon motion detection.',
+                    'features' => 'Relies on PIR Motion Sensors to activate light at full power when motion detected, remaining in Low Power Mode or off otherwise to maximize battery life and operating efficiency.',
+                ],
+            ],
+            
+            'advantages_title' => 'Operational and environmental advantages',
+            'advantages' => [
+                'Easy and fast installation: No trenching or cable extensions required, significantly reducing installation time and cost.',
+                'Zero operating cost: No electricity consumption or monthly bills, making it cost-effective long-term.',
+                'Environmental sustainability: Reduces carbon footprint and relies on completely clean and renewable energy source.',
+            ],
         ],
     ],
 

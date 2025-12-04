@@ -20,6 +20,9 @@
                 <a href="/about" class="navbar-link {{ request()->is('about') ? 'active' : '' }}">
                     {{ __('website.nav.about') }}
                 </a>
+                <a href="/solutions" class="navbar-link {{ request()->is('solutions') ? 'active' : '' }}">
+                    {{ __('website.nav.solutions') }}
+                </a>
                 <a href="/products" class="navbar-link {{ request()->is('products') ? 'active' : '' }}">
                     {{ __('website.nav.products') }}
                 </a>

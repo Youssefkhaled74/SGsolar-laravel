@@ -1,120 +1,143 @@
 @extends('layouts.app')
 
-@section('title', 'About Us - ' . config('website.name'))
+@section('title', __('website.about.title'))
 
 @section('content')
-
-<!-- Page Header -->
-<section class="page-header">
+<!-- About Hero Section -->
+<section class="about-hero">
     <div class="container">
-        <h1 class="page-title">About SgSolar</h1>
-        <p class="page-subtitle">Leading the way in solar water heating solutions</p>
+        <div class="hero-content">
+            <h1 class="section-title">{{ __('website.about.title') }}</h1>
+            <div class="hero-divider"></div>
+        </div>
     </div>
 </section>
 
-<!-- Company Mission -->
-<section class="section">
+<!-- Company Introduction -->
+<section class="about-intro">
     <div class="container">
-        <div class="about-grid">
-            <div class="about-content">
-                <x-section-title 
-                    title="Our Mission" 
-                    :centered="false"
-                />
-                <p class="text-lg">{{ $data['about']['mission_extended'] }}</p>
-            </div>
-            <div class="about-image">
-                <img src="{{ asset($data['about']['image']) }}" alt="SgSolar Mission">
+        <div class="intro-content">
+            <div class="intro-text">
+                <p>{{ __('website.about.intro') }}</p>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Our Story -->
-<section class="section bg-light">
+<!-- Vision & Mission -->
+<section class="vision-mission">
     <div class="container">
-        <div class="about-grid reverse">
-            <div class="about-image">
-                <img src="{{ asset('png/SG-03.png') }}" alt="SgSolar Story">
+        <div class="vm-grid">
+            <!-- Vision Card -->
+            <div class="vm-card vision-card">
+                <div class="vm-icon">
+                    <i class="fas fa-lightbulb"></i>
+                </div>
+                <h3 class="vm-title">{{ __('website.about.vision_title') }}</h3>
+                <p class="vm-text">{{ __('website.about.vision_text') }}</p>
             </div>
-            <div class="about-content">
-                <x-section-title 
-                    title="Our Story" 
-                    :centered="false"
-                />
-                <p class="text-lg">{{ $data['about']['story'] }}</p>
+
+            <!-- Mission Card -->
+            <div class="vm-card mission-card">
+                <div class="vm-icon">
+                    <i class="fas fa-bullseye"></i>
+                </div>
+                <h3 class="vm-title">{{ __('website.about.mission_title') }}</h3>
+                <p class="vm-text">{{ __('website.about.mission_text') }}</p>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Technology -->
-<section class="section">
+<!-- Statistics Counter Section -->
+<section class="stats-section">
     <div class="container">
-        <x-section-title 
-            title="Our Technology" 
-            subtitle="Advanced solar thermal systems for maximum efficiency"
-        />
-        <div class="technology-content">
-            <p class="text-lg text-center" style="max-width: 900px; margin: 0 auto;">
-                {{ $data['about']['technology'] }}
-            </p>
+        <div class="stats-grid">
+            @foreach(__('website.about.stats') as $stat)
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas {{ $stat['icon'] }}"></i>
+                </div>
+                <div class="stat-number">
+                    <span class="counter" data-target="{{ $stat['number'] }}">0</span><span class="stat-suffix">{{ $stat['suffix'] }}</span>
+                </div>
+                <div class="stat-label">{{ $stat['label'] }}</div>
+            </div>
+            @endforeach
         </div>
     </div>
 </section>
 
-<!-- Solar Benefits -->
-<section class="section section-benefits bg-gradient">
+<!-- Why Choose Us -->
+<section class="why-choose">
     <div class="container">
-        <x-section-title 
-            title="Benefits of Solar Water Heating" 
-            subtitle="Why solar thermal technology makes sense"
-        />
+        <div class="section-header">
+            <h2 class="section-title">{{ __('website.about.why_choose_title') }}</h2>
+            <h3 class="section-subtitle">{{ __('website.about.why_choose_subtitle') }}</h3>
+            <p class="section-intro">{{ __('website.about.why_choose_intro') }}</p>
+        </div>
+
+        <div class="guarantees-grid">
+            @foreach(__('website.about.guarantees') as $index => $guarantee)
+            <div class="guarantee-card">
+                <div class="guarantee-icon">
+                    <i class="fas {{ $guarantee['icon'] }}"></i>
+                </div>
+                <div class="guarantee-content">
+                    <h4 class="guarantee-title">{{ $guarantee['title'] }}</h4>
+                    <p class="guarantee-subtitle">{{ $guarantee['subtitle'] }}</p>
+                    <p class="guarantee-description">{{ $guarantee['description'] }}</p>
+                </div>
+            </div>
+            @endforeach
+        </div>
+    </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Animated Counter
+    const counters = document.querySelectorAll('.counter');
+    const speed = 200;
+    let hasAnimated = false;
+
+    const animateCounters = () => {
+        if (hasAnimated) return;
         
-        <div class="benefits-grid">
-            <div class="benefit-card">
-                <div class="benefit-icon">💰</div>
-                <h3>Reduce Energy Costs</h3>
-                <p>Save up to 70% on water heating expenses with free solar energy.</p>
-            </div>
-            <div class="benefit-card">
-                <div class="benefit-icon">🌍</div>
-                <h3>Protect the Environment</h3>
-                <p>Zero emissions and reduced carbon footprint for a cleaner planet.</p>
-            </div>
-            <div class="benefit-card">
-                <div class="benefit-icon">⚡</div>
-                <h3>Energy Independence</h3>
-                <p>Less reliance on grid electricity and fossil fuel-based heating.</p>
-            </div>
-            <div class="benefit-card">
-                <div class="benefit-icon">🔧</div>
-                <h3>Low Maintenance</h3>
-                <p>Durable systems designed for years of trouble-free operation.</p>
-            </div>
-            <div class="benefit-card">
-                <div class="benefit-icon">☀️</div>
-                <h3>All-Season Performance</h3>
-                <p>Efficient heating even during cloudy days with advanced insulation.</p>
-            </div>
-            <div class="benefit-card">
-                <div class="benefit-icon">📈</div>
-                <h3>Increase Property Value</h3>
-                <p>Solar installations boost home value and appeal to eco-conscious buyers.</p>
-            </div>
-        </div>
-    </div>
-</section>
+        counters.forEach(counter => {
+            const target = parseInt(counter.getAttribute('data-target'));
+            const increment = target / speed;
+            let current = 0;
 
-<!-- Call to Action -->
-<section class="section section-cta">
-    <div class="container">
-        <div class="cta-box">
-            <h2 class="cta-title">Ready to Go Solar?</h2>
-            <p class="cta-subtitle">Contact us today for a free consultation and quote.</p>
-            <a href="/contact" class="btn btn-primary btn-lg">Get Started</a>
-        </div>
-    </div>
-</section>
+            const updateCounter = () => {
+                current += increment;
+                if (current < target) {
+                    counter.textContent = Math.ceil(current);
+                    setTimeout(updateCounter, 1);
+                } else {
+                    counter.textContent = target;
+                }
+            };
 
+            updateCounter();
+        });
+        
+        hasAnimated = true;
+    };
+
+    // Intersection Observer for counter animation
+    const statsSection = document.querySelector('.stats-section');
+    if (statsSection) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounters();
+                }
+            });
+        }, { threshold: 0.5 });
+
+        observer.observe(statsSection);
+    }
+});
+</script>
 @endsection
