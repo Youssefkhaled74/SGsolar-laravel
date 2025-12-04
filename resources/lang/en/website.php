@@ -719,44 +719,7 @@ return [
             ['icon' => 'fas fa-leaf', 'title' => 'Future and Environment-Conscious Investment'],
         ],
         
-        'articles' => [
-            [
-                'icon' => 'fas fa-solar-panel',
-                'category' => 'Solar Energy Systems',
-                'date' => 'December 2024',
-                'title' => 'Photovoltaic Solar Energy: Classification of Plants and Systems',
-                'excerpt' => 'Learn about the main classifications of photovoltaic solar energy systems and the difference between grid-tied, off-grid, and hybrid systems.',
-                'highlights' => [
-                    'Common Basic Components',
-                    'System Classification by Grid Connection',
-                    'Specialized Solar Irrigation Systems',
-                ],
-            ],
-            [
-                'icon' => 'fas fa-fire',
-                'category' => 'Solar Water Heaters',
-                'date' => 'December 2024',
-                'title' => 'Everything You Need to Know About Solar Water Heaters and Their Types',
-                'excerpt' => 'A comprehensive guide to solar water heaters including basic principles, types of collectors, and necessary components to ensure maximum efficiency.',
-                'highlights' => [
-                    'Basic Principle: Converting Radiation to Heat',
-                    'Difference Between Evacuated Tubes and Flat Plate',
-                    'System Components and Investment Facts',
-                ],
-            ],
-            [
-                'icon' => 'fas fa-lightbulb',
-                'category' => 'Solar Technology',
-                'date' => 'November 2024',
-                'title' => 'Latest Innovations in Solar Panel Technology',
-                'excerpt' => 'Discover the latest developments in solar panel manufacturing and how they improve efficiency and reduce costs.',
-                'highlights' => [
-                    'Bifacial Panel Technology',
-                    'High Efficiency Monocrystalline Cells',
-                    'Future of Solar Energy',
-                ],
-            ],
-        ],
+        'articles' => require __DIR__ . '/news_articles.php',
     ],
 
     // Footer
