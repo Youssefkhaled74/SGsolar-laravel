@@ -28,11 +28,10 @@
            title="WhatsApp">
             <i class="fab fa-whatsapp"></i>
         </a>
-        <a href="{{ config('website.social.facebook') }}" 
-           target="_blank" 
-           class="facebook-btn" 
-           title="Facebook">
-            <i class="fab fa-facebook-f"></i>
+        <a href="{{ route('contact') }}" 
+           class="chat-btn" 
+           title="{{ __('website.nav.contact') }}">
+            <i class="fas fa-comments"></i>
         </a>
         <a href="tel:{{ config('website.contact.phone') }}" 
            class="call-btn" 

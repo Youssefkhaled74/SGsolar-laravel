@@ -114,8 +114,8 @@ ul {
     background: linear-gradient(135deg, #25D366, #128C7E);
 }
 
-.floating-social .facebook-btn {
-    background: linear-gradient(135deg, #1877F2, #0C5BBE);
+.floating-social .chat-btn {
+    background: linear-gradient(135deg, #FFDF41, #E3A000);
 }
 
 .floating-social .call-btn {
@@ -263,13 +263,13 @@ ul {
 }
 
 .navbar-brand .logo {
-    height: 70px;
+    height: 100px;
     width: auto;
     transition: all 0.3s ease;
 }
 
 .navbar.scrolled .navbar-brand .logo {
-    height: 60px;
+    height: 85px;
 }
 
 .navbar-menu {
@@ -392,7 +392,7 @@ ul {
 /* Mobile Menu */
 @media (max-width: 992px) {
     .navbar-brand .logo {
-        height: 50px;
+        height: 60px;
     }
     
     .navbar-toggle {
