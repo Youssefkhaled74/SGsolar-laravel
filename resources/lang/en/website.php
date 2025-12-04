@@ -700,6 +700,64 @@ return [
         ],
     ],
 
+    // News/Articles Page (NEW)
+    'news' => [
+        'title' => 'Latest News & Articles',
+        'subtitle' => 'Latest updates and technical information in the world of solar energy',
+        'read_more' => 'Read More',
+        
+        'cta_title' => 'Why Choose SG Solar?',
+        'cta_text' => 'Five Guarantees for Your Solar Investment Success',
+        'cta_button' => 'Get Free Consultation',
+        
+        'cta_guarantees' => [
+            ['icon' => 'fas fa-bolt', 'title' => 'Maximum Efficiency and Fast ROI'],
+            ['icon' => 'fas fa-user-shield', 'title' => 'Reliability and Deep Expertise Guarantee'],
+            ['icon' => 'fas fa-hand-holding-dollar', 'title' => 'Financial Security and Full Transparency'],
+            ['icon' => 'fas fa-award', 'title' => 'Durability and Absolute Engineering Quality'],
+            ['icon' => 'fas fa-leaf', 'title' => 'Future and Environment-Conscious Investment'],
+        ],
+        
+        'articles' => [
+            [
+                'icon' => 'fas fa-solar-panel',
+                'category' => 'Solar Energy Systems',
+                'date' => 'December 2024',
+                'title' => 'Photovoltaic Solar Energy: Classification of Plants and Systems',
+                'excerpt' => 'Learn about the main classifications of photovoltaic solar energy systems and the difference between grid-tied, off-grid, and hybrid systems.',
+                'highlights' => [
+                    'Common Basic Components',
+                    'System Classification by Grid Connection',
+                    'Specialized Solar Irrigation Systems',
+                ],
+            ],
+            [
+                'icon' => 'fas fa-fire',
+                'category' => 'Solar Water Heaters',
+                'date' => 'December 2024',
+                'title' => 'Everything You Need to Know About Solar Water Heaters and Their Types',
+                'excerpt' => 'A comprehensive guide to solar water heaters including basic principles, types of collectors, and necessary components to ensure maximum efficiency.',
+                'highlights' => [
+                    'Basic Principle: Converting Radiation to Heat',
+                    'Difference Between Evacuated Tubes and Flat Plate',
+                    'System Components and Investment Facts',
+                ],
+            ],
+            [
+                'icon' => 'fas fa-lightbulb',
+                'category' => 'Solar Technology',
+                'date' => 'November 2024',
+                'title' => 'Latest Innovations in Solar Panel Technology',
+                'excerpt' => 'Discover the latest developments in solar panel manufacturing and how they improve efficiency and reduce costs.',
+                'highlights' => [
+                    'Bifacial Panel Technology',
+                    'High Efficiency Monocrystalline Cells',
+                    'Future of Solar Energy',
+                ],
+            ],
+        ],
+    ],
+
     // Footer
     'footer' => [
         'quick_links' => 'Quick Links',
