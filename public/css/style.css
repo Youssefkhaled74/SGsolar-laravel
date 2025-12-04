@@ -1483,7 +1483,7 @@ ul {
 .stat-number {
     font-size: 3rem;
     font-weight: 700;
-    color: #fff;
+    color: #0C2D1C;
     line-height: 1;
     margin-bottom: 0.5rem;
 }
@@ -1501,7 +1501,7 @@ ul {
 
 .stat-label {
     font-size: 1rem;
-    color: rgba(255, 255, 255, 0.9);
+    color: #115F45;
     font-weight: 500;
 }
 

@@ -45,7 +45,7 @@ return [
     'products' => [
         [
             'name_key' => 'products.product1',
-            'image' => '/images/products/product1.jpg',
+            'image' => 'https://images.unsplash.com/photo-1560422920-f1ebe3523c8e?w=800&h=600&fit=crop&q=80',
             'description_key' => 'products.product1_desc',
             'features_key' => 'products.product1_features',
             'price' => '3,500',
@@ -53,7 +53,7 @@ return [
         ],
         [
             'name_key' => 'products.product2',
-            'image' => '/images/products/product2.jpg',
+            'image' => 'https://images.unsplash.com/photo-1624397640148-949b1732bb0a?w=800&h=600&fit=crop&q=80',
             'description_key' => 'products.product2_desc',
             'features_key' => 'products.product2_features',
             'price' => '7,800',
@@ -61,7 +61,7 @@ return [
         ],
         [
             'name_key' => 'products.product3',
-            'image' => '/images/products/product3.jpg',
+            'image' => 'https://images.unsplash.com/photo-1509391366360-2e959784a276?w=800&h=600&fit=crop&q=80',
             'description_key' => 'products.product3_desc',
             'features_key' => 'products.product3_features',
             'price' => '2,800',
@@ -69,7 +69,7 @@ return [
         ],
         [
             'name_key' => 'products.product4',
-            'image' => '/images/products/product4.jpg',
+            'image' => 'https://images.unsplash.com/photo-1595437193398-f24279553f4f?w=800&h=600&fit=crop&q=80',
             'description_key' => 'products.product4_desc',
             'features_key' => 'products.product4_features',
             'price' => '4,500',
@@ -77,7 +77,7 @@ return [
         ],
         [
             'name_key' => 'products.product5',
-            'image' => '/images/products/product5.jpg',
+            'image' => 'https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=800&h=600&fit=crop&q=80',
             'description_key' => 'products.product5_desc',
             'features_key' => 'products.product5_features',
             'price' => '6,200',
@@ -85,7 +85,7 @@ return [
         ],
         [
             'name_key' => 'products.product6',
-            'image' => '/images/products/product6.jpg',
+            'image' => 'https://images.unsplash.com/photo-1584267385494-9fdd9a71ad75?w=800&h=600&fit=crop&q=80',
             'description_key' => 'products.product6_desc',
             'features_key' => 'products.product6_features',
             'price' => '5,400',
@@ -198,12 +198,15 @@ return [
     // GALLERY IMAGES
     // ============================================
     'gallery' => [
-        'png/SG-01.png',
-        'png/SG-02.png',
-        'png/SG-03.png',
-        'png/SG-04.png',
-        'png/SG-05.png',
-        'png/SG-06.png',
+        'https://images.unsplash.com/photo-1509391366360-2e959784a276?w=800&h=600&fit=crop&q=85',
+        'https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=800&h=600&fit=crop&q=85',
+        'https://images.unsplash.com/photo-1595437193398-f24279553f4f?w=800&h=600&fit=crop&q=85',
+        'https://images.unsplash.com/photo-1624397640148-949b1732bb0a?w=800&h=600&fit=crop&q=85',
+        'https://images.unsplash.com/photo-1560422920-f1ebe3523c8e?w=800&h=600&fit=crop&q=85',
+        'https://images.unsplash.com/photo-1584267385494-9fdd9a71ad75?w=800&h=600&fit=crop&q=85',
+        'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=800&h=600&fit=crop&q=85',
+        'https://images.unsplash.com/photo-1559302504-64aae6ca6b6d?w=800&h=600&fit=crop&q=85',
+        'https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=800&h=600&fit=crop&q=85',
     ],
 
     // ============================================

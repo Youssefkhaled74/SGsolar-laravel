@@ -449,6 +449,7 @@ return [
     'products' => [
         'title' => 'Our Products',
         'subtitle' => 'Complete solar solutions with highest standards',
+        'view_all' => 'View All Products',
         'download_datasheet' => 'Download Datasheet',
         
         'swh' => [

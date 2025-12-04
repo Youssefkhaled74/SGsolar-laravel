@@ -23,7 +23,11 @@
         <div class="gallery-grid">
             @foreach($data['gallery'] as $index => $image)
                 <div class="gallery-item" onclick="openLightbox({{ $index }})">
-                    <img src="{{ asset($image) }}" alt="SgSolar Installation {{ $index + 1 }}">
+                    @if(str_starts_with($image, 'http'))
+                        <img src="{{ $image }}" alt="SgSolar Installation {{ $index + 1 }}">
+                    @else
+                        <img src="{{ asset($image) }}" alt="SgSolar Installation {{ $index + 1 }}">
+                    @endif
                     <div class="gallery-overlay">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/>
@@ -109,7 +113,13 @@ function changeImage(direction) {
 
 function updateLightboxImage() {
     const img = document.getElementById('lightbox-img');
-    img.src = '{{ asset('') }}' + images[currentImageIndex];
+    const currentImage = images[currentImageIndex];
+    // Check if URL is external
+    if (currentImage.startsWith('http')) {
+        img.src = currentImage;
+    } else {
+        img.src = '{{ asset('') }}' + currentImage;
+    }
 }
 
 // Close lightbox on ESC key
