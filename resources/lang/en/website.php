@@ -13,6 +13,7 @@ return [
         'solutions' => 'Solutions',
         'products' => 'Products',
         'projects' => 'Projects',
+        'news' => 'News',
         'services' => 'Services',
         'gallery' => 'Gallery',
         'contact' => 'Contact',
