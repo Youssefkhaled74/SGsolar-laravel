@@ -29,7 +29,7 @@
                 @foreach(__('website.products.swh.items') as $product)
                 <div class="product-card">
                     <div class="product-image">
-                        <img src="{{ asset('images/products/' . $product['image']) }}" alt="{{ $product['name'] }}">
+                        <img src="{{ $product['image'] }}" alt="{{ $product['name'] }}">
                         @if(isset($product['badge']))
                         <span class="product-badge">{{ $product['badge'] }}</span>
                         @endif
@@ -71,7 +71,7 @@
                 @foreach(__('website.products.solar_lights.items') as $product)
                 <div class="product-card">
                     <div class="product-image">
-                        <img src="{{ asset('images/products/' . $product['image']) }}" alt="{{ $product['name'] }}">
+                        <img src="{{ $product['image'] }}" alt="{{ $product['name'] }}">
                         @if(isset($product['badge']))
                         <span class="product-badge">{{ $product['badge'] }}</span>
                         @endif
@@ -113,7 +113,7 @@
                 @foreach(__('website.products.solar_panels.items') as $product)
                 <div class="product-card">
                     <div class="product-image">
-                        <img src="{{ asset('images/products/' . $product['image']) }}" alt="{{ $product['name'] }}">
+                        <img src="{{ $product['image'] }}" alt="{{ $product['name'] }}">
                         @if(isset($product['badge']))
                         <span class="product-badge">{{ $product['badge'] }}</span>
                         @endif
