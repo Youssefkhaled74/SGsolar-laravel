@@ -484,6 +484,7 @@ return [
         'subtitle' => 'حلول شمسية متكاملة بأعلى المعايير',
         'view_all' => 'عرض جميع المنتجات',
         'download_datasheet' => 'تحميل البيانات التقنية',
+        'download_catalog' => 'تحميل الكتالوج',
         
         'swh' => [
             'title' => 'سخانات المياه الشمسية',
@@ -596,6 +597,7 @@ return [
                     ],
                     'badge' => 'الأعلى كفاءة',
                     'datasheet' => 'panel-550w.pdf',
+                    'catalog' => 'panel-550w-catalog-ar.pdf',
                 ],
                 [
                     'name' => 'لوح شمسي Poly 450W',
@@ -609,6 +611,7 @@ return [
                         'قيمة اقتصادية عالية',
                     ],
                     'datasheet' => 'panel-450w.pdf',
+                    'catalog' => 'panel-450w-catalog-ar.pdf',
                 ],
                 [
                     'name' => 'لوح شمسي Bifacial 600W',
@@ -623,6 +626,7 @@ return [
                     ],
                     'badge' => 'الأعلى كفاءة',
                     'datasheet' => 'panel-600w.pdf',
+                    'catalog' => 'panel-600w-catalog-ar.pdf',
                 ],
             ],
         ],

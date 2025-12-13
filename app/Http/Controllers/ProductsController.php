@@ -10,4 +10,19 @@ class ProductsController extends Controller
             'data' => config('website')
         ]);
     }
+
+    public function swh()
+    {
+        return view('pages.products-swh');
+    }
+
+    public function lights()
+    {
+        return view('pages.products-lights');
+    }
+
+    public function panels()
+    {
+        return view('pages.products-panels');
+    }
 }

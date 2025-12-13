@@ -21,6 +21,9 @@ Route::get('/about', [AboutController::class, 'index'])->name('about');
 
 // Products Page
 Route::get('/products', [ProductsController::class, 'index'])->name('products');
+Route::get('/products/swh', [ProductsController::class, 'swh'])->name('products.swh');
+Route::get('/products/lights', [ProductsController::class, 'lights'])->name('products.lights');
+Route::get('/products/panels', [ProductsController::class, 'panels'])->name('products.panels');
 
 // Services Page
 Route::get('/services', [ServicesController::class, 'index'])->name('services');

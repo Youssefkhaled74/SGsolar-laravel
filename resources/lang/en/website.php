@@ -452,6 +452,7 @@ return [
         'subtitle' => 'Complete solar solutions with highest standards',
         'view_all' => 'View All Products',
         'download_datasheet' => 'Download Datasheet',
+        'download_catalog' => 'Download Catalog (Arabic)',
         
         'swh' => [
             'title' => 'Solar Water Heaters',

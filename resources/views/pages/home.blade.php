@@ -27,6 +27,53 @@
     </div>
 </section>
 
+<!-- Product Categories Selector -->
+<section class="section section-product-cats">
+    <div class="container">
+        <div class="scroll-fade">
+            <x-section-title 
+                title="{{ __('website.products.title') }}"
+                subtitle="{{ __('website.products.subtitle') }}"
+            />
+        </div>
+
+        <div class="category-selector-grid">
+            <a href="{{ route('products.swh') }}" class="category-card">
+                <div class="category-card-media">
+                    <i class="fas fa-fire"></i>
+                </div>
+                <div class="category-card-body">
+                    <h3>{{ __('website.products.swh.title') }}</h3>
+                    <p>{{ __('website.products.swh.description') }}</p>
+                </div>
+                <div class="category-card-cta">{{ __('website.products.view_all') }}</div>
+            </a>
+
+            <a href="{{ route('products.lights') }}" class="category-card">
+                <div class="category-card-media">
+                    <i class="fas fa-lightbulb"></i>
+                </div>
+                <div class="category-card-body">
+                    <h3>{{ __('website.products.solar_lights.title') }}</h3>
+                    <p>{{ __('website.products.solar_lights.description') }}</p>
+                </div>
+                <div class="category-card-cta">{{ __('website.products.view_all') }}</div>
+            </a>
+
+            <a href="{{ route('products.panels') }}" class="category-card">
+                <div class="category-card-media">
+                    <i class="fas fa-solar-panel"></i>
+                </div>
+                <div class="category-card-body">
+                    <h3>{{ __('website.products.solar_panels.title') }}</h3>
+                    <p>{{ __('website.products.solar_panels.description') }}</p>
+                </div>
+                <div class="category-card-cta">{{ __('website.products.view_all') }}</div>
+            </a>
+        </div>
+    </div>
+</section>
+
 <!-- Featured Products -->
 <section class="section section-products-featured bg-light">
     <div class="container">

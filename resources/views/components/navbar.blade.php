@@ -23,9 +23,16 @@
                 <a href="/solutions" class="navbar-link {{ request()->is('solutions') ? 'active' : '' }}">
                     {{ __('website.nav.solutions') }}
                 </a>
-                <a href="/products" class="navbar-link {{ request()->is('products') ? 'active' : '' }}">
-                    {{ __('website.nav.products') }}
-                </a>
+                <div class="navbar-dropdown">
+                    <a href="/products" class="navbar-link {{ request()->is('products') ? 'active' : '' }}">
+                        {{ __('website.nav.products') }}
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="{{ route('products.swh') }}" class="dropdown-item">{{ __('website.products.swh.title') }}</a>
+                        <a href="{{ route('products.lights') }}" class="dropdown-item">{{ __('website.products.solar_lights.title') }}</a>
+                        <a href="{{ route('products.panels') }}" class="dropdown-item">{{ __('website.products.solar_panels.title') }}</a>
+                    </div>
+                </div>
                 <a href="/projects" class="navbar-link {{ request()->is('projects') ? 'active' : '' }}">
                     {{ __('website.nav.projects') }}
                 </a>
