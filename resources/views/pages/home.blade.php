@@ -12,7 +12,7 @@
     <div class="container">
         <div class="about-home-grid">
             <div class="about-home-image scroll-slide-left">
-                <img src="{{ asset('png/SG-01.png') }}" alt="SgSolar Technology">
+                <img src="{{ asset(config('website.logo')) }}" alt="{{ config('website.name') }}">
             </div>
             <div class="about-home-content scroll-slide-right">
                 <x-section-title 

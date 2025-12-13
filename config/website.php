@@ -5,7 +5,7 @@ return [
     // COMPANY INFORMATION
     // ============================================
     'name' => 'SgSolar',
-    'logo' => 'png/SG-01.png',
+    'logo' => 'png/SG-02.png',
     'slogan' => 'Powering Tomorrow with Clean Energy Today',
     'mission' => 'At SgSolar, we are committed to providing sustainable, eco-friendly solar water heating solutions that reduce energy costs and environmental impact. Our mission is to harness the power of the sun to deliver efficient, reliable, and affordable heating systems for homes and businesses.',
     
