@@ -263,13 +263,20 @@ ul {
 }
 
 .navbar-brand .logo {
-    height: 100px;
+    height: 140px;
     width: auto;
     transition: all 0.3s ease;
 }
 
 .navbar.scrolled .navbar-brand .logo {
-    height: 85px;
+    height: 120px;
+}
+
+/* Footer logo sizing */
+.footer .logo {
+    height: 120px;
+    width: auto;
+    transition: all 0.3s ease;
 }
 
 .navbar-menu {
