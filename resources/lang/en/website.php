@@ -19,6 +19,12 @@ return [
         'contact' => 'Contact',
     ],
 
+    // Feedback Section
+    'feedback' => [
+        'title' => 'Real Reviews',
+        'cta' => 'See All Reviews',
+    ],
+
     // Hero Section
     'hero' => [
         'title' => 'Powering Tomorrow with Clean Energy Today',
@@ -245,12 +251,20 @@ return [
         'title' => 'Our Solar Solutions',
         'subtitle' => 'Integrated systems for all your needs',
         
+        'swh' => [
+            'title' => 'Solar Water Heater (SWH)',
+        ],
+        
+        'lighting' => [
+            'title' => 'Solar Lighting Systems',
+        ],
+        
         'solar_energy' => [
-            'title' => 'Solar Energy',
+            'title' => 'Solar Energy Systems',
             'subtitle' => 'Advanced photovoltaic power plants',
             
             'on_grid' => [
-                'name' => 'On-Grid Solar Energy',
+                'name' => 'On-Grid System',
                 'title' => 'On-Grid Systems',
                 'subtitle' => 'Your key to achieving self-sufficiency and immediate savings',
                 'intro' => 'On-Grid solar systems (Grid-Tied Systems) are the modern and most popular solution to drastically reduce electricity bills and achieve sustainable energy investment. This system is designed to work in complete parallel and integration with the public grid.',
@@ -343,6 +357,9 @@ return [
             ],
             
             'types_title' => 'Solar collector classification and technical differences',
+            'structure' => 'Structure',
+            'efficiency' => 'Efficiency',
+            'advantage' => 'Key Advantage',
             'types' => [
                 'flat_plate' => [
                     'name' => 'Flat Plate Collectors',
@@ -377,6 +394,8 @@ return [
             ],
             
             'categories_title' => 'Solar fixture classification and applications',
+            'usage' => 'Usage',
+            'features' => 'Key Features',
             'categories' => [
                 'residential' => [
                     'name' => 'Garden & Home Lighting',
@@ -453,50 +472,415 @@ return [
         'view_all' => 'View All Products',
         'download_datasheet' => 'Download Datasheet',
         'download_catalog' => 'Download Catalog (Arabic)',
+        'download_pdf' => 'Download PDF',
+        'view_more' => 'View More',
+        'specifications' => 'Product Features',
+        'technical_specs' => 'Technical Specifications',
+        'warranty' => 'Warranty Information',
         
         'swh' => [
             'title' => 'Solar Water Heaters',
-            'description' => 'High-efficiency water heating systems for all needs',
+            'description' => 'High-efficiency solar water heating systems with vacuum heat pipe technology, designed for optimal performance in Egyptian climate.',
             'items' => [
                 [
-                    'name' => '200L Solar Water Heater',
+                    'name' => 'Nobel Apollo',
                     'capacity' => '200 Liters',
-                    'image' => 'https://images.unsplash.com/photo-1509391366360-2e959784a276?w=800&h=600&fit=crop&q=80',
-                    'description' => 'Perfect for small to medium families',
+                    'image' => 'images/products/swh/NobelApollo.jpeg',
+                    'description' => 'Advanced solar water heater with high-efficiency evacuated tubes',
                     'features' => [
-                        'High-efficiency solar collector',
-                        'Thermally insulated tank',
-                        '5-year warranty',
-                        'Corrosion resistant',
+                        '12 double-wall evacuated tubes made of borosilicate glass',
+                        'Inner tank made of SUS304 stainless steel (316 optional)',
+                        '50mm insulation thickness (high-density polyurethane)',
+                        'Galvanized steel frame with corrosion-resistant coating',
+                        'Thermal efficiency up to 95% under ideal conditions',
                     ],
                     'badge' => 'Best Seller',
-                    'datasheet' => 'swh-200-datasheet.pdf',
-                ],
-                [
-                    'name' => '300L Solar Water Heater',
-                    'capacity' => '300 Liters',
-                    'image' => 'https://images.unsplash.com/photo-1624397640148-949b1732bb0a?w=800&h=600&fit=crop',
-                    'description' => 'For large families and intensive use',
-                    'features' => [
-                        'High-efficiency evacuated tubes',
-                        'Double-insulated tank',
-                        '7-year warranty',
-                        'Backup electric heater',
+                    'datasheet' => 'nobel-apollo-datasheet.pdf',
+                    'read_more' => [
+                        'certifications' => [
+                            'title' => 'Certifications & Approvals',
+                            'content' => [
+                                'ISO 9001 Certificate (Quality Management)',
+                                'Solar Keymark Certificate (European)',
+                                'EOS Approval (Egyptian Organization for Standards and Quality)',
+                            ],
+                        ],
+                        'specifications' => [
+                            'title' => 'Complete Technical Specifications',
+                            'content' => [
+                                'Number of tubes: 12 tubes × 58mm × 1800mm',
+                                'Effective absorption area: ~2.1 m²',
+                                'Tank capacity: 200 liters (± 5 liters)',
+                                'Empty system weight: ~55 kg',
+                                'Recommended operating pressure: 2-6 bar',
+                                'Frost resistance: Antifreeze Loop model available',
+                            ],
+                        ],
+                        'warranty' => [
+                            'title' => 'Warranty',
+                            'content' => [
+                                '5-year warranty on inner tank',
+                                '3-year warranty on evacuated tubes',
+                                '2-year warranty on frame and external components',
+                                'Free periodic maintenance during first year',
+                            ],
+                        ],
+                        'ideal_for' => [
+                            'title' => 'Ideal Use',
+                            'content' => [
+                                'Families of 3-5 members',
+                                'Daily household use (bathrooms + kitchen)',
+                                'Areas with moderate to cold temperatures',
+                                'Small underfloor heating systems (with heat exchanger loop)',
+                            ],
+                        ],
                     ],
-                    'datasheet' => 'swh-300-datasheet.pdf',
                 ],
                 [
-                    'name' => '150L Solar Water Heater',
+                    'name' => 'Nobel Solface',
                     'capacity' => '150 Liters',
-                    'image' => 'https://images.unsplash.com/photo-1584267385494-9fdd9a71ad75?w=800&h=600&fit=crop',
-                    'description' => 'Economic solution for apartments and homes',
+                    'image' => 'images/products/swh/NobelSolface.jpeg',
+                    'description' => 'Compact economical model suitable for apartments and small residential units',
                     'features' => [
-                        'Compact space-saving design',
-                        'Stainless steel tank',
-                        '3-year warranty',
-                        'Easy installation and maintenance',
+                        '10 evacuated tubes (58mm × 1500mm)',
+                        'SUS304 stainless steel tank',
+                        '45mm insulation thickness (high-density PU foam)',
+                        'Withstands water pressure up to 6 bar',
+                        'Lightweight with easy installation on limited-space roofs',
                     ],
-                    'datasheet' => 'swh-150-datasheet.pdf',
+                    'datasheet' => 'nobel-solface-datasheet.pdf',
+                    'read_more' => [
+                        'certifications' => [
+                            'title' => 'Certifications & Approvals',
+                            'content' => [
+                                'ISO 9001 Certificate',
+                                'EOS Approval',
+                                'EN 12975 Tests (Thermal Performance)',
+                            ],
+                        ],
+                        'specifications' => [
+                            'title' => 'Complete Technical Specifications',
+                            'content' => [
+                                'Number of tubes: 10 tubes × 58mm × 1500mm',
+                                'Effective absorption area: ~1.5 m²',
+                                'Tank capacity: 150 liters',
+                                'Empty weight: ~45 kg',
+                                'Maximum water temperature: 90°C',
+                                'Maximum pressure: 6 bar',
+                            ],
+                        ],
+                        'warranty' => [
+                            'title' => 'Warranty',
+                            'content' => [
+                                '5-year warranty on tank',
+                                '3-year warranty on tubes',
+                                'Free maintenance in first year',
+                            ],
+                        ],
+                        'ideal_for' => [
+                            'title' => 'Ideal Use',
+                            'content' => [
+                                'Families of 2-3 members',
+                                'Apartments and small residential units',
+                                'Light to moderate daily use',
+                                'Homes with limited roof space',
+                            ],
+                        ],
+                    ],
+                ],
+                [
+                    'name' => 'Delpaso Solar',
+                    'capacity' => '300 Liters',
+                    'image' => 'images/products/swh/DelpasoSolar.jpeg',
+                    'description' => 'Advanced solution for intensive use with larger capacity and exceptional thermal performance',
+                    'features' => [
+                        '18 evacuated tubes (58mm × 1800mm)',
+                        'SUS316 stainless steel tank (enhanced salt resistance)',
+                        '60mm insulation thickness (enhanced PU Foam technology)',
+                        'Built-in 1500W backup electric heater (optional)',
+                        'High-efficiency copper internal heat exchanger',
+                    ],
+                    'badge' => 'Best for Large Families',
+                    'datasheet' => 'delpaso-solar-datasheet.pdf',
+                    'read_more' => [
+                        'certifications' => [
+                            'title' => 'Certifications & Approvals',
+                            'content' => [
+                                'ISO 9001 Certificate',
+                                'Solar Keymark Certificate (European)',
+                                'EOS Approval',
+                                'SRCC Test (American Standard for Thermal Rating)',
+                            ],
+                        ],
+                        'specifications' => [
+                            'title' => 'Complete Technical Specifications',
+                            'content' => [
+                                'Number of tubes: 18 tubes × 58mm × 1800mm',
+                                'Effective absorption area: ~3.2 m²',
+                                'Tank capacity: 300 liters',
+                                'Empty weight: ~80 kg',
+                                'Operating pressure: up to 8 bar',
+                                'Maximum temperature: 95°C',
+                                'Heat loss coefficient: less than 0.8 W/m²·K',
+                            ],
+                        ],
+                        'warranty' => [
+                            'title' => 'Warranty',
+                            'content' => [
+                                '7-year warranty on inner tank',
+                                '5-year warranty on evacuated tubes',
+                                '3-year warranty on electrical components',
+                                'Free maintenance during first two years',
+                            ],
+                        ],
+                        'ideal_for' => [
+                            'title' => 'Ideal Use',
+                            'content' => [
+                                'Families of 5-8 members',
+                                'Intensive household use (multiple bathrooms)',
+                                'Small facilities and restaurants',
+                                'Areas with intensive winter use and cold climates',
+                            ],
+                        ],
+                    ],
+                ],
+                [
+                    'name' => 'Thermica',
+                    'capacity' => '250 Liters',
+                    'image' => 'images/products/swh/Thermica.jpeg',
+                    'description' => 'Integrated thermal system with forced circulation pump ideal for light industrial applications',
+                    'features' => [
+                        '15 evacuated tubes (58mm × 1800mm)',
+                        'SUS316 tank with dual heat exchanger',
+                        'Programmable electronic circulation pump',
+                        'SMART CONTROL digital controller with LCD display',
+                        'Overheat and freeze protection',
+                    ],
+                    'badge' => 'Smart System',
+                    'datasheet' => 'thermica-datasheet.pdf',
+                    'read_more' => [
+                        'certifications' => [
+                            'title' => 'Certifications & Approvals',
+                            'content' => [
+                                'ISO 9001 Certificate',
+                                'CE Approval (European Union)',
+                                'Solar Keymark Certificate',
+                                'EOS Approval',
+                            ],
+                        ],
+                        'specifications' => [
+                            'title' => 'Complete Technical Specifications',
+                            'content' => [
+                                'Number of tubes: 15 tubes × 58mm × 1800mm',
+                                'Tank capacity: 250 liters',
+                                'Full weight (filled): ~310 kg',
+                                'Circulation pump: 50W (operates automatically as needed)',
+                                'Electrical power consumption: 80-150 W/day (pump and control)',
+                                'Operating pressure: 2-8 bar',
+                            ],
+                        ],
+                        'warranty' => [
+                            'title' => 'Warranty',
+                            'content' => [
+                                '7-year warranty on tank',
+                                '5-year warranty on tubes',
+                                '3-year warranty on controller and pump',
+                                'Free periodic maintenance for two years',
+                            ],
+                        ],
+                        'ideal_for' => [
+                            'title' => 'Ideal Use',
+                            'content' => [
+                                'Villas and large homes (4-7 members)',
+                                'Small commercial projects (salons, restaurants)',
+                                'Systems requiring precise temperature control',
+                                'Areas with variable consumption',
+                            ],
+                        ],
+                    ],
+                ],
+                [
+                    'name' => 'Volca',
+                    'capacity' => '100 Liters',
+                    'image' => 'images/products/swh/volca.jpeg',
+                    'description' => 'Compact portable solution for limited applications and tight spaces',
+                    'features' => [
+                        '8 evacuated tubes (47mm × 1500mm)',
+                        'SUS304 stainless steel tank (100-liter capacity)',
+                        '40mm insulation thickness',
+                        'Lightweight treated aluminum frame',
+                        'Quick installation on small and sloped roofs',
+                    ],
+                    'badge' => 'Ideal for Apartments',
+                    'datasheet' => 'volca-datasheet.pdf',
+                    'read_more' => [
+                        'certifications' => [
+                            'title' => 'Certifications & Approvals',
+                            'content' => [
+                                'ISO 9001 Certificate',
+                                'EOS Approval',
+                            ],
+                        ],
+                        'specifications' => [
+                            'title' => 'Complete Technical Specifications',
+                            'content' => [
+                                'Number of tubes: 8 tubes × 47mm × 1500mm',
+                                'Tank capacity: 100 liters',
+                                'Absorption area: ~1.0 m²',
+                                'Empty weight: ~30 kg',
+                                'Maximum pressure: 5 bar',
+                                'Maximum temperature: 85°C',
+                            ],
+                        ],
+                        'warranty' => [
+                            'title' => 'Warranty',
+                            'content' => [
+                                '3-year warranty on tank',
+                                '2-year warranty on tubes',
+                                '1-year warranty on structural components',
+                            ],
+                        ],
+                        'ideal_for' => [
+                            'title' => 'Ideal Use',
+                            'content' => [
+                                'Individuals or small families (1-2 members)',
+                                'Apartments and hotel rooms',
+                                'Seasonal or light use',
+                                'Locations with very limited space',
+                            ],
+                        ],
+                    ],
+                ],
+                [
+                    'name' => 'ORCA Solar Heater (Heat Pipe System)',
+                    'capacity' => '200L / 300L',
+                    'image' => 'images/products/swh/ORCA.jpeg',
+                    'description' => 'Pressurized heat pipe vacuum tube system - saves up to 80% of electricity bills.',
+                    'features' => [
+                        'Pressurized system operating at main water network pressure',
+                        'Inner tank made of food-grade 316L stainless steel',
+                        'High-efficiency heat pipe vacuum tubes',
+                        '40mm polyurethane thermal insulation',
+                    ],
+                    'badge' => 'Heat Pipe Technology',
+                    'datasheet' => 'orca-heat-pipe-datasheet-en.pdf',
+                    'read_more' => [
+                        'technology' => [
+                            'title' => 'Technology Used',
+                            'content' => ['Heat Pipe Vacuum Tube System'],
+                        ],
+                        'efficiency' => [
+                            'title' => 'Efficiency & Savings',
+                            'content' => ['94% solar fraction', 'Saves 80% of electricity consumption'],
+                        ],
+                        'specifications' => [
+                            'title' => 'Complete Technical Specifications',
+                            'content' => [
+                                '1.2mm thick 316L stainless steel inner tank',
+                                'Painted steel outer tank',
+                                '16-24 heat pipe vacuum tubes (depending on capacity)',
+                                '1800mm tube length',
+                                '≥94% absorption rate',
+                                '0.6 MPa operating pressure (recommended not exceeding 6 bar)',
+                                'Pure magnesium anode for corrosion protection',
+                                'Dual safety valve (85°C / 0.6 MPa)',
+                            ],
+                        ],
+                        'certifications' => [
+                            'title' => 'Certifications & Approvals',
+                            'content' => [
+                                'Tested according to EN 12975',
+                                'Tested according to EN 12976',
+                                'Tested according to ISO 9459-2',
+                            ],
+                        ],
+                        'warranty' => [
+                            'title' => 'Warranty',
+                            'content' => [
+                                '5 years on solar heater',
+                                '12 months on electric heater',
+                                '15-20 years lifespan',
+                            ],
+                        ],
+                        'ideal_for' => [
+                            'title' => 'Ideal Use',
+                            'content' => [
+                                'Homes and commercial projects',
+                                'Pressurized systems with high efficiency',
+                                'Optional 1500W electric backup heater',
+                            ],
+                        ],
+                    ],
+                ],
+                [
+                    'name' => 'Evergreen Central Solar Heating System',
+                    'capacity' => '300L / 360L',
+                    'image' => 'images/products/swh/NobelSolface.jpeg',
+                    'description' => 'Central heating system with vacuum tubes and copper heat exchanger - ideal for factories and hotels.',
+                    'features' => [
+                        'Full-length copper heat exchanger',
+                        '304L stainless steel inner tank',
+                        '50mm high-density polyurethane insulation',
+                        'Smart electronic control panel with touch screen',
+                    ],
+                    'badge' => 'Central Systems',
+                    'datasheet' => 'evergreen-central-system-datasheet-en.pdf',
+                    'read_more' => [
+                        'technology' => [
+                            'title' => 'System Type',
+                            'content' => ['Pressurized system with copper heat exchanger (closed circuit)'],
+                        ],
+                        'applications' => [
+                            'title' => 'Applications',
+                            'content' => [
+                                'Ideal for factories and hotels',
+                                'Hospitals',
+                                'Large residential complexes',
+                            ],
+                        ],
+                        'specifications' => [
+                            'title' => 'Complete Technical Specifications',
+                            'content' => [
+                                '0.5mm thick 304L stainless steel inner tank',
+                                '370mm tank diameter',
+                                'Pure copper heat exchanger, 1.5mm thickness',
+                                '47.5mm polyurethane insulation (40kg/m³ density)',
+                                'Maintains heat for 48 hours',
+                                '30-36 vacuum tubes (depending on capacity)',
+                                '94% absorption rate',
+                                'Thermal shock resistant',
+                                'Smart electronic control panel with color touch screen',
+                                'Water temperature and level display',
+                                'Pre-set temperature adjustment',
+                                'Automatic water deficiency compensation',
+                                'Operating modes (timer, temperature, smart)',
+                            ],
+                        ],
+                        'certifications' => [
+                            'title' => 'Certifications & Approvals',
+                            'content' => [
+                                'Complies with European standards EN 12975',
+                                'Complies with European standards EN 12976',
+                            ],
+                        ],
+                        'warranty' => [
+                            'title' => 'Warranty',
+                            'content' => [
+                                '5 years on solar heater',
+                                '12 months on electric heater',
+                                '12 months on control panel',
+                                'Pure magnesium anode for corrosion protection',
+                            ],
+                        ],
+                        'ideal_for' => [
+                            'title' => 'Ideal Use',
+                            'content' => [
+                                'Commercial and industrial projects',
+                                'Large quantities of hot water',
+                                '1500W electric backup heater with electronic control',
+                            ],
+                        ],
+                    ],
                 ],
             ],
         ],
@@ -732,12 +1116,36 @@ return [
         'email_placeholder' => 'Your email address',
         'subscribe' => 'Subscribe',
         'copyright' => '© 2025 SgSolar. All rights reserved. Powering the future with clean solar energy.',
+        'feedback_form' => 'Share Your Feedback',
+        'feedback_description' => 'We value your opinion. Share your experience with us.',
+        'name_label' => 'Name',
+        'name_placeholder' => 'Your name',
+        'message_label' => 'Message',
+        'message_placeholder' => 'Your feedback message',
+        'rating_label' => 'Rating',
+        'submit_feedback' => 'Submit Feedback',
+        'feedback_success' => 'Your feedback has been sent successfully. It will be reviewed by the admin.',
+        'feedback_error' => 'Please fill in all fields and select a rating.',
     ],
 
     // Gallery
     'gallery' => [
         'title' => 'Gallery',
         'subtitle' => 'See our projects and installations',
+    ],
+
+    // Portfolio Section (Home Page)
+    'portfolio' => [
+        'title' => 'Our Portfolio',
+        'subtitle' => 'Featured solar energy projects',
+        'view_all' => 'View All Projects',
+    ],
+
+    // Latest News Section (Home Page)
+    'latest_news' => [
+        'title' => 'Latest News',
+        'subtitle' => 'Stay updated with solar energy innovations',
+        'view_all' => 'View All News',
     ],
 
     // Common

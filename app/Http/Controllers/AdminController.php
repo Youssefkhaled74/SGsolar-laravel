@@ -85,6 +85,53 @@ class AdminController extends Controller
         return redirect()->route('admin.dashboard')->with('success', 'تم حذف الرسالة بنجاح');
     }
 
+    public function saveDownloadRequest(Request $request)
+    {
+        try {
+            $validated = $request->validate([
+                'name' => 'nullable|string',
+                'email' => 'nullable|email',
+                'phone' => 'nullable|string',
+                'subject' => 'nullable|string',
+                'product' => 'nullable|string',
+                'datasheet' => 'nullable|string',
+            ]);
+
+            $contacts = $this->getContacts();
+            
+            $newContact = [
+                'name' => $validated['name']??'',
+                'email' => $validated['email']??'',
+                'phone' => $validated['phone']??'',
+                'subject' => $validated['subject']??'',
+                'message' => 'طلب تحميل كتالوج: ' . ($validated['product']??'') . ' (' . ($validated['datasheet']??'') . ')',
+                'date' => now()->format('Y-m-d H:i:s'),
+                'created_at' => now()->format('Y-m-d H:i:s'),
+                'status' => 'new',
+                'type' => 'download_request'
+            ];
+
+            $contacts[] = $newContact;
+            $this->saveContacts($contacts);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'تم حفظ البيانات بنجاح'
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'يرجى ملء جميع الحقول المطلوبة',
+                'errors' => $e->errors()
+            ], 422);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'حدث خطأ في حفظ البيانات: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
     private function getContacts()
     {
         $file = storage_path('app/contacts.json');

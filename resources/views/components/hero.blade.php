@@ -1,17 +1,60 @@
-<section class="hero" style="background-image: url('https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1920&h=1080&fit=crop&q=90');">
-    <div class="hero-overlay"></div>
-    <div class="container">
-        <div class="hero-content">
-            <h1 class="hero-title">{{ __('website.hero.title') }}</h1>
-            <p class="hero-subtitle">{{ __('website.hero.subtitle') }}</p>
-            <div class="hero-actions">
-                <a href="/contact" class="btn btn-primary btn-lg">
-                    {{ __('website.hero.cta') }}
-                </a>
-                <a href="/contact" class="btn btn-outline btn-lg">
-                    {{ __('website.contact_us') }}
-                </a>
-            </div>
+<section class="hero-slider">
+    <div class="slider-container">
+        <div class="slide active">
+            <img src="{{ asset('images/hero-slide-1.jpg') }}" alt="SG Solar Team">
+        </div>
+        <div class="slide">
+            <img src="{{ asset('images/hero-slide-2.jpg') }}" alt="SG Solar Team">
+        </div>
+        <div class="slide">
+            <img src="{{ asset('images/hero-slide-3.jpg') }}" alt="SG Solar Team">
+        </div>
+        <div class="slide">
+            <img src="{{ asset('images/hero-slide-4.jpg') }}" alt="SG Solar Team">
         </div>
     </div>
+    
+    <!-- Navigation Dots -->
+    <div class="slider-dots">
+        <span class="dot active" onclick="currentSlide(1)"></span>
+        <span class="dot" onclick="currentSlide(2)"></span>
+        <span class="dot" onclick="currentSlide(3)"></span>
+        <span class="dot" onclick="currentSlide(4)"></span>
+    </div>
 </section>
+
+<script>
+let slideIndex = 0;
+let slideTimer;
+
+function showSlides() {
+    let slides = document.getElementsByClassName("slide");
+    let dots = document.getElementsByClassName("dot");
+    
+    for (let i = 0; i < slides.length; i++) {
+        slides[i].classList.remove("active");
+    }
+    for (let i = 0; i < dots.length; i++) {
+        dots[i].classList.remove("active");
+    }
+    
+    slideIndex++;
+    if (slideIndex > slides.length) {slideIndex = 1}
+    
+    slides[slideIndex-1].classList.add("active");
+    dots[slideIndex-1].classList.add("active");
+    
+    slideTimer = setTimeout(showSlides, 4000); // Change every 4 seconds
+}
+
+function currentSlide(n) {
+    clearTimeout(slideTimer);
+    slideIndex = n - 1;
+    showSlides();
+}
+
+// Start the slideshow
+document.addEventListener('DOMContentLoaded', function() {
+    showSlides();
+});
+</script>

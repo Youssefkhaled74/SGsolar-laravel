@@ -266,7 +266,7 @@
                         <tbody>
                             @foreach(array_reverse($contacts, true) as $id => $contact)
                                 <tr>
-                                    <td style="white-space: nowrap;">{{ $contact['created_at'] }}</td>
+                                    <td style="white-space: nowrap;">{{ $contact['created_at'] ?? $contact['date'] ?? '-' }}</td>
                                     <td><strong>{{ $contact['name'] }}</strong></td>
                                     <td>{{ $contact['email'] }}</td>
                                     <td>{{ $contact['phone'] ?? '-' }}</td>

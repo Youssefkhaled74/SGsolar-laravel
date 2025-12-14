@@ -4,8 +4,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ProductsController;
-use App\Http\Controllers\ServicesController;
-use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\AdminController;
@@ -25,14 +23,13 @@ Route::get('/products/swh', [ProductsController::class, 'swh'])->name('products.
 Route::get('/products/lights', [ProductsController::class, 'lights'])->name('products.lights');
 Route::get('/products/panels', [ProductsController::class, 'panels'])->name('products.panels');
 
-// Services Page
-Route::get('/services', [ServicesController::class, 'index'])->name('services');
-
-// Gallery Page
-Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery');
-
-// Solutions Page
-Route::view('/solutions', 'pages.solutions')->name('solutions');
+// Solutions Pages
+Route::view('/solutions/on-grid', 'pages.solutions.on-grid')->name('solutions.on-grid');
+Route::view('/solutions/off-grid', 'pages.solutions.off-grid')->name('solutions.off-grid');
+Route::view('/solutions/hybrid', 'pages.solutions.hybrid')->name('solutions.hybrid');
+Route::view('/solutions/pumping', 'pages.solutions.pumping')->name('solutions.pumping');
+Route::view('/solutions/swh', 'pages.solutions.swh')->name('solutions.swh');
+Route::view('/solutions/lighting', 'pages.solutions.lighting')->name('solutions.lighting');
 
 // Projects Page
 Route::view('/projects', 'pages.projects')->name('projects');
@@ -41,9 +38,15 @@ Route::view('/projects', 'pages.projects')->name('projects');
 Route::view('/news', 'pages.news')->name('news');
 Route::view('/news/{slug}', 'pages.news-single')->name('news.single');
 
+// Feedback Section
+Route::view('/feedback', 'pages.feedback')->name('feedback');
+
 // Contact Page
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
+
+// Download Request
+Route::post('/download-request', [AdminController::class, 'saveDownloadRequest'])->name('download.request');
 
 // Admin Routes
 Route::prefix('dashboard_admin')->group(function () {

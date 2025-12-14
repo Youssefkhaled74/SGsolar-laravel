@@ -13,6 +13,9 @@
                 <span></span>
             </button>
 
+            <!-- Mobile Menu Overlay -->
+            <div class="navbar-overlay" id="navOverlay"></div>
+            
             <div class="navbar-menu" id="navMenu">
                 <a href="/" class="navbar-link {{ request()->is('/') ? 'active' : '' }}">
                     {{ __('website.nav.home') }}
@@ -20,13 +23,28 @@
                 <a href="/about" class="navbar-link {{ request()->is('about') ? 'active' : '' }}">
                     {{ __('website.nav.about') }}
                 </a>
-                <a href="/solutions" class="navbar-link {{ request()->is('solutions') ? 'active' : '' }}">
-                    {{ __('website.nav.solutions') }}
-                </a>
                 <div class="navbar-dropdown">
-                    <a href="/products" class="navbar-link {{ request()->is('products') ? 'active' : '' }}">
+                    <span class="navbar-link {{ request()->is('solutions*') ? 'active' : '' }}" style="cursor: pointer;">
+                        {{ __('website.nav.solutions') }}
+                    </span>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-item has-submenu">
+                            <span>{{ __('website.solutions.solar_energy.title') }}</span>
+                            <div class="submenu">
+                                <a href="{{ route('solutions.on-grid') }}" class="submenu-item">{{ __('website.solutions.solar_energy.on_grid.name') }}</a>
+                                <a href="{{ route('solutions.off-grid') }}" class="submenu-item">{{ __('website.solutions.solar_energy.off_grid.name') }}</a>
+                                <a href="{{ route('solutions.hybrid') }}" class="submenu-item">{{ __('website.solutions.solar_energy.hybrid.name') }}</a>
+                                <a href="{{ route('solutions.pumping') }}" class="submenu-item">{{ __('website.solutions.solar_energy.pumping.name') }}</a>
+                            </div>
+                        </div>
+                        <a href="{{ route('solutions.swh') }}" class="dropdown-item">{{ __('website.solutions.swh.title') }}</a>
+                        <a href="{{ route('solutions.lighting') }}" class="dropdown-item">{{ __('website.solutions.lighting.title') }}</a>
+                    </div>
+                </div>
+                <div class="navbar-dropdown">
+                    <span class="navbar-link {{ request()->is('products*') ? 'active' : '' }}" style="cursor: pointer;">
                         {{ __('website.nav.products') }}
-                    </a>
+                    </span>
                     <div class="dropdown-menu">
                         <a href="{{ route('products.swh') }}" class="dropdown-item">{{ __('website.products.swh.title') }}</a>
                         <a href="{{ route('products.lights') }}" class="dropdown-item">{{ __('website.products.solar_lights.title') }}</a>
@@ -38,12 +56,6 @@
                 </a>
                 <a href="/news" class="navbar-link {{ request()->is('news') ? 'active' : '' }}">
                     {{ __('website.nav.news') }}
-                </a>
-                <a href="/services" class="navbar-link {{ request()->is('services') ? 'active' : '' }}">
-                    {{ __('website.nav.services') }}
-                </a>
-                <a href="/gallery" class="navbar-link {{ request()->is('gallery') ? 'active' : '' }}">
-                    {{ __('website.nav.gallery') }}
                 </a>
                 <a href="/contact" class="navbar-link {{ request()->is('contact') ? 'active' : '' }}">
                     {{ __('website.nav.contact') }}
@@ -60,6 +72,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const navbar = document.querySelector('.navbar');
     const navToggle = document.getElementById('navToggle');
     const navMenu = document.getElementById('navMenu');
+    const navOverlay = document.getElementById('navOverlay');
     
     // Scroll effect for navbar
     let lastScroll = 0;
@@ -76,11 +89,20 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Mobile menu toggle
-    if (navToggle && navMenu) {
+    if (navToggle && navMenu && navOverlay) {
         navToggle.addEventListener('click', function() {
             navMenu.classList.toggle('active');
             navToggle.classList.toggle('active');
+            navOverlay.classList.toggle('active');
             document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
+        });
+        
+        // Close menu when clicking on overlay
+        navOverlay.addEventListener('click', function() {
+            navMenu.classList.remove('active');
+            navToggle.classList.remove('active');
+            navOverlay.classList.remove('active');
+            document.body.style.overflow = '';
         });
         
         // Close menu when clicking outside
@@ -91,6 +113,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!isClickInsideNav && !isClickOnToggle && navMenu.classList.contains('active')) {
                 navMenu.classList.remove('active');
                 navToggle.classList.remove('active');
+                navOverlay.classList.remove('active');
                 document.body.style.overflow = '';
             }
         });
@@ -101,6 +124,7 @@ document.addEventListener('DOMContentLoaded', function() {
             link.addEventListener('click', function() {
                 navMenu.classList.remove('active');
                 navToggle.classList.remove('active');
+                navOverlay.classList.remove('active');
                 document.body.style.overflow = '';
             });
         });
