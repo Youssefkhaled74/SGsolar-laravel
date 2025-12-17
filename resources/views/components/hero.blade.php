@@ -1,27 +1,55 @@
 <section class="hero-slider">
     <div class="slider-container">
         <div class="slide active">
-            <img src="{{ asset('images/hero-slide-1.jpg') }}" alt="SG Solar Team">
+            <img src="{{ asset('banner (1).png') }}" alt="SG Solar Banner 1">
         </div>
         <div class="slide">
-            <img src="{{ asset('images/hero-slide-2.jpg') }}" alt="SG Solar Team">
-        </div>
-        <div class="slide">
-            <img src="{{ asset('images/hero-slide-3.jpg') }}" alt="SG Solar Team">
-        </div>
-        <div class="slide">
-            <img src="{{ asset('images/hero-slide-4.jpg') }}" alt="SG Solar Team">
+            <img src="{{ asset('banner (2)..png') }}" alt="SG Solar Banner 2">
         </div>
     </div>
+    
+    <!-- Location Text Overlay -->
+    {{-- <div class="hero-location-overlay">
+        <div class="location-text">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>201 - 40 الملتقي العربي شيراتون المطار - النزهة - القاهرة</span>
+        </div>
+    </div> --}}
     
     <!-- Navigation Dots -->
     <div class="slider-dots">
         <span class="dot active" onclick="currentSlide(1)"></span>
         <span class="dot" onclick="currentSlide(2)"></span>
-        <span class="dot" onclick="currentSlide(3)"></span>
-        <span class="dot" onclick="currentSlide(4)"></span>
     </div>
 </section>
+
+<!-- Solutions Banner Section -->
+{{-- <section class="solutions-banner">
+    <div class="container">
+        <div class="banner-grid">
+            <div class="banner-item">
+                <img src="{{ asset('icons/icons/on grid.png') }}" alt="On Grid">
+                <span>On Grid</span>
+            </div>
+            <div class="banner-item">
+                <img src="{{ asset('icons/icons/off grid.png') }}" alt="Off Grid">
+                <span>Off Grid</span>
+            </div>
+            <div class="banner-item">
+                <img src="{{ asset('icons/icons/pump.png') }}" alt="Pump">
+                <span>Pump</span>
+            </div>
+            <div class="banner-item">
+                <img src="{{ asset('icons/icons/heater.png') }}" alt="Solar Heater">
+                <span>Solar Heater</span>
+            </div>
+            <div class="banner-item">
+                <img src="{{ asset('icons/icons/light.png') }}" alt="Solar Light">
+                <span>Solar Light</span>
+            </div>
+        </div>
+    </div>
+</section> --}}
 
 <script>
 let slideIndex = 0;

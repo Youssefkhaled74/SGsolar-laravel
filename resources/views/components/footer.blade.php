@@ -35,11 +35,17 @@
                 <ul class="footer-contact">
                     <li>
                         <i class="fas fa-phone"></i>
-                        <a href="tel:{{ config('website.contact.phone') }}">{{ config('website.contact.phone') }}</a>
+                        <div>
+                            <a href="tel:{{ config('website.contact.phone') }}">{{ config('website.contact.phone') }}</a>
+                            @if(config('website.contact.phone2'))
+                            <br>
+                            <a href="tel:{{ config('website.contact.phone2') }}">{{ config('website.contact.phone2') }}</a>
+                            @endif
+                        </div>
                     </li>
                     <li>
                         <i class="fab fa-whatsapp"></i>
-                        <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', config('website.contact.whatsapp')) }}" target="_blank" rel="noopener">{{ __('website.contact.whatsapp') }}</a>
+                        <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', config('website.contact.whatsapp')) }}" target="_blank" rel="noopener">{{ config('website.contact.whatsapp') }}</a>
                     </li>
                     <li>
                         <i class="fas fa-envelope"></i>
@@ -47,7 +53,7 @@
                     </li>
                     <li>
                         <i class="fas fa-map-marker-alt"></i>
-                        <span>{{ config('website.contact.address') }}</span>
+                        <a href="{{ config('website.contact.maps_link') }}" target="_blank" rel="noopener noreferrer">{{ config('website.contact.address') }}</a>
                     </li>
                 </ul>
             </div>

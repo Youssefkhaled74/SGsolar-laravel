@@ -189,55 +189,8 @@ document.addEventListener('DOMContentLoaded', function() {
 <!-- Contact Section -->
 <section class="section">
     <div class="container">
+        <!-- Form and Map Side by Side -->
         <div class="contact-wrapper">
-            <!-- Contact Information -->
-            <div class="contact-info">
-                <h2 class="contact-info-title">{{ __('website.contact.lets_talk') }}</h2>
-                <p class="contact-info-text">{{ __('website.contact.have_questions') }}</p>
-                
-                <div class="contact-methods">
-                    <div class="contact-method">
-                        <div class="contact-method-icon contact-method-icon-phone">
-                            <i class="fas fa-phone"></i>
-                        </div>
-                        <div class="contact-method-content">
-                            <h3>{{ __('website.contact.phone') }}</h3>
-                            <a href="tel:{{ $data['contact']['phone'] }}">{{ $data['contact']['phone'] }}</a>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-method">
-                        <div class="contact-method-icon contact-method-icon-whatsapp">
-                            <i class="fab fa-whatsapp"></i>
-                        </div>
-                        <div class="contact-method-content">
-                            <h3>{{ __('website.contact.whatsapp') }}</h3>
-                            <a href="https://wa.me/{{ str_replace(['+', ' '], '', $data['contact']['whatsapp']) }}" target="_blank">{{ $data['contact']['whatsapp'] }}</a>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-method">
-                        <div class="contact-method-icon contact-method-icon-gmail">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <div class="contact-method-content">
-                            <h3>{{ __('website.contact.email') }}</h3>
-                            <a href="mailto:{{ $data['contact']['email'] }}">{{ $data['contact']['email'] }}</a>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-method">
-                        <div class="contact-method-icon contact-method-icon-location">
-                            <i class="fas fa-map-marker-alt"></i>
-                        </div>
-                        <div class="contact-method-content">
-                            <h3>{{ __('website.contact.location') }}</h3>
-                            <p>{{ $data['contact']['address'] }}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
             <!-- Contact Form -->
             <div class="contact-form-wrapper">
                 <div class="contact-form-card">
@@ -297,9 +250,318 @@ document.addEventListener('DOMContentLoaded', function() {
                     </form>
                 </div>
             </div>
+
+            <!-- Location Map -->
+            <div class="location-map-wrapper">
+                <div class="location-map-card">
+                    <h2 class="map-title">{{ __('website.contact.our_location') }}</h2>
+                    <div class="map-container">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d221062.06239819965!2d31.115111750000002!3d30.0443879!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14583fa60b21beeb%3A0x79dfb296e8423bba!2sCairo%2C%20Egypt!5e0!3m2!1sen!2s!4v1634567890123!5m2!1sen!2s"
+                            width="100%" 
+                            height="100%" 
+                            style="border:0; border-radius: 15px;" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                    <div class="map-footer">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <p>{{ $data['contact']['address'] }}</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
+
+<style>
+/* Form and Map Side by Side */
+.contact-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: start;
+}
+
+.contact-form-wrapper,
+.location-map-wrapper {
+    width: 100%;
+}
+
+/* Location Map Styles */
+.location-map-card {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(140, 198, 63, 0.1);
+    height: 100%;
+}
+
+.map-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #0C2D1C;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.map-container {
+    width: 100%;
+    height: 450px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.map-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(140, 198, 63, 0.2);
+}
+
+.map-footer i {
+    color: #FFDF41;
+    font-size: 1.25rem;
+}
+
+.map-footer p {
+    color: #0C2D1C;
+    font-weight: 600;
+    margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .contact-wrapper {
+        grid-template-columns: 1fr;
+    }
+    
+    .contact-methods {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .location-map-card {
+        padding: 1.5rem;
+    }
+    
+    .map-title {
+        font-size: 1.25rem;
+    }
+    
+    .map-container {
+        height: 300px;
+    }
+}
+</style>
+
+<!-- Contact Information Section -->
+<section class="contact-info-section">
+    <div class="container">
+        <div class="contact-methods">
+            <div class="contact-method">
+                <div class="contact-method-icon contact-method-icon-phone">
+                    <i class="fas fa-phone"></i>
+                </div>
+                <div class="contact-method-content">
+                    <h3>{{ __('website.contact.phone') }}</h3>
+                    <a href="tel:{{ $data['contact']['phone'] }}">{{ $data['contact']['phone'] }}</a>
+                </div>
+            </div>
+            
+            <div class="contact-method">
+                <div class="contact-method-icon contact-method-icon-whatsapp">
+                    <i class="fab fa-whatsapp"></i>
+                </div>
+                <div class="contact-method-content">
+                    <h3>{{ __('website.contact.whatsapp') }}</h3>
+                    <a href="https://wa.me/{{ str_replace(['+', ' '], '', $data['contact']['whatsapp']) }}" target="_blank">{{ $data['contact']['whatsapp'] }}</a>
+                </div>
+            </div>
+            
+            <div class="contact-method">
+                <div class="contact-method-icon contact-method-icon-gmail">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div class="contact-method-content">
+                    <h3>{{ __('website.contact.email') }}</h3>
+                    <a href="mailto:{{ $data['contact']['email'] }}">{{ $data['contact']['email'] }}</a>
+                </div>
+            </div>
+            
+            <div class="contact-method">
+                <div class="contact-method-icon contact-method-icon-location">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <div class="contact-method-content">
+                    <h3>{{ __('website.contact.location') }}</h3>
+                    <p>{{ $data['contact']['address'] }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+.contact-info-section {
+    padding: 3rem 0;
+    background: #F9FAFB;
+}
+
+.contact-methods {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.contact-method {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-method:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.contact-method-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.contact-method-icon-phone {
+    background: linear-gradient(135deg, #FFDF41 0%, #E3A000 100%);
+    color: #0C2D1C;
+}
+
+.contact-method-icon-whatsapp {
+    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+    color: white;
+}
+
+.contact-method-icon-gmail {
+    background: linear-gradient(135deg, #EA4335 0%, #C5221F 100%);
+    color: white;
+}
+
+.contact-method-icon-location {
+    background: linear-gradient(135deg, #8CC63F 0%, #115F45 100%);
+    color: white;
+}
+
+.contact-method-content {
+    text-align: left;
+}
+
+.contact-method-content h3 {
+    font-size: 0.9rem;
+    color: #6B7280;
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+}
+
+.contact-method-content a,
+.contact-method-content p {
+    font-size: 1rem;
+    color: #0C2D1C;
+    font-weight: 700;
+    text-decoration: none;
+    margin: 0;
+}
+
+.contact-method-content a:hover {
+    color: #FFDF41;
+}
+
+@media (max-width: 1024px) {
+    .contact-methods {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .contact-info-section {
+        padding: 2rem 0;
+    }
+    
+    .contact-methods {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+}
+</style>
+
+<!-- Let's Talk Section -->
+<section class="lets-talk-section">
+    <div class="container">
+        <div class="lets-talk-content">
+            <h2 class="lets-talk-title">{{ __('website.contact.lets_talk') }}</h2>
+            <p class="lets-talk-text">{{ __('website.contact.have_questions') }}</p>
+        </div>
+    </div>
+</section>
+
+<style>
+.lets-talk-section {
+    padding: 4rem 0;
+    background: linear-gradient(135deg, rgba(140, 198, 63, 0.05) 0%, rgba(17, 95, 69, 0.05) 100%);
+}
+
+.lets-talk-content {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.lets-talk-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #0C2D1C;
+    margin-bottom: 1.5rem;
+}
+
+.lets-talk-text {
+    font-size: 1.25rem;
+    color: #6B7280;
+    line-height: 1.8;
+}
+
+@media (max-width: 768px) {
+    .lets-talk-section {
+        padding: 3rem 0;
+    }
+    
+    .lets-talk-title {
+        font-size: 1.75rem;
+    }
+    
+    .lets-talk-text {
+        font-size: 1.1rem;
+    }
+}
+</style>
 
 <!-- Call to Action Banner -->
 <section class="cta-banner">

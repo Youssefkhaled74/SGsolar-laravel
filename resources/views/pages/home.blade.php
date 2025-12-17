@@ -85,7 +85,7 @@
         <div class="category-selector-grid">
             <a href="{{ route('products.swh') }}" class="product-card">
                 <div class="product-card-image">
-                    <img src="{{ asset('images/category-swh.png') }}" alt="{{ __('website.products.swh.title') }}">
+                    <img src="{{ asset('icons/icons/heater.png') }}" alt="{{ __('website.products.swh.title') }}">
                     <div class="product-card-overlay">
                         <span class="product-view-btn">{{ __('website.products.view_all') }}</span>
                     </div>
@@ -98,7 +98,7 @@
 
             <a href="{{ route('products.lights') }}" class="product-card">
                 <div class="product-card-image">
-                    <img src="{{ asset('images/category-lights.png') }}" alt="{{ __('website.products.solar_lights.title') }}">
+                    <img src="{{ asset('icons/icons/light.png') }}" alt="{{ __('website.products.solar_lights.title') }}">
                     <div class="product-card-overlay">
                         <span class="product-view-btn">{{ __('website.products.view_all') }}</span>
                     </div>
@@ -111,7 +111,7 @@
 
             <a href="{{ route('products.panels') }}" class="product-card">
                 <div class="product-card-image">
-                    <img src="{{ asset('images/category-panels.png') }}" alt="{{ __('website.products.solar_panels.title') }}">
+                    <img src="{{ asset('icons/icons/on grid.png') }}" alt="{{ __('website.products.solar_panels.title') }}">
                     <div class="product-card-overlay">
                         <span class="product-view-btn">{{ __('website.products.view_all') }}</span>
                     </div>

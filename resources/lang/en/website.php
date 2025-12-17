@@ -462,6 +462,7 @@ return [
         'call_now' => 'Call Now',
         'get_in_touch' => 'Get in touch with our team',
         'location' => 'Location',
+        'our_location' => 'Our Location',
         'message_sent' => 'Your message has been sent successfully!',
     ],
 
@@ -995,7 +996,7 @@ return [
         'items' => [
             [
                 'title' => 'Residential Solar Plant',
-                'location' => 'Cairo, Egypt',
+                'location' => '201 - 40 الملتقي العربي شيراتون المطار - النزهة - القاهرة',
                 'type' => 'On-Grid System',
                 'capacity' => '10 kW',
                 'date' => 'December 2024',

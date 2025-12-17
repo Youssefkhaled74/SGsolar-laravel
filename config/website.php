@@ -13,10 +13,12 @@ return [
     // CONTACT INFORMATION
     // ============================================
     'contact' => [
-        'phone' => '+20 123 456 7890',
-        'whatsapp' => '+20 123 456 7890',
+        'phone' => '01103740202',
+        'phone2' => '01103740201',
+        'whatsapp' => '01103740202',
         'email' => 'info@sgsolar.com',
-        'address' => 'Cairo, Egypt',
+        'address' => '201 - 40 الملتقي العربي شيراتون المطار - النزهة - القاهرة',
+        'maps_link' => 'https://maps.app.goo.gl/tHgYSeWPymNs28868?g_st=aw',
     ],
 
     // ============================================
