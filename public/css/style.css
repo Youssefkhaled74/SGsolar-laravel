@@ -114,6 +114,10 @@ ul {
     background: linear-gradient(135deg, #25D366, #128C7E);
 }
 
+.floating-social .whatsapp-btn i {
+    font-size: 34px;
+}
+
 .floating-social .chat-btn {
     background: linear-gradient(135deg, #FFDF41, #E3A000);
 }
@@ -577,77 +581,33 @@ ul {
 .language-switcher {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
     margin: 0 1rem;
 }
 
 .lang-btn {
-    padding: 0.4rem 0.8rem;
+    padding: 0.6rem 1.2rem;
     font-weight: 600;
-    font-size: 0.875rem;
-    color: #0C2D1C;
-    border-radius: 6px;
-    transition: all 0.3s ease;
-    text-decoration: none;
-}
-
-.lang-flag {
     font-size: 0.95rem;
-    line-height: 1;
-    display: inline-block;
-    vertical-align: middle;
-}
-
-.lang-flag-img {
-    width: 28px;
-    height: 20px;
-    object-fit: cover;
-    border-radius: 3px;
-    display: inline-block;
-    vertical-align: middle;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.sr-only {
-    position: absolute !important;
-    width: 1px !important;
-    height: 1px !important;
-    padding: 0 !important;
-    margin: -1px !important;
-    overflow: hidden !important;
-    clip: rect(0, 0, 0, 0) !important;
-    white-space: nowrap !important;
-    border: 0 !important;
-}
-
-.lang-btn {
-    padding: 0.4rem 0.6rem;
+    color: #0C2D1C;
+    background: linear-gradient(135deg, #FFDF41 0%, #E3A000 100%);
     border-radius: 8px;
     transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 2px 8px rgba(227, 160, 0, 0.25);
 }
 
 .lang-btn:hover {
-    background-color: #F3F4F6;
-    transform: scale(1.1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(227, 160, 0, 0.4);
 }
 
-.lang-btn:hover .lang-flag-img {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+.lang-btn span {
+    font-family: 'Cairo', sans-serif;
+    line-height: 1;
 }
-
-.lang-btn.active {
-    background: linear-gradient(135deg, #FFDF41 0%, #E3A000 100%);
-    transform: scale(1.15);
-    box-shadow: 0 4px 12px rgba(227, 160, 0, 0.3);
-}
-
-.lang-btn.active .lang-flag-img {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-}
-
-.lang-separator {
-    color: #9CA3AF;
-    font-weight: 300;
 }
 
 .navbar-toggle {
@@ -1648,6 +1608,21 @@ ul {
     margin-bottom: 2rem;
 }
 
+/* CTA Button Override - Green on Yellow Background */
+.section-cta .btn,
+.section-cta .btn-primary {
+    background: linear-gradient(135deg, #0C2D1C 0%, #115F45 100%);
+    color: white;
+    border-color: #0C2D1C;
+    border-radius: 8px;
+}
+
+.section-cta .btn:hover,
+.section-cta .btn-primary:hover {
+    background: linear-gradient(135deg, #115F45 0%, #0C2D1C 100%);
+    box-shadow: 0 10px 20px rgba(12, 45, 28, 0.3);
+}
+
 @media (max-width: 768px) {
     .cta-title {
         font-size: 1.875rem;
@@ -2169,7 +2144,7 @@ ul {
 /* Statistics Section */
 .stats-section {
     padding: 80px 0;
-    background: linear-gradient(135deg, #0C2D1C 0%, #115F45 100%);
+    background: linear-gradient(135deg, #FFDF41 0%, #E3A000 100%);
 }
 
 .stats-grid {
@@ -2183,21 +2158,21 @@ ul {
 .stat-card {
     text-align: center;
     padding: 2rem 1rem;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.15);
     border-radius: 12px;
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
     transition: all 0.3s ease;
 }
 
 .stat-card:hover {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.25);
     transform: translateY(-5px);
 }
 
 .stat-icon {
     font-size: 2.5rem;
-    color: #FFDF41;
+    color: #0C2D1C;
     margin-bottom: 1rem;
 }
 
@@ -2211,7 +2186,7 @@ ul {
 
 .stat-suffix {
     font-size: 2rem;
-    color: #FFDF41;
+    color: #0C2D1C;
     margin-left: 2px;
 }
 
@@ -2222,7 +2197,7 @@ ul {
 
 .stat-label {
     font-size: 1rem;
-    color: #ffffff;
+    color: #0C2D1C;
     font-weight: 600;
 }
 
