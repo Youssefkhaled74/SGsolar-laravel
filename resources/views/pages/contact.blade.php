@@ -257,7 +257,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <h2 class="map-title">{{ __('website.contact.our_location') }}</h2>
                     <div class="map-container">
                         <iframe 
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d221062.06239819965!2d31.115111750000002!3d30.0443879!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14583fa60b21beeb%3A0x79dfb296e8423bba!2sCairo%2C%20Egypt!5e0!3m2!1sen!2s!4v1634567890123!5m2!1sen!2s"
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3453.3689582876394!2d31.32447547588555!3d30.08634401883173!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14583e5f0a8c5e23%3A0x5e3b3f3e3e3e3e3e!2s40%20El-Moltaka%20Al-Arabi%2C%20Sheraton%20Al%20Matar%2C%20El%20Nozha%2C%20Cairo%20Governorate!5e0!3m2!1sen!2seg!4v1703000000000!5m2!1sen!2seg"
                             width="100%" 
                             height="100%" 
                             style="border:0; border-radius: 15px;" 
@@ -268,7 +268,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     </div>
                     <div class="map-footer">
                         <i class="fas fa-map-marker-alt"></i>
-                        <p>{{ $data['contact']['address'] }}</p>
+                        <a href="{{ config('website.contact.maps_link') }}" target="_blank" rel="noopener noreferrer" style="color: #0C2D1C; font-weight: 600; text-decoration: none;">
+                            {{ $data['contact']['address'] }}
+                        </a>
                     </div>
                 </div>
             </div>
