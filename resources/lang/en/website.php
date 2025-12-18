@@ -36,17 +36,17 @@ return [
     'about' => [
         'title' => 'About SG Solar',
         'intro' => 'Driven by our vision to empower individuals and businesses to achieve self-sufficiency, SG Solar was established as a legal entity in 2021. What sets us apart in the industry is that we rely on a deep understanding and accumulated expertise of over ten years (10+) within our founding and specialized teams in the solar energy sector. This unique blend of modern structure and long-standing experience enables us to be your trusted consultant and technical partner, guaranteeing the optimal choice for your solar plants and water heaters with the highest levels of efficiency and clarity.',
-        
+
         'vision_title' => 'Vision',
         'vision_text' => 'To be the first choice in solar energy, empowering individuals and businesses to achieve self-sufficiency and access a clean, reliable energy future, led by our expert teams.',
-        
+
         'mission_title' => 'Mission',
         'mission_text' => 'To be the trusted consultant and technical partner who facilitates our clients\' transition to solar energy. We leverage the expertise of our teams to offer the optimal choice for solar plants and water heaters with the highest degree of clarity and transparency.',
-        
+
         'why_choose_title' => 'Why Choose SG Solar?',
         'why_choose_subtitle' => 'Five Guarantees for Your Solar Investment Success',
         'why_choose_intro' => 'When you invest in solar energy, you are looking for a partner that guarantees performance and savings in the long term. At SG Solar, we provide you with five solid guarantees that ensure the best possible decision:',
-        
+
         'guarantees' => [
             [
                 'icon' => 'fa-bolt',
@@ -79,7 +79,7 @@ return [
                 'description' => 'Choosing SG Solar is a step towards securing your children\'s future. We provide you with technology that enables you to achieve energy self-sufficiency and contributes to reducing your facility\'s carbon footprint, making you an active partner in building a clean and sustainable environment for future generations.',
             ],
         ],
-        
+
         'stats' => [
             [
                 'icon' => 'fa-calendar-check',
@@ -106,7 +106,7 @@ return [
                 'label' => 'Technical Support',
             ],
         ],
-        
+
         'subtitle' => 'Your Trusted Partner in Solar Energy',
         'learn_more' => 'Learn More About Us',
         'our_story' => 'Our Story',
@@ -250,19 +250,26 @@ return [
     'solutions' => [
         'title' => 'Our Solar Solutions',
         'subtitle' => 'Integrated systems for all your needs',
-        
+        'banner_labels' => [
+            'on_grid' => 'On Grid',
+            'off_grid' => 'Off Grid',
+            'pump' => 'Pump',
+            'solar_heater' => 'Solar Heater',
+            'solar_light' => 'Solar Light',
+        ],
+
         'swh' => [
             'title' => 'Solar Water Heater (SWH)',
         ],
-        
+
         'lighting' => [
             'title' => 'Solar Lighting Systems',
         ],
-        
+
         'solar_energy' => [
             'title' => 'Solar Energy Systems',
             'subtitle' => 'Advanced photovoltaic power plants',
-            
+
             'on_grid' => [
                 'name' => 'On-Grid System',
                 'title' => 'On-Grid Systems',
@@ -282,7 +289,7 @@ return [
                     'Simplicity and efficiency: The optimal solution for homes and facilities looking to maximize solar energy benefits without disconnecting from the grid.',
                 ],
             ],
-            
+
             'off_grid' => [
                 'name' => 'Off-Grid Solar Energy',
                 'title' => 'Off-Grid Systems',
@@ -302,7 +309,7 @@ return [
                     'Expansion flexibility: Panel and battery capacity can be increased in the future to meet growing energy needs.',
                 ],
             ],
-            
+
             'hybrid' => [
                 'name' => 'Hybrid Solar Energy',
                 'title' => 'Hybrid Systems',
@@ -322,7 +329,7 @@ return [
                     'Best market solutions: Combines benefits of both systems in one package, giving you savings and security together.',
                 ],
             ],
-            
+
             'pumping' => [
                 'name' => 'Solar Irrigation & Pumping',
                 'title' => 'Solar Pumping Systems',
@@ -343,19 +350,19 @@ return [
                 ],
             ],
         ],
-        
+
         'swh' => [
             'title' => 'Solar Water Heaters',
             'subtitle' => 'Solar Water Heaters - SWH',
             'intro' => 'Solar Water Heaters (SWH) are thermal systems designed to absorb solar radiation energy and convert it into heat used to raise water temperature. This technology is one of the oldest and most efficient solar energy applications.',
-            
+
             'components_title' => 'Structural components of solar heating system',
             'components' => [
                 'Solar Collectors: The unit responsible for absorbing solar radiation. Design varies by system type, where absorbed heat is transferred to working fluid (water or heat transfer fluid).',
                 'Insulated Storage Tank: A dedicated vessel for storing hot water. Features high-efficiency thermal insulation layers to minimize heat loss and maintain water temperature for extended periods until next morning.',
                 'Circulation System: The piping network connecting collectors and tank. Circulation may be natural (gravity) or forced using small electric pumps.',
             ],
-            
+
             'types_title' => 'Solar collector classification and technical differences',
             'structure' => 'Structure',
             'efficiency' => 'Efficiency',
@@ -376,15 +383,15 @@ return [
                     'advantage' => 'Evacuation process reduces heat loss from convection and radiation, making it the optimal choice for cold regions or facilities requiring very high water temperatures.',
                 ],
             ],
-            
+
             'working_principle' => 'Water heating relies on a closed cycle where heat is continuously transferred: heat absorption when collectors are exposed to radiation, heat transfer to insulated tank, heat exchange within tank, and storage for use when needed with auxiliary heater ensuring constant temperature.',
         ],
-        
+
         'solar_lights' => [
             'title' => 'Solar Lighting Systems',
             'subtitle' => 'Solar Light Systems',
             'intro' => 'Solar lighting fixtures are the ideal solution for illuminating outdoor spaces and locations far from electricity grid. These systems feature completely independent (Off-Grid) operation thanks to their integrated design, eliminating the need for electrical extensions or operating bills.',
-            
+
             'components_title' => 'Structural components of solar lighting system',
             'components' => [
                 'Small PV Panel: Captures solar radiation and charges battery during day.',
@@ -392,7 +399,7 @@ return [
                 'Smart Charge Controller: Manages charging and discharging operations, provides overcharge protection, and controls lighting levels.',
                 'LED Lamp: Exclusively relies on LED lamps due to high efficiency and low power consumption.',
             ],
-            
+
             'categories_title' => 'Solar fixture classification and applications',
             'usage' => 'Usage',
             'features' => 'Key Features',
@@ -416,7 +423,7 @@ return [
                     'features' => 'Relies on PIR Motion Sensors to activate light at full power when motion detected, remaining in Low Power Mode or off otherwise to maximize battery life and operating efficiency.',
                 ],
             ],
-            
+
             'advantages_title' => 'Operational and environmental advantages',
             'advantages' => [
                 'Easy and fast installation: No trenching or cable extensions required, significantly reducing installation time and cost.',
@@ -431,6 +438,12 @@ return [
         'title' => 'Ready to Switch to Solar?',
         'subtitle' => 'Join thousands of satisfied customers who are saving money and protecting the planet',
         'button' => 'Get Free Consultation',
+    ],
+
+    // Partners Section
+    'partners' => [
+        'title' => 'Our Partners',
+        'subtitle' => 'Proud to work with the world\'s best brands',
     ],
 
     // Contact Section
@@ -478,7 +491,10 @@ return [
         'specifications' => 'Product Features',
         'technical_specs' => 'Technical Specifications',
         'warranty' => 'Warranty Information',
-        
+        'download_request' => 'Download Request',
+        'download_message' => 'To download the file, please enter your information',
+        'submit_download' => 'Submit & Download',
+
         'swh' => [
             'title' => 'Solar Water Heaters',
             'description' => 'High-efficiency solar water heating systems with vacuum heat pipe technology, designed for optimal performance in Egyptian climate.',
@@ -885,98 +901,192 @@ return [
                 ],
             ],
         ],
-        
+
         'solar_lights' => [
             'title' => 'Solar Lighting Systems',
             'description' => 'Solar-powered outdoor lights and fixtures',
             'items' => [
                 [
-                    'name' => '100W LED Street Light',
-                    'power' => '100 Watts',
-                    'image' => 'https://images.unsplash.com/photo-1513828583688-c52646db42da?w=800&h=600&fit=crop',
-                    'description' => 'Powerful lighting for streets and roads',
-                    'features' => [
-                        '150W solar panel',
-                        '40Ah Lithium battery',
-                        'Automatic operation',
-                        'IP66 waterproof',
-                    ],
-                    'datasheet' => 'street-light-100w.pdf',
+                    'name' => 'Solar LED Flood Light',
+                    'english_name' => 'SOLAR LED FLOOD LIGHT',
+                    'power' => '',
+                    'image' => '/images/products/solar_lights/SOLAR-FLOOD-LIGHT.jpeg',
+                    'description' => 'Modern solar floodlights with very strong lighting suitable for large areas, easy to install',
+                    'full_content' => 'Modern solar floodlights with very strong lighting suitable for large areas, easy to install
+Charging time: 6-8 hours
+Available capacities: 40-60-100-150-200 watts
+Material: Aluminum
+Battery: LifePO4
+Warranty: 2 years
+Model photos and detailed technical specifications are shown in detail in the catalog.',
+                    'features' => [],
+                    'datasheet' => 'solar_lights/solar flood light.pdf',
                 ],
                 [
-                    'name' => '50W LED Garden Light',
-                    'power' => '50 Watts',
-                    'image' => 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=600&fit=crop',
-                    'description' => 'Aesthetic lighting for gardens and pathways',
-                    'features' => [
-                        '80W integrated solar panel',
-                        '20Ah Lithium battery',
-                        'Smart motion sensor',
-                        'Modern elegant design',
-                    ],
+                    'name' => 'Solar Garden Landscape Light',
+                    'english_name' => 'SOLAR GARDEN LANDSCAPE',
+                    'power' => '',
+                    'image' => '/images/products/solar_lights/SOLAR-GARDEN-LIGHT.jpeg',
+                    'description' => 'Distinguished lights with wonderful lighting and excellent modern designs in shapes and sizes to suit all tastes and capacities to suit all needs',
+                    'full_content' => 'Distinguished lights with wonderful lighting and excellent modern designs in shapes and sizes to suit all tastes and capacities to suit all needs
+Charging time: 6-8 hours
+Capacity: 2-5-7 watts
+Material: Aluminum, ABS, Pc
+Battery: Lithium Ion, LifePO4
+Warranty: 1 year
+Model photos and detailed technical specifications are shown in detail in the catalog.',
+                    'features' => [],
                     'badge' => 'Best Seller',
-                    'datasheet' => 'garden-light-50w.pdf',
+                    'datasheet' => 'solar_lights/solar garden light.pdf',
                 ],
                 [
-                    'name' => '200W LED Security Light',
-                    'power' => '200 Watts',
-                    'image' => 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=800&h=600&fit=crop',
-                    'description' => 'Ultra-powerful lighting for security and surveillance',
-                    'features' => [
-                        '250W solar panel',
-                        '60Ah Lithium battery',
-                        'Advanced PIR sensor',
-                        '30-meter lighting range',
-                    ],
-                    'datasheet' => 'security-light-200w.pdf',
+                    'name' => 'Solar LED Street Light',
+                    'english_name' => 'SOLAR LED STREET LIGHT',
+                    'power' => '',
+                    'image' => '/images/products/solar_lights/SOLAR-LED-STREET-LIGHT.jpeg',
+                    'description' => 'LED lights with very strong lighting with materials suitable to withstand harsh climatic conditions (rain - wind - temperatures) available in high capacities and distinctive shape in addition to a remote control (on - off)',
+                    'full_content' => 'LED lights with very strong lighting with materials suitable to withstand harsh climatic conditions (rain - wind - temperatures) available in high capacities and distinctive shape in addition to a remote control (on - off)
+Charging time: 6-8 hours
+Capacity: 60-90-120-180-200-300 watts
+Material: Aluminum, ABS
+Battery: LifePO4
+Warranty: 2 years, 3 years
+Model photos and detailed technical specifications are shown in detail in the catalog.',
+                    'features' => [],
+                    'datasheet' => 'solar_lights/solar street light.pdf',
+                ],
+                [
+                    'name' => 'Solar Pillar Light',
+                    'english_name' => 'SOLAR PILLAR LIGHT',
+                    'power' => '',
+                    'image' => '/images/products/solar_lights/SOLAR-PILLAR-LIGHT.jpeg',
+                    'description' => 'Distinguished lamps with modern contemporary shapes and suitable lighting for floors and gardens, available in different shapes and capacities to suit all tastes and needs',
+                    'full_content' => 'Distinguished lamps with modern contemporary shapes and suitable lighting for floors and gardens, available in different shapes and capacities to suit all tastes and needs
+Charging time: 6-8 hours
+Capacity: 3-5-7 watts
+Material: Aluminum, ABS
+Battery: Lithium Ion
+Warranty: 1 year
+Model photos and detailed technical specifications are shown in detail in the catalog',
+                    'features' => [],
+                    'datasheet' => 'solar_lights/solar pillar light.pdf',
+                ],
+                [
+                    'name' => 'Solar Wall Light',
+                    'english_name' => 'SOLAR WALL LIGHT',
+                    'power' => '',
+                    'image' => '/images/products/solar_lights/SOLAR-WALL-LIGHT.jpeg',
+                    'description' => 'Wall lights with designs characterized by simplicity and elegance with appropriate lighting in different capacities',
+                    'full_content' => 'Wall lights with designs characterized by simplicity and elegance with appropriate lighting in different capacities
+Charging time: 6-8 hours
+Capacity: 3-5-8-10 watts
+Material: ABS, Pc
+Battery: Lithium Ion
+Warranty: 1 year
+Model photos and detailed technical specifications are shown in detail in the catalog.',
+                    'features' => [],
+                    'datasheet' => 'solar_lights/solar wall light.pdf',
+                ],
+                [
+                    'name' => 'Up & Down Solar Wall Light',
+                    'english_name' => 'UP & DOWN SOLAR WALL LIGHT',
+                    'power' => '',
+                    'image' => '/images/products/solar_lights/SOLAR-WALL-UP-&-DOWN.jpeg',
+                    'description' => 'Distinguished wall lamp with wonderful lighting up and down to decorate walls and pillars',
+                    'full_content' => 'Distinguished wall lamp with wonderful lighting up and down to decorate walls and pillars
+Charging time: 6-8 hours
+Available: 4 lamps, 6 lamps
+Material: Pc
+Battery: Lithium Ion
+Warranty: 6 months
+Model photos and detailed technical specifications are shown in detail in the catalog.',
+                    'features' => [],
+                    'datasheet' => 'solar_lights/solar wall up & down.pdf',
                 ],
             ],
         ],
-        
+
         'solar_panels' => [
             'title' => 'Solar Panels',
             'description' => 'High-efficiency photovoltaic panels',
             'items' => [
                 [
-                    'name' => '550W Mono Solar Panel',
-                    'power' => '550 Watts',
-                    'image' => 'https://images.unsplash.com/photo-1509391366360-2e959784a276?w=800&h=600&fit=crop',
-                    'description' => 'Monocrystalline technology for maximum efficiency',
+                    'name' => 'Vertex N NEG21C.20 Solar Panel',
+                    'power' => '695-720W',
+                    'image' => '/images/products/solar_panels/VERTEX N 700 720 W.jpeg',
+                    'description' => 'N-type i-TOPCon, bifacial dual glass, monocrystalline, high power',
                     'features' => [
-                        '21%+ efficiency',
-                        '25-year warranty',
-                        'Harsh weather resistant',
-                        'Easy installation',
+                        'Up to 23.2% efficiency',
+                        '30-year power warranty',
+                        'Resistant to PID, LID, LeTID, salt, ammonia',
+                        'Low voltage design reduces BOS and LCOE',
+                        'Bifacial with 10-20% additional backside gain',
                     ],
                     'badge' => 'Highest Efficiency',
-                    'datasheet' => 'panel-550w.pdf',
+                    'datasheet' => 'solar_panels/VERTEX N 700 -720 W.pdf',
+                    'full_content' => 'Uses innovative i-TOPCon technology, suitable for harsh environments and large-scale commercial applications.',
                 ],
                 [
-                    'name' => '450W Poly Solar Panel',
-                    'power' => '450 Watts',
-                    'image' => 'https://images.unsplash.com/photo-1595437193398-f24279553f4f?w=800&h=600&fit=crop',
-                    'description' => 'Balanced solution between performance and price',
+                    'name' => 'NEG19RC.20 Solar Panel',
+                    'power' => '605-630W',
+                    'image' => '/images/products/solar_panels/VERTEX N 630 W.jpeg',
+                    'description' => 'N-type i-TOPCon, bifacial dual glass, monocrystalline, 1P tracker compatible',
                     'features' => [
-                        '18%+ efficiency',
-                        '20-year warranty',
-                        'Excellent heat performance',
-                        'High economic value',
+                        'Up to 23.3% efficiency',
+                        '30-year power warranty',
+                        'Excellent low-irradiance performance',
+                        'Low temperature coefficient (-0.29%/°C)',
+                        'Up to 20% backside power gain',
                     ],
-                    'datasheet' => 'panel-450w.pdf',
+                    'datasheet' => 'solar_panels/VERTEX N 605 -630 W.pdf',
+                    'full_content' => 'Designed specifically for 1P tracker systems, offering excellent compatibility with existing components.',
                 ],
                 [
-                    'name' => '600W Bifacial Solar Panel',
-                    'power' => '600 Watts',
-                    'image' => 'https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=800&h=600&fit=crop',
-                    'description' => 'Bifacial technology for higher output',
+                    'name' => 'Tiger Neo 66HL4M Solar Panel',
+                    'power' => '605-630W',
+                    'image' => '/images/products/solar_panels/JINKO TIGER NEO 605 - 630 W.jpeg',
+                    'description' => 'N-type TOPCon, dual glass, HOT 3.0 technology, high reliability',
                     'features' => [
-                        '22%+ front efficiency',
-                        '30% additional rear production',
-                        '30-year warranty',
-                        'Ideal for reflective surfaces',
+                        'Up to 23.32% efficiency',
+                        '12-year product warranty, 30-year power warranty',
+                        'SMBB technology for improved performance',
+                        'High mechanical load resistance (5400 Pa front)',
+                        'Anti-PID guarantee',
                     ],
-                    'badge' => 'Highest Efficiency',
-                    'datasheet' => 'panel-600w.pdf',
+                    'badge' => 'High Reliability',
+                    'datasheet' => 'solar_panels/JINKO Tiger Neo 605 -630.pdf',
+                    'full_content' => 'Features TOPCon and HOT 3.0 technology ensuring lower degradation and better low-light performance.',
+                ],
+                [
+                    'name' => 'JAM66D45 LB Solar Panel',
+                    'power' => '590-615W',
+                    'image' => '/images/products/solar_panels/JA SOLAR 620W.jpeg',
+                    'description' => 'N-type double glass, MBB half-cell technology, up to 26% cell efficiency',
+                    'features' => [
+                        'Better temperature coefficient',
+                        'Very low LID',
+                        'Good low irradiance response',
+                        '30-year linear performance warranty',
+                        'Up to 26% cell efficiency',
+                    ],
+                    'datasheet' => 'solar_panels/JA 620 W.pdf',
+                    'full_content' => 'Ideal for applications requiring high cell efficiency and long-term stable performance.',
+                ],
+                [
+                    'name' => 'TWMRF-66HD Solar Panel',
+                    'power' => '700-720W',
+                    'image' => '/images/products/solar_panels/TW 700 -720 W.jpeg',
+                    'description' => 'N-type half-cell, bifacial, high power, low LCOE',
+                    'features' => [
+                        'Up to 28.2% efficiency (with rear gain)',
+                        '12-year materials warranty, 30-year power warranty',
+                        'Temperature coefficient -0.28%/°C',
+                        'Wind/snow load 2400Pa/5400Pa',
+                        'Bifaciality 80±5%',
+                    ],
+                    'badge' => 'Highest Power',
+                    'datasheet' => 'solar_panels/TW 700-720 W.pdf',
+                    'full_content' => 'Suitable for commercial and utility-scale projects where LCOE reduction is critical.',
                 ],
             ],
         ],
@@ -992,7 +1102,7 @@ return [
         'completion_date' => 'Completion Date',
         'description' => 'Project Description',
         'project_features' => 'Project Features',
-        
+
         'items' => [
             [
                 'title' => 'Residential Solar Plant',
@@ -1092,11 +1202,11 @@ return [
         'title' => 'Latest News & Articles',
         'subtitle' => 'Latest updates and technical information in the world of solar energy',
         'read_more' => 'Read More',
-        
+
         'cta_title' => 'Why Choose SG Solar?',
         'cta_text' => 'Five Guarantees for Your Solar Investment Success',
         'cta_button' => 'Get Free Consultation',
-        
+
         'cta_guarantees' => [
             ['icon' => 'fas fa-bolt', 'title' => 'Maximum Efficiency and Fast ROI'],
             ['icon' => 'fas fa-user-shield', 'title' => 'Reliability and Deep Expertise Guarantee'],
@@ -1104,7 +1214,7 @@ return [
             ['icon' => 'fas fa-award', 'title' => 'Durability and Absolute Engineering Quality'],
             ['icon' => 'fas fa-leaf', 'title' => 'Future and Environment-Conscious Investment'],
         ],
-        
+
         'articles' => require __DIR__ . '/news_articles.php',
     ],
 

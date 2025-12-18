@@ -125,6 +125,41 @@
     </div>
 </section>
 
+<!-- Solutions Banner Section -->
+<section class="section section-solutions-banner" style="background-color: #1a5f3a;">
+    <div class="container">
+        <div class="scroll-fade" style="color: white;">
+            <div class="section-title text-center" style="color: white;">
+                <h2 class="section-title-main" style="color: white;">{{ __('website.solutions.title') }}</h2>
+                <p class="section-title-subtitle" style="color: white;">{{ __('website.solutions.subtitle') }}</p>
+            </div>
+        </div>
+        
+        <div class="banner-grid">
+            <a href="/solutions/on-grid" class="banner-item scroll-animate">
+                <img src="{{ asset('icons/icons/on grid.png') }}" alt="{{ __('website.solutions.banner_labels.on_grid') }}">
+                <span>{{ __('website.solutions.banner_labels.on_grid') }}</span>
+            </a>
+            <a href="/solutions/off-grid" class="banner-item scroll-animate">
+                <img src="{{ asset('icons/icons/off grid.png') }}" alt="{{ __('website.solutions.banner_labels.off_grid') }}">
+                <span>{{ __('website.solutions.banner_labels.off_grid') }}</span>
+            </a>
+            <a href="/solutions/pumping" class="banner-item scroll-animate">
+                <img src="{{ asset('icons/icons/pump.png') }}" alt="{{ __('website.solutions.banner_labels.pump') }}">
+                <span>{{ __('website.solutions.banner_labels.pump') }}</span>
+            </a>
+            <a href="/solutions/swh" class="banner-item scroll-animate">
+                <img src="{{ asset('icons/icons/heater.png') }}" alt="{{ __('website.solutions.banner_labels.solar_heater') }}">
+                <span>{{ __('website.solutions.banner_labels.solar_heater') }}</span>
+            </a>
+            <a href="/products/lights" class="banner-item scroll-animate">
+                <img src="{{ asset('icons/icons/light.png') }}" alt="{{ __('website.solutions.banner_labels.solar_light') }}">
+                <span>{{ __('website.solutions.banner_labels.solar_light') }}</span>
+            </a>
+        </div>
+    </div>
+</section>
+
 <!-- Latest News Section -->
 <section class="section section-latest-news">
     <div class="container">
@@ -295,6 +330,190 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 });
+</script>
+
+<!-- Our Partners Section -->
+<section class="section section-partners">
+    <div class="container">
+        <div class="scroll-fade">
+            <x-section-title 
+                title="{{ __('website.partners.title') }}" 
+                subtitle="{{ __('website.partners.subtitle') }}"
+            />
+        </div>
+        
+        <div class="partners-slider-container">
+            <button class="slider-btn slider-btn-prev" onclick="movePartnersSlider(-1)">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            
+            <div class="partners-slider-wrapper">
+                <div class="partners-slider" id="partnersSlider">
+                    <div class="partner-slide"><img src="{{ asset('Our Partner logo/jinko-solar-logo.jpg') }}" alt="Jinko Solar"></div>
+                    <div class="partner-slide"><img src="{{ asset('Our Partner logo/logo-ja-solar2.png') }}" alt="JA Solar"></div>
+                    <div class="partner-slide"><img src="{{ asset('Our Partner logo/LONGi-solar.jpg') }}" alt="LONGi Solar"></div>
+                    <div class="partner-slide"><img src="{{ asset('Our Partner logo/znshine-solar-logo.png') }}" alt="Znshine Solar"></div>
+                    <div class="partner-slide"><img src="{{ asset('Our Partner logo/hwawei.png') }}" alt="Huawei"></div>
+                    <div class="partner-slide"><img src="{{ asset('Our Partner logo/shnider.png') }}" alt="Schneider"></div>
+                    <div class="partner-slide"><img src="{{ asset('Our Partner logo/abb.png') }}" alt="ABB"></div>
+                    <div class="partner-slide"><img src="{{ asset('Our Partner logo/chint_1615152722__50818.original.png') }}" alt="Chint"></div>
+                    <div class="partner-slide"><img src="{{ asset('Our Partner logo/Logo_Legrand_SA.svg.png') }}" alt="Legrand"></div>
+                    <div class="partner-slide"><img src="{{ asset('Our Partner logo/Bticino-logo.jpg') }}" alt="BTicino"></div>
+                    <div class="partner-slide"><img src="{{ asset('Our Partner logo/2560px-Lafarge_(Unternehmen)_logo.svg.png') }}" alt="Lafarge"></div>
+                    <div class="partner-slide"><img src="{{ asset('Our Partner logo/nrea.png') }}" alt="NREA"></div>
+                    <div class="partner-slide"><img src="{{ asset('Our Partner logo/final-volca-logo-01.png') }}" alt="Volca"></div>
+                </div>
+            </div>
+            
+            <button class="slider-btn slider-btn-next" onclick="movePartnersSlider(1)">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+</section>
+
+<style>
+.section-partners {
+    background: #f9fafb;
+    padding: 4rem 0;
+}
+
+.partners-slider-container {
+    position: relative;
+    max-width: 1200px;
+    margin: 3rem auto 0;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.partners-slider-wrapper {
+    flex: 1;
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+.partners-slider {
+    display: flex;
+    transition: transform 0.5s ease;
+    gap: 2rem;
+}
+
+.partner-slide {
+    flex: 0 0 calc(25% - 1.5rem);
+    min-width: calc(25% - 1.5rem);
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.partner-slide:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+
+.partner-slide img {
+    max-width: 100%;
+    max-height: 80px;
+    object-fit: contain;
+    transition: all 0.3s ease;
+}
+
+.partner-slide:hover img {
+    transform: scale(1.05);
+}
+
+.slider-btn {
+    background: white;
+    border: 2px solid #e5e7eb;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    color: #1a5f3a;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.slider-btn:hover {
+    background: #1a5f3a;
+    color: white;
+    border-color: #1a5f3a;
+    transform: scale(1.1);
+}
+
+.slider-btn:active {
+    transform: scale(0.95);
+}
+
+@media (max-width: 1024px) {
+    .partner-slide {
+        flex: 0 0 calc(33.333% - 1.5rem);
+        min-width: calc(33.333% - 1.5rem);
+    }
+}
+
+@media (max-width: 768px) {
+    .partners-slider-container {
+        gap: 1rem;
+    }
+    
+    .partner-slide {
+        flex: 0 0 calc(50% - 1rem);
+        min-width: calc(50% - 1rem);
+        padding: 1.5rem;
+    }
+    
+    .slider-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .partner-slide {
+        flex: 0 0 100%;
+        min-width: 100%;
+    }
+}
+</style>
+
+<script>
+let currentPartnersSlide = 0;
+const partnersSlider = document.getElementById('partnersSlider');
+const totalPartnersSlides = document.querySelectorAll('.partner-slide').length;
+const slidesToShow = window.innerWidth > 1024 ? 4 : (window.innerWidth > 768 ? 3 : (window.innerWidth > 480 ? 2 : 1));
+
+function movePartnersSlider(direction) {
+    const maxSlide = totalPartnersSlides - slidesToShow;
+    currentPartnersSlide += direction;
+    
+    if (currentPartnersSlide < 0) {
+        currentPartnersSlide = maxSlide;
+    } else if (currentPartnersSlide > maxSlide) {
+        currentPartnersSlide = 0;
+    }
+    
+    const slideWidth = partnersSlider.querySelector('.partner-slide').offsetWidth;
+    const gap = 32; // 2rem in pixels
+    const offset = -(currentPartnersSlide * (slideWidth + gap));
+    partnersSlider.style.transform = `translateX(${offset}px)`;
+}
+
+// Auto slide every 4 seconds
+setInterval(() => {
+    movePartnersSlider(1);
+}, 4000);
 </script>
 
 @endsection

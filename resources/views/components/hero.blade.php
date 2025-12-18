@@ -6,6 +6,9 @@
         <div class="slide">
             <img src="{{ asset('banner (2)..png') }}" alt="SG Solar Banner 2">
         </div>
+        <div class="slide">
+            <img src="{{ asset('banner (3).jpeg') }}" alt="SG Solar Banner 3">
+        </div>
     </div>
     
     <!-- Location Text Overlay -->
@@ -20,36 +23,9 @@
     <div class="slider-dots">
         <span class="dot active" onclick="currentSlide(1)"></span>
         <span class="dot" onclick="currentSlide(2)"></span>
+        <span class="dot" onclick="currentSlide(3)"></span>
     </div>
 </section>
-
-<!-- Solutions Banner Section -->
-{{-- <section class="solutions-banner">
-    <div class="container">
-        <div class="banner-grid">
-            <div class="banner-item">
-                <img src="{{ asset('icons/icons/on grid.png') }}" alt="On Grid">
-                <span>On Grid</span>
-            </div>
-            <div class="banner-item">
-                <img src="{{ asset('icons/icons/off grid.png') }}" alt="Off Grid">
-                <span>Off Grid</span>
-            </div>
-            <div class="banner-item">
-                <img src="{{ asset('icons/icons/pump.png') }}" alt="Pump">
-                <span>Pump</span>
-            </div>
-            <div class="banner-item">
-                <img src="{{ asset('icons/icons/heater.png') }}" alt="Solar Heater">
-                <span>Solar Heater</span>
-            </div>
-            <div class="banner-item">
-                <img src="{{ asset('icons/icons/light.png') }}" alt="Solar Light">
-                <span>Solar Light</span>
-            </div>
-        </div>
-    </div>
-</section> --}}
 
 <script>
 let slideIndex = 0;
