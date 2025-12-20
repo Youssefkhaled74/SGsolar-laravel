@@ -225,7 +225,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 15px;
 }
 
 .slide.active {
@@ -233,11 +232,9 @@
 }
 
 .project-image {
-    max-width: 85%;
-    max-height: 85%;
-    width: auto;
-    height: auto;
-    object-fit: contain;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     object-position: center;
 }
 
