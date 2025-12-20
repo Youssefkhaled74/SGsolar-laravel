@@ -225,44 +225,35 @@
         </div>
         
         <div class="projects-grid">
-            @php
-                $allProjects = __('website.projects.items');
-                $randomProjects = collect($allProjects)->random(min(3, count($allProjects)));
-            @endphp
-            
-            @foreach($randomProjects as $index => $project)
-            <div class="project-card scroll-animate">
+            @forelse($portfolioProjects as $project)
+            <div class="project-card scroll-animate" onclick="window.location.href='/projects'" style="cursor: pointer;">
                 <div class="project-image-wrapper">
-                    <img src="{{ $project['image'] }}" alt="{{ $project['title'] }}" class="project-image">
+                    <img src="{{ asset($project['images'][0]) }}" alt="{{ $project['name'] }}" class="project-image">
                     <div class="project-overlay">
                         <div class="project-overlay-content">
-                            <h3 class="project-overlay-title">{{ $project['title'] }}</h3>
+                            <h3 class="project-overlay-title">{{ $project['name'] }}</h3>
                             <p class="project-overlay-location">
-                                <i class="fas fa-map-marker-alt"></i>
-                                {{ $project['location'] }}
+                                <i class="fas fa-images"></i>
+                                {{ count($project['images']) }} {{ count($project['images']) > 1 ? __('website.projects.photos') : __('website.projects.photo') }}
                             </p>
                         </div>
                     </div>
                 </div>
                 <div class="project-info">
-                    <h3 class="project-title">{{ $project['title'] }}</h3>
-                    <p class="project-location">
-                        <i class="fas fa-map-marker-alt"></i>
-                        {{ $project['location'] }}
-                    </p>
+                    <h3 class="project-title">{{ $project['name'] }}</h3>
                     <div class="project-meta">
                         <span class="project-type">
-                            <i class="fas fa-tag"></i>
-                            {{ $project['type'] }}
-                        </span>
-                        <span class="project-capacity">
-                            <i class="fas fa-bolt"></i>
-                            {{ $project['capacity'] }}
+                            <i class="fas fa-images"></i>
+                            {{ count($project['images']) }} {{ count($project['images']) > 1 ? __('website.projects.photos') : __('website.projects.photo') }}
                         </span>
                     </div>
                 </div>
             </div>
-            @endforeach
+            @empty
+            <div class="col-12 text-center">
+                <p>{{ __('website.projects.no_projects') }}</p>
+            </div>
+            @endforelse
         </div>
         
         <div class="text-center" style="margin-top: 3rem;">
@@ -273,6 +264,79 @@
         </div>
     </div>
 </section>
+
+<style>
+/* Override project card styles for home page portfolio section */
+.section-portfolio .project-info {
+    background: white;
+    padding: 1.5rem;
+}
+
+.section-portfolio .project-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #0C2D1C;
+    margin-bottom: 0.75rem;
+    line-height: 1.4;
+}
+
+.section-portfolio .project-meta {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.section-portfolio .project-type {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: #F3F4F6;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    color: #4B5563;
+    font-weight: 500;
+}
+
+.section-portfolio .project-type i {
+    color: #FFDF41;
+    font-size: 1rem;
+}
+
+/* Make overlay visible only on hover */
+.section-portfolio .project-overlay {
+    opacity: 0;
+}
+
+.section-portfolio .project-card:hover .project-overlay {
+    opacity: 1;
+}
+
+.section-portfolio .project-overlay-content {
+    text-align: center;
+    color: white;
+}
+
+.section-portfolio .project-overlay-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: white;
+}
+
+.section-portfolio .project-overlay-location {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.section-portfolio .project-overlay-location i {
+    color: #FFDF41;
+}
+</style>
 
 @include('partials.home-feedback', ['feedbacks' => config('website.testimonials', [])])
 

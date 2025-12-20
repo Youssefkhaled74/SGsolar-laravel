@@ -5496,13 +5496,14 @@ ul {
 /* Premium Feedback Cards */
 .feedback-card {
     background: linear-gradient(135deg, #FFFFFF 0%, #F8FAFB 100%) !important;
-    border-radius: 24px !important;
+    border-radius: 20px !important;
     padding: 0 !important;
     box-shadow: 
-        0 15px 45px rgba(0, 0, 0, 0.15),
-        0 5px 15px rgba(0, 0, 0, 0.1),
+        0 10px 30px rgba(0, 0, 0, 0.12),
+        0 4px 12px rgba(0, 0, 0, 0.08),
         inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
     min-width: calc(33.333% - 22px) !important;
+    max-width: 380px !important;
     flex-shrink: 0 !important;
     position: relative !important;
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
@@ -5552,7 +5553,7 @@ ul {
     display: flex !important;
     justify-content: space-between !important;
     align-items: flex-start !important;
-    padding: 32px 32px 0 !important;
+    padding: 20px 24px 0 !important;
     position: relative !important;
     z-index: 2 !important;
 }
@@ -5579,13 +5580,13 @@ ul {
 /* Card Content */
 .feedback-card-content {
     flex: 1 !important;
-    padding: 28px 32px !important;
+    padding: 18px 24px !important;
 }
 
 .feedback-card-message {
     color: #1F2937 !important;
-    line-height: 1.85 !important;
-    font-size: 1.05rem !important;
+    line-height: 1.7 !important;
+    font-size: 0.95rem !important;
     font-weight: 400 !important;
     margin: 0 !important;
     letter-spacing: 0.01em !important;
@@ -5595,8 +5596,8 @@ ul {
 [dir="rtl"] .feedback-card-message {
     text-align: start !important;
     font-family: 'Cairo', 'Tajawal', sans-serif !important;
-    line-height: 2 !important;
-    font-size: 1.08rem !important;
+    line-height: 1.85 !important;
+    font-size: 0.98rem !important;
     letter-spacing: 0 !important;
 }
 
@@ -5641,8 +5642,8 @@ ul {
 .feedback-card-footer {
     display: flex !important;
     align-items: center !important;
-    gap: 16px !important;
-    padding: 24px 32px !important;
+    gap: 12px !important;
+    padding: 18px 24px !important;
     background: linear-gradient(135deg, rgba(255, 223, 65, 0.08) 0%, rgba(140, 198, 63, 0.05) 100%) !important;
     border-top: 1px solid rgba(255, 223, 65, 0.15) !important;
     position: relative !important;
@@ -5660,15 +5661,15 @@ ul {
 
 /* Customer Avatar */
 .feedback-customer-avatar {
-    width: 48px !important;
-    height: 48px !important;
+    width: 42px !important;
+    height: 42px !important;
     border-radius: 50% !important;
     background: linear-gradient(135deg, #FFDF41 0%, #E3A000 100%) !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
     font-weight: 800 !important;
-    font-size: 1.25rem !important;
+    font-size: 1.15rem !important;
     color: #0C2D1C !important;
     box-shadow: 
         0 4px 12px rgba(255, 223, 65, 0.3),
@@ -5694,7 +5695,7 @@ ul {
 
 .feedback-card-name {
     font-weight: 700 !important;
-    font-size: 1.1rem !important;
+    font-size: 1rem !important;
     color: #0C2D1C !important;
     margin: 0 !important;
     letter-spacing: 0.01em !important;

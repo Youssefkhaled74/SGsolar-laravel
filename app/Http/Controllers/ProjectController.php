@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\File;
 
 class ProjectController extends Controller
 {
-    public function index()
+    public static function getAllProjects()
     {
         $portfolioPath = public_path('our porfolio');
         $projects = [];
@@ -37,6 +37,16 @@ class ProjectController extends Controller
                 }
             }
         }
+
+        return $projects;
+    }
+
+    public function index()
+    {
+        $projects = self::getAllProjects();
+        
+        // Shuffle projects to display them randomly
+        shuffle($projects);
 
         return view('pages.projects', compact('projects'));
     }
