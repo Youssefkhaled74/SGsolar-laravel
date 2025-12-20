@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\AdminController;
@@ -32,7 +33,7 @@ Route::view('/solutions/swh', 'pages.solutions.swh')->name('solutions.swh');
 Route::view('/solutions/lighting', 'pages.solutions.lighting')->name('solutions.lighting');
 
 // Projects Page
-Route::view('/projects', 'pages.projects')->name('projects');
+Route::get('/projects', [ProjectController::class, 'index'])->name('projects');
 
 // News/Blog Pages
 Route::view('/news', 'pages.news')->name('news');

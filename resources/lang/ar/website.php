@@ -1129,6 +1129,10 @@ return [
         'completion_date' => 'تاريخ الإنجاز',
         'description' => 'وصف المشروع',
         'project_features' => 'مميزات المشروع',
+        'photos' => 'صور',
+        'photo' => 'صورة',
+        'no_projects' => 'لا توجد مشاريع متاحة في الوقت الحالي',
+        'view_gallery' => 'عرض المعرض',
 
         'items' => [
             [

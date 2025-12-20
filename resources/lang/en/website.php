@@ -1102,6 +1102,10 @@ Model photos and detailed technical specifications are shown in detail in the ca
         'completion_date' => 'Completion Date',
         'description' => 'Project Description',
         'project_features' => 'Project Features',
+        'photos' => 'Photos',
+        'photo' => 'Photo',
+        'no_projects' => 'No projects available at the moment',
+        'view_gallery' => 'View Gallery',
 
         'items' => [
             [
