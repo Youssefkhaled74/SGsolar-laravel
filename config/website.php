@@ -423,10 +423,10 @@ return [
     // SOCIAL MEDIA LINKS
     // ============================================
     'social' => [
-        'facebook' => 'https://www.facebook.com/sgsolar',
-        'instagram' => 'https://www.instagram.com/sgsolar',
+        'facebook' => 'https://www.facebook.com/share/1HBoXxi2u8/',
+        'instagram' => 'https://www.instagram.com/sgsolar1/',
         'twitter' => 'https://twitter.com/sgsolar',
-        'linkedin' => 'https://www.linkedin.com/company/sgsolar',
+        'linkedin' => 'https://www.linkedin.com/company/sgsolar/',
     ],
 
     // ============================================

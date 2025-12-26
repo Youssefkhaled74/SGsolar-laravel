@@ -36,15 +36,28 @@
                             </div>
                             <div class="product-info">
                                 <h3 class="product-name">{{ $product['name'] }}</h3>
-                                <p class="product-description">{{ $product['description'] }}</p>
+                                
+                                @if(isset($product['capacity']))
+                                    <p class="product-capacity"><i class="fas fa-tint"></i> {{ $product['capacity'] }}</p>
+                                @endif
+                                
+                                <p class="product-description">
+                                    {{ Str::limit($product['description'], 150, '...') }}
+                                </p>
 
                                 <ul class="product-features">
-                                    @foreach ($product['features'] as $feature)
-                                        <li><i class="fas fa-check"></i> {{ $feature }}</li>
+                                    @foreach (array_slice($product['features'], 0, 3) as $feature)
+                                        <li><i class="fas fa-check"></i> {{ Str::limit($feature, 80, '...') }}</li>
                                     @endforeach
                                 </ul>
 
                                 <div class="product-actions">
+                                    <button class="btn-product btn-view-more"
+                                        onclick="openProductModal({{ $loop->index }})">
+                                        <i class="fas fa-info-circle"></i>
+                                        {{ __('website.products.view_more') }}
+                                    </button>
+                                    
                                     @if (isset($product['datasheet']))
                                         <button class="btn-product btn-download-pdf"
                                             onclick="showDownloadForm('{{ $product['datasheet'] }}', '{{ $product['name'] }}')">
@@ -52,12 +65,6 @@
                                             {{ __('website.products.download_pdf') }}
                                         </button>
                                     @endif
-
-                                    <button class="btn-product btn-view-more"
-                                        onclick="openProductModal({{ $loop->index }})">
-                                        <i class="fas fa-info-circle"></i>
-                                        {{ __('website.products.view_more') }}
-                                    </button>
                                 </div>
                             </div>
                         </div>
