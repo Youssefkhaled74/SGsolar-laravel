@@ -592,7 +592,7 @@ return [
                 ],
 
                 [
-                    'name' => 'Nobel Apollo Solar Water Heater',
+                    'name' => 'Nobel Abollon Solar Water Heater',
                     'capacity' => '200 L / 320 L',
                     'image' => 'images/products/swh/NobelApollo.jpeg',
                     'description' => 'Nobel Apollo is an advanced solar thermal system representing the new generation of solar water heaters, combining the authentic Greek design of the distinguished Nobel brand with the Double Jacket insulation tank technology that ensures the highest level of heat retention. This system is manufactured in Nobel factories in Bulgaria under full Greek technical supervision. It is specially designed for markets with diverse climatic conditions like Egypt, providing high efficiency in hot summers and maintaining performance in cold winter nights, with Double Jacket technology making it the best in retaining heat for long periods.',
@@ -733,7 +733,7 @@ return [
                 [
                     'name' => 'Delpaso Flat Plate Solar Water Heater',
                     'capacity' => '200 L / 300 L',
-                    'image' => 'images/products/swh/DelpasoSolar.jpeg',
+                    'image' => 'images/products/swh/Thermica.jpeg',
                     'description' => '**Delpaso heater** is an integrated water heating system based on the latest flat plate collector technologies (Flat Plate), engineered professionally to achieve maximum efficiency in converting solar energy into thermal energy. It is an ideal solution for families and institutions seeking **high reliability** and **continuous efficiency** in diverse climate conditions. Delpaso Solar combines advanced Spanish technology with strong performance to deliver a high-quality solar heater that withstands various operating conditions, providing excellent efficiency and long-term reliability for daily use.',
                     'features' => [
                         '**Unique flat collector design**: delivers superior performance in areas with direct solar irradiation and high heat.',
@@ -798,10 +798,10 @@ return [
                 ],
 
                 [
-                    'name' => 'Thermica Flat Plate Solar Water Heater',
+                    'name' => 'Termica Flat Plate Solar Water Heater',
                     'capacity' => '200 L / 300 L',
-                    'image' => 'images/products/swh/Thermica.jpeg',
-                    'description' => 'Thermica solar heater is the result of a strategic partnership combining leading Egyptian expertise in water heater manufacturing and advanced technology in solar thermal energy. Designed specifically for the Egyptian and Arab markets, it blends local manufacturing quality supported by European technological knowledge to deliver an integrated solar solution suitable for the region’s climate and environment. Origin & identity: manufactured in Egypt using key imported components (flat plate collectors) with local production of tanks and structures. This model merges the competitive advantage of Egyptian industry with European quality assurance.',
+                    'image' => 'images/products/swh/DelpasoSolar.jpeg',
+                    'description' => 'Termica solar heater is the result of a strategic partnership combining leading Egyptian expertise in water heater manufacturing and advanced technology in solar thermal energy. Designed specifically for the Egyptian and Arab markets, it blends local manufacturing quality supported by European technological knowledge to deliver an integrated solar solution suitable for the region’s climate and environment. Origin & identity: manufactured in Egypt using key imported components (flat plate collectors) with local production of tanks and structures. This model merges the competitive advantage of Egyptian industry with European quality assurance.',
                     'features' => [
                         'Climate-adaptive design: developed to withstand extreme summer heat and cold winter nights',
                         'High resistance to hard water: materials and internal design reduce scale impact',
