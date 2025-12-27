@@ -8,6 +8,7 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CatalogController;
 
 // Language Switcher
 Route::get('/locale/{locale}', [LocaleController::class, 'switch'])->name('locale.switch');
@@ -34,6 +35,9 @@ Route::view('/solutions/lighting', 'pages.solutions.lighting')->name('solutions.
 
 // Projects Page
 Route::get('/projects', [ProjectController::class, 'index'])->name('projects');
+
+// Catalog Page
+Route::get('/catalog', [CatalogController::class, 'index'])->name('catalog');
 
 // News/Blog Pages
 Route::view('/news', 'pages.news')->name('news');
