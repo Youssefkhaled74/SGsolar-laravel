@@ -28,7 +28,7 @@
                     @foreach (__('website.products.swh.items') as $product)
                         <div class="product-card">
                             <div class="product-image">
-                                <img src="{{ asset($product['image']) }}" alt="{{ $product['name'] }}"
+                                <img src="{{ asset(ltrim($product['image'], '/')) }}" alt="{{ $product['name'] }}"
                                     onerror="handleImageError(this)">
                                 @if (isset($product['badge']))
                                     <span class="product-badge">{{ $product['badge'] }}</span>
@@ -377,7 +377,8 @@
             const modal = document.getElementById('productModal');
 
             // Basic Info
-            document.getElementById('modalProductImage').src = '{{ asset('') }}/' + product.image;
+            const imagePath = product.image.startsWith('/') ? product.image.substring(1) : product.image;
+            document.getElementById('modalProductImage').src = '{{ asset('') }}/' + imagePath;
             document.getElementById('modalProductImage').alt = product.name;
             document.getElementById('modalProductName').textContent = product.name;
             document.getElementById('modalProductDescription').textContent = product.description;
@@ -509,12 +510,7 @@
         }
 
         // Download Form Functions
-        let currentDownloadFile = '';
-        let currentProductName = '';
-
         function showDownloadForm(datasheet, productName) {
-            currentDownloadFile = datasheet;
-            currentProductName = productName;
             document.getElementById('downloadDatasheet').value = datasheet;
             document.getElementById('downloadProductName').value = productName;
             document.getElementById('downloadFormModal').style.display = 'flex';
@@ -532,7 +528,6 @@
         function closeDownloadForm() {
             document.getElementById('downloadFormModal').style.display = 'none';
             document.body.style.overflow = 'auto';
-            document.getElementById('downloadForm').reset();
         }
 
         function submitDownloadForm(event) {
@@ -581,28 +576,22 @@
             })
             .then(result => {
                 if (result.success) {
-                    // Start download
-                    const link = document.createElement('a');
-                    link.href = '{{ asset('datasheets/') }}/' + currentDownloadFile;
-                    link.download = currentDownloadFile;
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-
-                    // Close form and show success message
                     closeDownloadForm();
                     showSuccessAlert('تم بنجاح!', 'شكراً لك! تم حفظ بياناتك وسيتم التحميل الآن...');
+                    
+                    setTimeout(() => {
+                        const datasheetPath = document.getElementById('downloadDatasheet').value;
+                        window.open('{{ asset('datasheets') }}/' + datasheetPath, '_blank');
+                    }, 1500);
+                    
+                    event.target.reset();
                 } else {
                     showErrorAlert('حدث خطأ', 'حدث خطأ، يرجى المحاولة مرة أخرى');
-                    submitBtn.disabled = false;
-                    submitBtn.innerHTML = originalBtnText;
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
                 showErrorAlert('خطأ في الاتصال', 'حدث خطأ في الاتصال، يرجى المحاولة مرة أخرى');
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = originalBtnText;
             });
         }
 

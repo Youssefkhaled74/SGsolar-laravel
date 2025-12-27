@@ -513,7 +513,7 @@ return [
                         '**Elegant aesthetic design**: gray finishes and other colors, and an elegant aluminum frame for the collector to match modern building designs.',
                         '**Flexible auxiliary electrical installation**: includes a backup electric heating element and adjustable thermostat according to local regulations, with the possibility of adding an additional heat exchanger to connect with central heating systems in winter.',
                     ],
-                    'datasheet' => 'nobel-solface-datasheet.pdf',
+                    'datasheet' => 'swh/Nobel Solfos Solar Water Heater.pdf',
                     'read_more' => [
                         'origin' => [
                             'title' => 'Origin',
@@ -604,7 +604,7 @@ return [
                         'High aesthetics and hidden design: all connections and pipes are concealed inside decorative ABS side covers.',
                         'Easy installation and maintenance: integrated system with galvanized chassis base, suitable for installation on all roof types.',
                     ],
-                    'datasheet' => 'nobel-apollo-datasheet.pdf',
+                    'datasheet' => 'swh/Nobel Abollon Solar Water Heater.pdf',
                     'read_more' => [
                         'specifications' => [
                             'title' => 'Detailed Technical Specifications',
@@ -673,7 +673,7 @@ return [
                         'Strong focus on safety and water quality: the manual includes strict warnings and specific water quality requirements (pH, hardness, chlorides) to ensure longer tank life, which is critical in Egypt.',
                         'Certified safe electrical equipment: backup electric heater element and safety thermostat compliant with European standards EN60335-1 and EN60335-2-21.',
                     ],
-                    'datasheet' => 'volca-datasheet.pdf',
+                    'datasheet' => 'swh/VOLCA Solar Water Heater.pdf',
                     'read_more' => [
                         'origin' => [
                             'title' => 'Origin & Identity',
@@ -743,7 +743,7 @@ return [
                         '**Superior summer performance**: does not suffer from overheating issues that affect some other types.',
                         '**Easier maintenance**: simple design allows inspection and service without complex techniques.',
                     ],
-                    'datasheet' => 'delpaso-solar-datasheet.pdf',
+                    'datasheet' => 'swh/Delpaso Flat Plate Solar Water Heater.pdf',
                     'read_more' => [
                         'specifications' => [
                             'title' => 'Detailed Technical Specifications',
@@ -810,7 +810,7 @@ return [
                         'Compatible with auxiliary electrical setups: designed to work with conventional electric heaters as backup',
                         'High local manufacturing ratio: supports national economy while preserving core quality',
                     ],
-                    'datasheet' => 'thermica-datasheet.pdf',
+                    'datasheet' => 'swh/Termica Flat Plate Solar Water Heater.pdf',
                     'read_more' => [
                         'specifications' => [
                             'title' => 'Detailed Technical Specifications',
@@ -878,7 +878,7 @@ return [
                         'Flexible installation: compatible with all roof types (flat, inclined) and can integrate with central heating systems.',
                         'Efficient in harsh climates: works effectively even on cloudy days and in cold regions.',
                     ],
-                    'datasheet' => 'اوركا داتا شيت.pdf',
+                    'datasheet' => 'swh/ORCA Solar Water Heater.pdf',
                     'read_more' => [
                         'origin' => [
                             'title' => 'Origin',
@@ -947,7 +947,7 @@ return [
                         'Reflectors (mirrors) behind the tubes: reflective mirrors increase solar absorption efficiency by 8%, a rare feature improving performance.',
                         'High-quality vacuum tubes: Chinese borosilicate tubes with triple layers and selective coating (AL-N/O/Cu), absorption 94% and high vacuum (5x10^-4 Pa).',
                     ],
-                    'datasheet' => 'اوركا داتا شيت.pdf',
+                    'datasheet' => 'swh/KFP Solar Water Heater (Khallouf Future Power).pdf',
                     'read_more' => [
                         'specifications' => [
                             'title' => 'Technical Specifications',

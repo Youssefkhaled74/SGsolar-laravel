@@ -69,38 +69,56 @@
     </div>
 </section>
 
-<!-- Download Request Modal -->
-<div class="success-overlay" id="downloadModal" style="display: none;">
-    <div class="download-form-modal">
+<!-- Download Form Modal -->
+<div id="downloadFormModal" class="product-modal" style="display: none;">
+    <div class="modal-content-product" style="max-width: 600px;">
         <span class="close-modal" onclick="closeDownloadForm()">&times;</span>
-        <h3 style="color: #0C2D1C; margin-bottom: 1rem;">{{ __('website.products.download_request') }}</h3>
-        <p style="color: #6B7280; margin-bottom: 2rem;">{{ __('website.products.download_message') }}</p>
-        <form id="downloadForm" onsubmit="submitDownloadForm(event)">
-            @csrf
-            <input type="hidden" id="downloadFile" name="file">
-            <input type="hidden" name="product_name" id="downloadProductName">
-            
-            <div class="form-group" style="margin-bottom: 1.5rem;">
-                <label style="display: block; margin-bottom: 0.5rem; color: #374151; font-weight: 600;">{{ __('website.contact.name') }}</label>
-                <input type="text" name="name" required style="width: 100%; padding: 12px; border: 2px solid #E5E7EB; border-radius: 8px; font-size: 16px;">
-            </div>
-            <div class="form-group" style="margin-bottom: 1.5rem;">
-                <label style="display: block; margin-bottom: 0.5rem; color: #374151; font-weight: 600;">{{ __('website.contact.phone') }}</label>
-                <input type="tel" name="phone" required style="width: 100%; padding: 12px; border: 2px solid #E5E7EB; border-radius: 8px; font-size: 16px;">
-            </div>
-            <div class="form-group" style="margin-bottom: 2rem;">
-                <label style="display: block; margin-bottom: 0.5rem; color: #374151; font-weight: 600;">{{ __('website.contact.subject') }}</label>
-                <input type="text" name="subject" value="{{ __('website.products.solar_panels.title') }}" required style="width: 100%; padding: 12px; border: 2px solid #E5E7EB; border-radius: 8px; font-size: 16px;">
-            </div>
-            <button type="submit" class="btn-product btn-download-pdf" style="width: 100%; padding: 15px; font-size: 16px; background: linear-gradient(135deg, #FFDF41 0%, #E3A000 100%); color: #0C2D1C; border: none; border-radius: 8px; cursor: pointer; font-weight: 700;">
-                <i class="fas fa-download"></i> {{ __('website.products.submit_download') }}
-            </button>
-        </form>
+        <div class="modal-body-product" style="display: block; padding: 30px;">
+            <h2 style="color: #0C2D1C; margin-bottom: 10px; text-align: center;">{{ __('website.contact.get_in_touch') }}</h2>
+            <p style="color: #6B7280; text-align: center; margin-bottom: 30px;">{{ __('website.contact.have_questions') }}</p>
+
+            <form id="downloadForm" onsubmit="submitDownloadForm(event)">
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label style="display: block; color: #0C2D1C; font-weight: 600; margin-bottom: 8px;">
+                        <i class="fas fa-user"></i> {{ __('website.contact.full_name') }}
+                    </label>
+                    <input type="text" name="name" required
+                        style="width: 100%; padding: 12px; border: 2px solid #E5E7EB; border-radius: 8px; font-size: 14px;"
+                        placeholder="{{ __('website.contact.full_name') }}">
+                </div>
+
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label style="display: block; color: #0C2D1C; font-weight: 600; margin-bottom: 8px;">
+                        <i class="fas fa-phone"></i> {{ __('website.contact.phone_number') }}
+                    </label>
+                    <input type="tel" name="phone" required
+                        style="width: 100%; padding: 12px; border: 2px solid #E5E7EB; border-radius: 8px; font-size: 14px;"
+                        placeholder="{{ __('website.contact.phone_number') }}">
+                </div>
+
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label style="display: block; color: #0C2D1C; font-weight: 600; margin-bottom: 8px;">
+                        <i class="fas fa-tag"></i> {{ __('website.contact.subject') }}
+                    </label>
+                    <input type="text" name="subject" required readonly
+                        style="width: 100%; padding: 12px; border: 2px solid #E5E7EB; border-radius: 8px; font-size: 14px; background: #F9FAFB;"
+                        value="تحميل كتالوج">
+                </div>
+
+                <input type="hidden" name="datasheet" id="downloadDatasheet">
+                <input type="hidden" name="product_name" id="downloadProductName">
+
+                <button type="submit" class="btn-product btn-download-pdf"
+                    style="width: 100%; padding: 15px; font-size: 16px; margin-top: 10px;">
+                    <i class="fas fa-download"></i> {{ __('website.products.download_pdf') }}
+                </button>
+            </form>
+        </div>
     </div>
 </div>
 
 <!-- Success Alert Modal -->
-<div class="success-overlay" id="successModal" style="display: none;">
+<div class="success-overlay" id="successAlert" style="display: none;">
     <div class="success-modal">
         <div class="success-icon">
             <svg viewBox="0 0 52 52">
@@ -108,14 +126,14 @@
                 <path fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
             </svg>
         </div>
-        <h2>{{ __('website.contact.success') }}</h2>
-        <p id="successMessage"></p>
-        <button onclick="closeSuccessAlert()" class="close-alert-btn">{{ __('website.contact.close') ?? 'حسناً' }}</button>
+        <h2 id="successTitle">تم بنجاح!</h2>
+        <p id="successMessage">شكراً لك! تم حفظ بياناتك وسيتم التحميل الآن...</p>
+        <button onclick="closeSuccessAlert()" class="close-alert-btn">حسناً</button>
     </div>
 </div>
 
 <!-- Error Alert Modal -->
-<div class="success-overlay" id="errorModal" style="display: none;">
+<div class="success-overlay" id="errorAlert" style="display: none;">
     <div class="success-modal">
         <div class="error-icon">
             <svg viewBox="0 0 52 52">
@@ -123,9 +141,9 @@
                 <path fill="none" d="M16 16 36 36 M36 16 16 36"/>
             </svg>
         </div>
-        <h2>{{ __('website.contact.error') }}</h2>
-        <p id="errorMessage"></p>
-        <button onclick="closeErrorAlert()" class="close-alert-btn error-btn">{{ __('website.contact.close') ?? 'حسناً' }}</button>
+        <h2 id="errorTitle">حدث خطأ</h2>
+        <p id="errorMessage">حدث خطأ في الاتصال، يرجى المحاولة مرة أخرى</p>
+        <button onclick="closeErrorAlert()" class="close-alert-btn error-btn">حسناً</button>
     </div>
 </div>
 
@@ -149,17 +167,6 @@
     to { opacity: 1; }
 }
 
-.download-form-modal {
-    background: white;
-    padding: 2.5rem;
-    border-radius: 20px;
-    max-width: 500px;
-    width: 90%;
-    animation: slideDown 0.5s ease;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-    position: relative;
-}
-
 .success-modal {
     background: white;
     padding: 3rem;
@@ -181,20 +188,7 @@
     }
 }
 
-.close-modal {
-    position: absolute;
-    top: 15px;
-    right: 20px;
-    font-size: 30px;
-    color: #6B7280;
-    cursor: pointer;
-    line-height: 1;
-    transition: color 0.3s;
-}
 
-.close-modal:hover {
-    color: #374151;
-}
 
 .success-icon, .error-icon {
     width: 100px;
@@ -267,86 +261,111 @@
     font-size: 1.1rem;
     font-weight: 700;
     cursor: pointer;
-    transition: transform 0.2s;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(227, 160, 0, 0.3);
+    font-family: 'Cairo', sans-serif;
 }
 
 .close-alert-btn:hover {
-    transform: scale(1.05);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(227, 160, 0, 0.5);
 }
 
 .close-alert-btn.error-btn {
     background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
     color: white;
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.close-alert-btn.error-btn:hover {
+    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.5);
+}
+
+@media (max-width: 768px) {
+    .success-modal {
+        margin: 1rem;
+        padding: 2rem;
+    }
+    
+    .success-modal h2 {
+        font-size: 1.5rem;
+    }
 }
 </style>
 
 <script>
-let currentDatasheet = '';
-
-function showDownloadForm(datasheet) {
-    currentDatasheet = datasheet;
-    document.getElementById('downloadFile').value = datasheet;
-    document.getElementById('downloadModal').style.display = 'flex';
+function showDownloadForm(datasheet, productName) {
+    document.getElementById('downloadDatasheet').value = datasheet;
+    document.getElementById('downloadProductName').value = productName;
+    document.getElementById('downloadFormModal').style.display = 'flex';
     document.body.style.overflow = 'hidden';
 }
 
 function closeDownloadForm() {
-    document.getElementById('downloadModal').style.display = 'none';
-    document.body.style.overflow = 'auto';
-}
-
-function closeSuccessAlert() {
-    document.getElementById('successModal').style.display = 'none';
-    document.body.style.overflow = 'auto';
-    window.location.href = '/datasheets/' + currentDatasheet;
-}
-
-function closeErrorAlert() {
-    document.getElementById('errorModal').style.display = 'none';
+    document.getElementById('downloadFormModal').style.display = 'none';
     document.body.style.overflow = 'auto';
 }
 
 function submitDownloadForm(event) {
     event.preventDefault();
-    const formData = new FormData(event.target);
     
-    fetch('/download-request', {
+    const formData = new FormData(event.target);
+    const data = Object.fromEntries(formData);
+    
+    fetch('{{ route('download.request') }}', {
         method: 'POST',
-        body: formData,
         headers: {
-            'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
-        }
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        },
+        body: JSON.stringify(data)
     })
     .then(response => response.json())
     .then(data => {
-        closeDownloadForm();
         if (data.success) {
-            document.getElementById('successMessage').textContent = data.message;
-            document.getElementById('successModal').style.display = 'flex';
+            closeDownloadForm();
+            showSuccessAlert();
+            
             setTimeout(() => {
-                closeSuccessAlert();
-            }, 2000);
+                const datasheetPath = document.getElementById('downloadDatasheet').value;
+                window.open('{{ asset('datasheets') }}/' + datasheetPath, '_blank');
+            }, 1500);
+            
+            event.target.reset();
         } else {
-            document.getElementById('errorMessage').textContent = data.message || 'حدث خطأ، يرجى المحاولة مرة أخرى';
-            document.getElementById('errorModal').style.display = 'flex';
+            closeDownloadForm();
+            showErrorAlert(data.message || 'حدث خطأ في الاتصال');
         }
     })
     .catch(error => {
+        console.error('Error:', error);
         closeDownloadForm();
-        document.getElementById('errorMessage').textContent = 'حدث خطأ في الاتصال، يرجى المحاولة مرة أخرى';
-        document.getElementById('errorModal').style.display = 'flex';
+        showErrorAlert('حدث خطأ في الاتصال، يرجى المحاولة مرة أخرى');
     });
 }
 
+function showSuccessAlert() {
+    document.getElementById('successAlert').style.display = 'flex';
+}
+
+function closeSuccessAlert() {
+    document.getElementById('successAlert').style.display = 'none';
+}
+
+function showErrorAlert(message) {
+    document.getElementById('errorMessage').textContent = message;
+    document.getElementById('errorAlert').style.display = 'flex';
+}
+
+function closeErrorAlert() {
+    document.getElementById('errorAlert').style.display = 'none';
+}
+
+// Close modal on outside click
 window.onclick = function(event) {
-    if (event.target.classList.contains('success-overlay')) {
-        if (event.target.id === 'downloadModal') {
-            closeDownloadForm();
-        } else if (event.target.id === 'successModal') {
-            closeSuccessAlert();
-        } else if (event.target.id === 'errorModal') {
-            closeErrorAlert();
-        }
+    const downloadModal = document.getElementById('downloadFormModal');
+    if (event.target === downloadModal) {
+        closeDownloadForm();
     }
 }
 </script>
