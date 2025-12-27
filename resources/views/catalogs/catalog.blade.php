@@ -1,895 +1,1070 @@
 <!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}" dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
+<html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>{{ config('website.name') }} - Company Catalog</title>
 
     <style>
-        /* ==============================
-           Modern Print-Ready Catalog
-           ============================== */
+        /* =========================
+           PRO CATALOG (RTL) - A4
+           Single file: CSS + JS
+        ========================== */
 
         :root{
             --primary:#FFDF41;
-            --secondary:#E3A000;
-            --dark:#0C2D1C;
-            --dark2:#115F45;
-            --ink:#0f172a;
-            --muted:#64748b;
-            --paper:#ffffff;
-            --soft:#f8fafc;
-            --border: rgba(15, 23, 42, 0.10);
-            --shadow: 0 18px 40px rgba(2, 6, 23, 0.10);
-            --radius: 18px;
+            --primary2:#E3A000;
+            --green:#0C2D1C;
+            --green2:#115F45;
+            --ink:#111827;
+            --muted:#6B7280;
+            --border:rgba(17,24,39,.10);
+            --shadow: 0 18px 45px rgba(0,0,0,.08);
+            --soft: rgba(17,24,39,.04);
         }
 
-        *{ box-sizing:border-box; }
-        html,body{ height:100%; }
+        *{box-sizing:border-box;margin:0;padding:0}
         body{
-            margin:0;
-            font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans", "Helvetica Neue", sans-serif;
-            color: var(--ink);
-            background: var(--soft);
-            line-height: 1.65;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
+            font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+            color:var(--ink);
+            background:#f3f4f6;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
         }
 
-        /* ========== Toolbar (screen only) ========== */
-        .toolbar{
-            position: sticky;
-            top: 0;
-            z-index: 50;
-            background: rgba(255,255,255,.85);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border);
+        /* ====== Layout wrappers ====== */
+        .book{
+            max-width:1100px;
+            margin:24px auto;
+            padding:0 14px 30px;
         }
-        .toolbar-inner{
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 12px 20px;
+        .page{
+            width: 210mm;
+            min-height: 297mm;
+            background:#fff;
+            border-radius:18px;
+            box-shadow: var(--shadow);
+            overflow:hidden;
+            position:relative;
+            margin: 0 auto 18px;
+        }
+
+        .page-inner{
+            padding: 18mm 16mm 18mm;
+        }
+
+        /* ====== Top header (for inner pages) ====== */
+        .page-head{
             display:flex;
             align-items:center;
             justify-content:space-between;
-            gap: 12px;
+            gap:12px;
+            padding: 4mm 16mm 2mm;
+            border-bottom: 1px solid var(--border);
+            background: linear-gradient(135deg, rgba(12,45,28,.04), rgba(255,223,65,.06));
+            /* make header less heavy in print */
+            box-shadow: none;
         }
-        .toolbar .brand{
+        .brand{
             display:flex;
             align-items:center;
             gap:10px;
             min-width:0;
         }
-        .toolbar .brand strong{
-            font-size: 14px;
-            letter-spacing:.2px;
+        .brand .logo{
+            width:44px;height:44px;
+            border-radius:14px;
+            display:grid;place-items:center;
+            background: linear-gradient(135deg, var(--green), var(--green2));
+            color:#fff;
+            font-weight:1000;
+            letter-spacing:.4px;
+            flex:0 0 auto;
+            overflow:hidden;
+        }
+        .brand .logo img{width:100%;height:100%;object-fit:cover}
+        .brand .txt{min-width:0}
+        .brand .txt .name{
+            font-weight:1000;
+            font-size:14px;
             white-space:nowrap;
             overflow:hidden;
             text-overflow:ellipsis;
         }
-        .toolbar .hint{
-            font-size: 12px;
-            color: var(--muted);
-        }
-        .btn{
-            border: 1px solid var(--border);
-            background: linear-gradient(180deg,#fff,#f8fafc);
-            border-radius: 12px;
-            padding: 10px 14px;
-            cursor: pointer;
-            font-weight: 700;
-            font-size: 13px;
-            display:inline-flex;
-            align-items:center;
-            gap: 8px;
-            box-shadow: 0 8px 18px rgba(2,6,23,.06);
-        }
-        .btn-primary{
-            border-color: rgba(227,160,0,0.45);
-            background: linear-gradient(180deg, var(--primary), #ffe979);
-        }
-        .btn:active{ transform: translateY(1px); }
-
-        /* ========== Page Wrapper ========== */
-        .page{
-            max-width: 1200px;
-            margin: 18px auto 40px;
-            padding: 0 18px;
+        .brand .txt .tag{
+            font-size:12px;
+            color:var(--muted);
+            font-weight:700;
+            white-space:nowrap;
+            overflow:hidden;
+            text-overflow:ellipsis;
         }
 
-        /* Print header/footer “running” feel */
-        .print-header, .print-footer{
-            display:none;
-        }
-
-        /* ========== Card / Sections ========== */
-        .sheet{
-            background: var(--paper);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            overflow: hidden;
-        }
-        .section{
-            padding: 46px 46px;
-        }
-        @media (max-width: 900px){
-            .section{ padding: 28px 18px; }
-        }
-
-        .section-head{
+        .head-meta{
             display:flex;
-            align-items:flex-end;
-            justify-content:space-between;
-            gap: 20px;
-            padding-bottom: 18px;
-            border-bottom: 2px solid rgba(255,223,65,.55);
-            margin-bottom: 26px;
-        }
-        .section-head h2{
-            margin:0;
-            font-size: 34px;
-            letter-spacing:-.6px;
-            color: var(--dark);
-        }
-        .section-head p{
-            margin: 6px 0 0;
-            color: var(--muted);
-            max-width: 62ch;
-        }
-        .chip{
-            display:inline-flex;
             align-items:center;
             gap:8px;
-            border: 1px solid var(--border);
-            border-radius: 999px;
-            padding: 8px 12px;
-            font-weight: 800;
-            font-size: 12px;
-            background: #fff;
-            color: #0b1220;
+            flex-wrap:wrap;
+            justify-content:flex-end;
+        }
+        .pill{
+            background:#fff;
+            border:1px solid rgba(17,24,39,.06);
+            border-radius:999px;
+            padding:6px 10px;
+            font-size:11px;
+            font-weight:800;
+            color:var(--green);
+            box-shadow: none;
+        }
+        .pill b{color:var(--ink)}
+
+        /* ====== Footer for page numbers (injected by JS) ====== */
+        .page-footer{
+            position:absolute;
+            left:0; right:0;
+            bottom:0;
+            padding: 6mm 14mm 6mm;
+            border-top:1px solid rgba(17,24,39,.04);
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:12px;
+            background: transparent;
+            /* keep footers light and non-obtrusive */
+            box-shadow: none;
+        }
+        .page-footer .foot-left{
+            font-size:11px;
+            color:var(--muted);
+            font-weight:700;
+        }
+        .page-footer .foot-right{
+            font-size:11px;
+            color:var(--muted);
+            font-weight:700;
+        }
+        .page-footer .pageno{
+            font-size:11px;
+            color:var(--ink);
+            font-weight:900;
+            background: rgba(255,223,65,.12);
+            border: 1px solid rgba(227,160,0,.16);
+            padding:5px 9px;
+            border-radius:999px;
+        }
+
+        /* ====== Cover ====== */
+        .cover{
+            background: radial-gradient(1200px 600px at 10% 10%, rgba(255,223,65,.22), transparent 55%),
+                        radial-gradient(900px 600px at 90% 20%, rgba(17,95,69,.18), transparent 55%),
+                        linear-gradient(135deg, var(--green) 0%, var(--green2) 100%);
+            color:#fff;
+        }
+        .cover .page-inner{
+            padding: 24mm 18mm;
+            display:flex;
+            flex-direction:column;
+            justify-content:space-between;
+            min-height:297mm;
+        }
+        .cover-top{
+            display:flex;
+            justify-content:space-between;
+            align-items:flex-start;
+            gap:16px;
+        }
+        .cover-logo{
+            display:flex;
+            align-items:center;
+            gap:12px;
+        }
+        .cover-logo .mark{
+            width:64px;height:64px;border-radius:18px;
+            background: rgba(255,255,255,.10);
+            border:1px solid rgba(255,255,255,.18);
+            display:grid;place-items:center;
+            overflow:hidden;
+        }
+        .cover-logo .mark img{width:100%;height:100%;object-fit:contain;filter: brightness(0) invert(1);}
+        .cover-logo .text .co{
+            font-size:18px;
+            font-weight:1000;
+            letter-spacing:.3px;
+        }
+        .cover-logo .text .sl{
+            font-size:12px;
+            opacity:.85;
+            margin-top:2px;
+            font-weight:700;
+        }
+
+        .cover-year{
+            background: rgba(255,255,255,.10);
+            border:1px solid rgba(255,255,255,.18);
+            padding:10px 14px;
+            border-radius:999px;
+            font-weight:1000;
+            font-size:12px;
             white-space:nowrap;
         }
 
-        /* ========== Cover ========== */
-        .cover{
-            min-height: 100vh;
-            background: radial-gradient(1200px 700px at 10% 0%, rgba(255,223,65,.18), transparent 60%),
-                        radial-gradient(900px 600px at 90% 30%, rgba(227,160,0,.16), transparent 55%),
-                        linear-gradient(135deg, var(--dark) 0%, var(--dark2) 100%);
-            color: #fff;
-            display:flex;
-            align-items:center;
-            justify-content:center;
+        .cover-mid{
             text-align:center;
-            padding: 70px 40px;
-            page-break-after: always;
-        }
-        .cover-inner{
-            max-width: 880px;
-        }
-        .cover-logo{
-            width: 240px;
-            max-width: 70vw;
-            height:auto;
-            margin: 0 auto 26px;
-            filter: brightness(0) invert(1);
-            display:block;
+            margin-top:6mm;
         }
         .cover-title{
-            margin:0;
-            font-size: 54px;
-            letter-spacing:-1px;
-            color: var(--primary);
+            font-size:44px;
+            font-weight:1100;
+            color:var(--primary);
+            letter-spacing:.4px;
+            line-height:1.15;
         }
-        .cover-subtitle{
-            margin: 10px 0 0;
-            font-size: 20px;
-            opacity: .92;
-            font-weight: 500;
+        .cover-sub{
+            margin-top:10px;
+            font-size:18px;
+            opacity:.92;
+            font-weight:600;
         }
         .cover-divider{
-            width: 260px;
-            height: 4px;
-            margin: 26px auto 22px;
-            border-radius: 99px;
-            background: linear-gradient(90deg, var(--primary), rgba(255,223,65,.20));
+            width:220px;height:3px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            margin:18px auto 16px;
+            border-radius:999px;
         }
-        .cover-badge-row{
-            display:flex;
-            gap: 10px;
-            justify-content:center;
-            flex-wrap:wrap;
-            margin-top: 18px;
-        }
-        .cover-badge{
-            background: rgba(255,255,255,.10);
-            border: 1px solid rgba(255,255,255,.18);
-            border-radius: 999px;
-            padding: 10px 14px;
-            font-size: 12px;
-            font-weight: 700;
-        }
-        .cover-year{
-            margin-top: 26px;
+        .cover-note{
+            font-size:14px;
             opacity:.85;
-            font-weight: 700;
+            font-weight:700;
         }
 
-        /* ========== TOC ========== */
-        .toc{
-            display:grid;
-            grid-template-columns: 1.1fr .9fr;
-            gap: 22px;
-            align-items:start;
-        }
-        .toc-card{
-            border: 1px solid var(--border);
-            border-radius: 18px;
-            padding: 18px;
-            background: linear-gradient(180deg, #fff, #fbfdff);
-        }
-        .toc h3{
-            margin: 0 0 10px;
-            color: #0b1220;
-            font-size: 18px;
-            letter-spacing: -.2px;
-        }
-        .toc a{
-            display:flex;
-            justify-content:space-between;
-            gap: 10px;
-            padding: 10px 10px;
-            border-radius: 12px;
-            text-decoration:none;
-            color: var(--ink);
-            border: 1px solid transparent;
-        }
-        .toc a:hover{
-            border-color: var(--border);
-            background: #fff;
-        }
-        .toc small{ color: var(--muted); font-weight: 700; }
-
-        /* ========== About ========== */
-        .grid-2{
+        .cover-bottom{
             display:grid;
             grid-template-columns: 1fr 1fr;
-            gap: 26px;
+            gap:16px;
+            align-items:end;
+        }
+        .cover-card{
+            background: rgba(255,255,255,.10);
+            border:1px solid rgba(255,255,255,.18);
+            border-radius:18px;
+            padding:14px 16px;
+        }
+        .cover-card h4{
+            font-size:12px;
+            opacity:.9;
+            font-weight:1000;
+            color: #fff;
+            margin-bottom:8px;
+            letter-spacing:.4px;
+        }
+        .cover-card p{
+            font-size:12px;
+            opacity:.9;
+            line-height:1.7;
+            font-weight:650;
+        }
+
+        /* ====== Section header ====== */
+        .section-header{
+            display:flex;
+            align-items:flex-end;
+            justify-content:space-between;
+            gap:14px;
+            margin-bottom:12px;
+            padding-bottom:6px;
+            border-bottom: 1px dashed rgba(17,24,39,.03);
+        }
+        .sec-left{
+            min-width:0;
+            flex:1;
+        }
+        .sec-kicker{
+            display:flex;
             align-items:center;
+            gap:12px;
         }
-        @media (max-width: 900px){
-            .grid-2{ grid-template-columns: 1fr; }
+        .sec-no{
+            width:44px;height:44px;border-radius:14px;
+            background: linear-gradient(135deg, var(--primary), var(--primary2));
+            display:grid;place-items:center;
+            font-weight:1100;
+            color:#1f2937;
+            border: 1px solid rgba(0,0,0,.08);
+            flex:0 0 auto;
         }
-        .about-box h3{
-            margin: 0 0 10px;
-            color: var(--dark);
-            font-size: 20px;
+        .sec-title{
+            font-size:24px;
+            font-weight:1100;
+            color:var(--green);
+            line-height:1.1;
         }
-        .about-box p{
-            margin: 0 0 14px;
-            color: #111827;
+        .sec-title-en{
+            font-size:12px;
+            color:var(--muted);
+            font-weight:900;
+            margin-top:2px;
+            letter-spacing:.3px;
         }
-        .about-image{
-            border-radius: 18px;
-            overflow:hidden;
-            border: 1px solid var(--border);
-            box-shadow: 0 14px 30px rgba(2,6,23,.10);
+        .sec-line{
+            height:2px;
+            background: linear-gradient(90deg, var(--primary), transparent);
+            margin-top:10px;
+            border-radius:999px;
+            width:100%;
+        }
+
+        /* ====== Cards / grids ====== */
+        .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+        .card{
+            border:1px solid var(--border);
             background: #fff;
+            border-radius:18px;
+            overflow:hidden;
         }
-        .about-image img{
-            width: 100%;
-            height: 100%;
-            max-height: 360px;
-            object-fit: cover;
-            display:block;
+        .card.pad{padding:14px}
+        .card.soft{
+            background: linear-gradient(180deg, rgba(17,24,39,.02), #fff);
+        }
+        .muted{color:var(--muted)}
+        .small{font-size:12px}
+        .bold{font-weight:1000}
+
+        /* ====== About ====== */
+        .about-hero{
+            display:grid;
+            grid-template-columns: 1.2fr .8fr;
+            gap:14px;
+        }
+        .about-hero .img{
+            border-radius:18px;
+            overflow:hidden;
+            border:1px solid var(--border);
+            background:#f3f4f6;
+            min-height:240px;
+        }
+        .about-hero .img img{width:100%;height:100%;object-fit:cover}
+        .about-hero h3{
+            font-size:16px;font-weight:1100;color:var(--green);
+            margin-bottom:8px;
+        }
+        .about-hero p{
+            font-size:13px;
+            color:var(--ink);
+            line-height:1.9;
+            font-weight:650;
         }
 
         .stats{
             display:grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 14px;
-            margin-top: 22px;
-        }
-        @media (max-width: 900px){
-            .stats{ grid-template-columns: repeat(2, 1fr); }
+            gap:10px;
+            margin-top:14px;
         }
         .stat{
-            border-radius: 18px;
-            padding: 18px 16px;
-            background: linear-gradient(135deg, rgba(12,45,28,1), rgba(17,95,69,1));
+            border-radius:18px;
+            background: linear-gradient(135deg, var(--green), var(--green2));
             color:#fff;
-            border: 1px solid rgba(255,255,255,.16);
+            padding:12px;
+            border:1px solid rgba(255,255,255,.12);
         }
-        .stat strong{
-            display:block;
-            font-size: 34px;
+        .stat .n{
+            font-size:26px;
+            font-weight:1200;
             color: var(--primary);
-            letter-spacing:-.6px;
         }
-        .stat span{
-            font-size: 12px;
-            opacity:.92;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: .8px;
+        .stat .l{
+            font-size:11px;
+            opacity:.9;
+            font-weight:900;
+            margin-top:6px;
         }
 
-        /* ========== Products ========== */
-        .category{
-            margin-top: 26px;
+        /* ====== Products ====== */
+        .cat-block{
+            border:1px solid var(--border);
+            border-radius:18px;
+            background: linear-gradient(180deg, rgba(17,24,39,.02), #fff);
+            padding:12px;
+            overflow:hidden;
         }
-        .category-head{
+        .cat-title{
             display:flex;
             align-items:center;
             justify-content:space-between;
-            gap: 12px;
-            margin-bottom: 12px;
+            gap:10px;
+            margin-bottom:8px;
         }
-        .category-head h3{
-            margin: 0;
-            font-size: 20px;
-            color: #0b1220;
+        .cat-title h3{
+            font-size:14px;
+            font-weight:1200;
+            color:var(--green);
+            line-height:1.25;
         }
-        .category-head p{
-            margin: 0;
-            color: var(--muted);
-            font-size: 13px;
-        }
-        .products{
-            display:grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 14px;
-        }
-        @media (max-width: 1050px){
-            .products{ grid-template-columns: repeat(2, 1fr); }
-        }
-        @media (max-width: 650px){
-            .products{ grid-template-columns: 1fr; }
-        }
-        .product{
-            border: 1px solid var(--border);
-            border-radius: 18px;
-            background: #fff;
-            padding: 16px;
-            page-break-inside: avoid;
-            position:relative;
-            overflow:hidden;
-        }
-        .product:before{
-            content:"";
-            position:absolute;
-            inset:0;
-            background: radial-gradient(600px 220px at 0% 0%, rgba(255,223,65,.20), transparent 55%);
-            pointer-events:none;
-        }
-        .product-top{
-            display:flex;
-            align-items:center;
-            gap: 12px;
-            margin-bottom: 10px;
-            position:relative;
-        }
-        .picon{
-            width: 52px;
-            height: 52px;
-            border-radius: 16px;
-            background: linear-gradient(135deg, var(--dark), var(--dark2));
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            color: var(--primary);
-            font-weight: 900;
-            flex: 0 0 auto;
-            border: 1px solid rgba(255,255,255,.18);
-            overflow:hidden;
-        }
-        .picon img{
-            width: 34px;
-            height: 34px;
-            object-fit: contain;
-        }
-        .product h4{
-            margin: 0;
-            font-size: 15px;
-            color: #0b1220;
-            letter-spacing: -.2px;
-        }
-        .product p{
-            margin: 6px 0 0;
-            color: var(--muted);
-            font-size: 13px;
-            position:relative;
-        }
-        .tag-row{
-            display:flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            margin-top: 10px;
-            position:relative;
-        }
-        .tag{
-            font-size: 11px;
-            font-weight: 800;
-            padding: 6px 10px;
-            border-radius: 999px;
-            border: 1px solid var(--border);
-            background: rgba(248,250,252,.9);
-            color: #0b1220;
+        .cat-title .en{
+            font-size:11px;
+            color:var(--muted);
+            font-weight:900;
+            margin-top:2px;
+            letter-spacing:.3px;
         }
 
-        /* ========== Projects ========== */
-        .projects{
-            display:grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 14px;
+        .product{
+            border:1px solid var(--border);
+            border-radius:16px;
+            padding:10px;
+            background:#fff;
+            display:flex;
+            gap:10px;
+            align-items:flex-start;
         }
-        @media (max-width: 900px){
-            .projects{ grid-template-columns: 1fr; }
+        .product + .product{margin-top:10px}
+        .product .icon{
+            width:38px;height:38px;
+            border-radius:14px;
+            display:grid;place-items:center;
+            background: rgba(17,95,69,.10);
+            border:1px solid rgba(17,95,69,.18);
+            font-weight:1000;
+            flex:0 0 auto;
         }
-        .project{
-            border: 1px solid var(--border);
-            border-radius: 18px;
+        .product .name{
+            font-size:13px;
+            font-weight:1100;
+            line-height:1.4;
+        }
+        .product .desc{
+            font-size:11.5px;
+            color:var(--muted);
+            margin-top:4px;
+            line-height:1.7;
+            font-weight:650;
+        }
+
+        /* ====== Projects ====== */
+        .proj-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+        .proj{
+            border:1px solid var(--border);
+            border-radius:18px;
             overflow:hidden;
             background:#fff;
-            page-break-inside: avoid;
         }
-        .project .img{
-            height: 240px;
-            background: #f1f5f9;
-            overflow:hidden;
+        .proj .img{
+            height:160px;
+            background:#f3f4f6;
         }
-        .project .img img{
-            width:100%;
-            height:100%;
-            object-fit:cover;
-            display:block;
-        }
-        .project .body{
-            padding: 14px 16px;
-        }
-        .project h4{
-            margin: 0 0 6px;
-            font-size: 16px;
-            color: #0b1220;
-        }
-        .project p{
-            margin: 0;
-            font-size: 13px;
-            color: var(--muted);
-        }
+        .proj .img img{width:100%;height:100%;object-fit:cover}
+        .proj .body{padding:12px}
+        .proj .title{font-size:13px;font-weight:1100;color:var(--green)}
+        .proj .meta{font-size:11px;color:var(--muted);font-weight:800;margin-top:6px}
 
-        /* ========== Contact ========== */
+        /* ====== Contact ====== */
         .contact{
-            border-radius: 18px;
-            background: linear-gradient(135deg, var(--dark), var(--dark2));
+            background: linear-gradient(135deg, var(--green) 0%, var(--green2) 100%);
             color:#fff;
-            padding: 22px;
-            border: 1px solid rgba(255,255,255,.14);
+            border-radius:18px;
+            padding:14px;
+            border:1px solid rgba(255,255,255,.10);
         }
-        .contact-grid{
-            display:grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 14px;
-        }
-        @media (max-width: 900px){
-            .contact-grid{ grid-template-columns: 1fr; }
-        }
+        .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
         .citem{
+            background: rgba(255,255,255,.10);
+            border:1px solid rgba(255,255,255,.18);
+            border-radius:16px;
+            padding:10px;
             display:flex;
-            gap: 12px;
+            gap:10px;
             align-items:flex-start;
-            padding: 12px;
-            border-radius: 16px;
-            background: rgba(255,255,255,.06);
-            border: 1px solid rgba(255,255,255,.12);
         }
         .cicon{
-            width: 40px;
-            height: 40px;
-            border-radius: 14px;
-            background: linear-gradient(180deg, var(--primary), #ffe979);
-            color: #0b1220;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            font-weight: 900;
-            flex: 0 0 auto;
+            width:34px;height:34px;border-radius:14px;
+            background: rgba(255,223,65,.22);
+            border:1px solid rgba(255,223,65,.22);
+            display:grid;place-items:center;
+            font-weight:1000;
+            flex:0 0 auto;
         }
-        .citem h4{
-            margin: 0 0 4px;
-            font-size: 13px;
-            letter-spacing:.2px;
-            color: rgba(255,255,255,.95);
-        }
-        .citem p{
-            margin: 0;
-            font-size: 13px;
-            color: rgba(255,255,255,.85);
-        }
+        .ctxt h4{font-size:12px;font-weight:1100;color:var(--primary)}
+        .ctxt p{font-size:11.5px;opacity:.95;margin-top:3px;line-height:1.7;font-weight:650}
 
-        /* ========== Print Rules ========== */
+        /* ====== Avoid breaking cards in print ====== */
+        .avoid-break{break-inside: avoid; page-break-inside: avoid;}
+        .page-break{page-break-before: always; break-before: page;}
+
+        /* ====== Print ====== */
         @media print{
-            /* IMPORTANT: allow backgrounds in print */
-            *{ -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+            body{background:#fff}
+            .book{max-width:none;margin:0;padding:0}
+            .page{
+                margin:0;
+                box-shadow:none;
+                border-radius:0;
+                width:210mm;
+                min-height:297mm;
+            }
+            @page{size:A4;margin:0}
+        }
 
-            .toolbar{ display:none !important; }
-            body{ background:#fff; }
-            .page{ max-width: 100%; margin: 0; padding: 0; }
-            .sheet{ box-shadow:none; border: none; border-radius: 0; }
-
-            /* Fixed header/footer in print */
-            .print-header, .print-footer{
-                display:block;
-                position: fixed;
-                left: 0;
-                right: 0;
-                padding: 10mm 14mm;
-                color: #0b1220;
-                font-size: 11px;
-            }
-            .print-header{
-                top: 0;
-                border-bottom: 1px solid rgba(15,23,42,.10);
-                background: rgba(255,255,255,.92);
-            }
-            .print-footer{
-                bottom: 0;
-                border-top: 1px solid rgba(15,23,42,.10);
-                background: rgba(255,255,255,.92);
-            }
-            .print-footer .page-num:after{
-                content: counter(page);
-            }
-
-            /* page margins (space for fixed header/footer) */
-            @page{
-                size: A4;
-                margin: 18mm 14mm;
-            }
-
-            /* Avoid awkward breaks */
-            .section, .product, .project, .contact{ break-inside: avoid; page-break-inside: avoid; }
-            .cover{ page-break-after: always; }
+        /* Responsive screen only */
+        @media (max-width: 980px){
+            .page{width:100%;min-height:auto}
+            .page-inner{padding:18px}
+            .page-head{padding:16px}
+            .page-footer{padding:12px 16px}
+        }
+        @media (max-width: 780px){
+            .grid-2,.proj-grid,.about-hero{grid-template-columns:1fr}
+            .stats{grid-template-columns:1fr 1fr}
+            .contact-grid{grid-template-columns:1fr}
         }
     </style>
 </head>
 
 <body>
+@php
+    use Illuminate\Support\Facades\Lang;
 
-    {{-- Screen-only toolbar --}}
-    <div class="toolbar no-print">
-        <div class="toolbar-inner">
+    // Force Arabic visual content, but still use website config values
+    $companyName = config('website.name');
+    $slogan      = config('website.slogan');
+    $mission     = config('website.mission');
+
+    $logoPath    = config('website.logo');
+
+    // Products from your translation structure
+    $panels = Lang::get('website.products.solar_panels.items');
+    $lights = Lang::get('website.products.solar_lights.items');
+    $swh    = Lang::get('website.products.swh.items');
+
+    $panels = is_array($panels) ? $panels : [];
+    $lights = is_array($lights) ? $lights : [];
+    $swh    = is_array($swh)    ? $swh    : [];
+
+    // Combine language product lists into one ordered array (Arabic data source)
+    $langProductsCombined = array_values(array_merge($swh, $lights, $panels));
+
+    // About stats
+    $stats  = Lang::get('website.about.stats');
+    $stats  = is_array($stats) ? $stats : [];
+
+    // Projects (folders)
+    $projectsPath = public_path('our porfolio');
+    $folders = [];
+    if (is_dir($projectsPath)) {
+        $folders = array_filter(scandir($projectsPath), function($item) use ($projectsPath) {
+            return $item !== '.' && $item !== '..' && is_dir($projectsPath . '/' . $item);
+        });
+        // show more if you want
+        $folders = array_values($folders);
+    }
+
+    $safe = function($v){ return e((string)($v ?? '')); };
+
+    $sections = [
+        ['id'=>'about','no'=>'01','ar'=>'من نحن','en'=>'About Us'],
+        ['id'=>'products','no'=>'02','ar'=>'المنتجات','en'=>'Products'],
+        ['id'=>'projects','no'=>'03','ar'=>'المشاريع','en'=>'Projects'],
+        ['id'=>'contact','no'=>'04','ar'=>'تواصل معنا','en'=>'Contact'],
+    ];
+@endphp
+
+<div class="book" id="catalogBook">
+
+    {{-- ================= COVER PAGE ================= --}}
+    <div class="page cover" data-nofooter="1">
+        <div class="page-inner">
+            <div class="cover-top">
+                <div class="cover-logo">
+                    <div class="mark">
+                        @if($logoPath)
+                            <img src="{{ asset($logoPath) }}" alt="{{ $safe($companyName) }}" style="width:100%;height:100%;object-fit:contain;">
+                        @endif
+                    </div>
+                    <div class="text">
+                        <div class="co">{{ $companyName }}</div>
+                        <div class="sl">{{ $slogan }}</div>
+                    </div>
+                </div>
+                <div class="cover-year">Company Catalog — {{ date('Y') }}</div>
+            </div>
+
+            <div class="cover-mid">
+                <div class="cover-title">{{ $companyName }}</div>
+                <div class="cover-sub">{{ $slogan }}</div>
+                <div class="cover-divider"></div>
+                <div class="cover-note">كتالوج الشركة — عرض المنتجات والمشاريع والخدمات</div>
+            </div>
+
+            <!-- cover-bottom removed as requested -->
+        </div>
+    </div>
+
+    {{-- ================= ABOUT (01) ================= --}}
+    <div class="page" data-section="about">
+        <div class="page-head">
             <div class="brand">
-                <strong>{{ config('website.name') }} — Catalog</strong>
-                <span class="hint">Ctrl + P to print / Save as PDF</span>
-            </div>
-            <div style="display:flex; gap:10px; align-items:center;">
-                <button class="btn" type="button" id="scrollTopBtn">↑ Top</button>
-                <button class="btn btn-primary" type="button" id="printBtn">🖨️ Print / Save PDF</button>
-            </div>
-        </div>
-    </div>
-
-    {{-- Print header/footer --}}
-    <div class="print-header">
-        <div style="display:flex; justify-content:space-between; align-items:center;">
-            <div style="font-weight:800;">{{ config('website.name') }}</div>
-            <div style="color:#64748b; font-weight:700;">Company Catalog — {{ date('Y') }}</div>
-        </div>
-    </div>
-
-    <div class="print-footer">
-        <div style="display:flex; justify-content:space-between; align-items:center;">
-            <div style="color:#64748b;">
-                {{ config('website.contact.email') }} • {{ config('website.contact.phone') }}
-            </div>
-            <div style="font-weight:800;">
-                Page <span class="page-num"></span>
-            </div>
-        </div>
-    </div>
-
-    <div class="page">
-        <div class="sheet">
-
-            {{-- Cover --}}
-            <div class="cover" id="cover">
-                <div class="cover-inner">
-                    <img src="{{ asset(config('website.logo')) }}" alt="{{ config('website.name') }} Logo" class="cover-logo">
-                    <h1 class="cover-title">{{ config('website.name') }}</h1>
-                    <p class="cover-subtitle">{{ config('website.slogan') }}</p>
-                    <div class="cover-divider"></div>
-                    <div style="font-size: 22px; font-weight: 900; letter-spacing:.2px;">Company Catalog</div>
-
-                    <div class="cover-badge-row">
-                        <div class="cover-badge">Solar Solutions</div>
-                        <div class="cover-badge">Engineering & Installation</div>
-                        <div class="cover-badge">After-Sales Support</div>
-                    </div>
-
-                    <div class="cover-year">{{ date('Y') }}</div>
+                <div class="logo">
+                    @if($logoPath)
+                        <img src="{{ asset($logoPath) }}" alt="{{ $safe($companyName) }}">
+                    @else
+                        {{ mb_substr((string)$companyName,0,1) }}
+                    @endif
+                </div>
+                <div class="txt">
+                    <div class="name">{{ $companyName }}</div>
+                    <div class="tag">{{ $slogan }}</div>
                 </div>
             </div>
 
-            {{-- TOC --}}
-            <div class="section" id="toc">
-                <div class="section-head">
-                    <div>
-                        <h2>Table of Contents</h2>
-                        <p>Quick navigation for the catalog sections.</p>
-                    </div>
-                    <span class="chip">PDF Ready</span>
-                </div>
+            <div class="head-meta">
+                <div class="pill"><b>01</b> — من نحن</div>
+                <div class="pill">{{ date('Y') }}</div>
+            </div>
+        </div>
 
-                <div class="toc">
-                    <div class="toc-card">
-                        <h3>Sections</h3>
-                        <a href="#about"><span>About Us</span><small>01</small></a>
-                        <a href="#products"><span>Products</span><small>02</small></a>
-                        <a href="#projects"><span>Projects</span><small>03</small></a>
-                        <a href="#contact"><span>Contact</span><small>04</small></a>
-                    </div>
-
-                    <div class="toc-card">
-                        <h3>Catalog Notes</h3>
-                        <div style="color:var(--muted); font-size:13px;">
-                            <div class="chip" style="margin-bottom:10px;">Tip</div>
-                            Use <strong>Ctrl + P</strong> then choose <strong>Save as PDF</strong>.
-                            For best results, enable <strong>Background graphics</strong> in print settings.
-                            <div style="margin-top:12px;">
-                                <span class="chip">A4</span>
-                                <span class="chip">Clean Layout</span>
-                                <span class="chip">Page Numbers</span>
-                            </div>
+        <div class="page-inner">
+            <div class="section-header">
+                <div class="sec-left">
+                    <div class="sec-kicker">
+                        <div class="sec-no">01</div>
+                        <div>
+                            <div class="sec-title">{{ __('website.about.title') }}</div>
+                            <div class="sec-title-en">About Us</div>
                         </div>
                     </div>
+                    <div class="sec-line"></div>
+                </div>
+                <div class="pill"><b>{{ __('website.about.subtitle') }}</b></div>
+            </div>
+
+
+            <div class="about-hero">
+                <div class="card pad soft avoid-break" style="background: linear-gradient(135deg, #f9fbe7 60%, #e0f2f1 100%); border: 2px solid #e0e0e0;">
+                    <h3 style="color: var(--primary); font-size: 20px; font-weight: 900; margin-bottom: 10px;">من نحن</h3>
+                    <p class="muted" style="margin-top:6px; font-size: 15px; color: #222; font-weight: 700; line-height: 2.1;">
+                        نحن في <span style="color: var(--green); font-weight: 900;">SG Solar</span> نؤمن بأن الطاقة الشمسية هي مستقبل الاستدامة. نلتزم بتقديم حلول تسخين مياه صديقة للبيئة وموفرة للطاقة، مع ضمان أعلى مستويات الجودة والكفاءة لعملائنا في المنازل والشركات.
+                    </p>
+                    <div style="margin-top:18px; background: #fffbe7; border-radius: 12px; padding: 12px 14px; border: 1px solid #ffe082;">
+                        <div class="bold" style="color:var(--primary2);font-size:15px; margin-bottom: 6px;">لماذا تختارنا؟</div>
+                        <ul style="font-size: 13px; color: #444; font-weight: 700; line-height: 2; margin: 0 0 0 18px; padding: 0; list-style: disc inside;">
+                            <li>خبرة عميقة وفريق متخصص في الطاقة الشمسية.</li>
+                            <li>حلول مخصصة تلبي احتياجاتك بدقة.</li>
+                            <li>ضمان الجودة وخدمة ما بعد البيع المتميزة.</li>
+                            <li>أسعار تنافسية وشفافية كاملة في التعامل.</li>
+                            <li>دعم فني واستشارات مجانية لتحقيق أفضل النتائج.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="about-hero img avoid-break">
+                    <img src="{{ asset('images/aboutus.png') }}" alt="About {{ $safe($companyName) }}">
                 </div>
             </div>
 
-            {{-- About --}}
-            <div class="section" id="about">
-                <div class="section-head">
-                    <div>
-                        <h2>{{ __('website.about.title') }}</h2>
-                        <p>{{ __('website.about.subtitle') }}</p>
-                    </div>
-                    <span class="chip">{{ __('website.nav.mission') }}</span>
-                </div>
-
-                <div class="grid-2">
-                    <div class="about-box">
-                        <h3>{{ __('website.nav.mission') }}</h3>
-                        <p>{{ config('website.mission') }}</p>
-
-                        <h3 style="margin-top:16px;">Why Choose Us</h3>
-                        <p>{{ __('website.why_us.subtitle') }}</p>
-
-                        <div style="margin-top:16px;">
-                            <span class="chip">Quality</span>
-                            <span class="chip">Safety</span>
-                            <span class="chip">Warranty</span>
-                            <span class="chip">Support</span>
-                        </div>
-                    </div>
-
-                    <div class="about-image">
-                        <img src="{{ asset('images/aboutus.png') }}" alt="About {{ config('website.name') }}">
-                    </div>
-                </div>
-
+            @if(!empty($stats))
                 <div class="stats">
-                    @foreach(__('website.about.stats') as $stat)
-                        <div class="stat">
-                            <strong>{{ $stat['number'] ?? '' }}{{ $stat['suffix'] ?? '' }}</strong>
-                            <span>{{ $stat['label'] ?? '' }}</span>
+                    @foreach($stats as $st)
+                        <div class="stat avoid-break">
+                            <div class="n">
+                                {{ $st['number'] ?? '' }}{{ $st['suffix'] ?? '' }}
+                            </div>
+                            <div class="l">{{ $st['label'] ?? '' }}</div>
                         </div>
                     @endforeach
                 </div>
+            @endif
+        </div>
+    </div>
+
+    {{-- ================= PRODUCTS (02) ================= --}}
+    <div class="page" data-section="products">
+        <div class="page-head">
+            <div class="brand">
+                <div class="logo">
+                    @if($logoPath)
+                        <img src="{{ asset($logoPath) }}" alt="{{ $safe($companyName) }}">
+                    @else
+                        {{ mb_substr((string)$companyName,0,1) }}
+                    @endif
+                </div>
+                <div class="txt">
+                    <div class="name">{{ $companyName }}</div>
+                    <div class="tag">Company Catalog</div>
+                </div>
             </div>
 
-            {{-- Products --}}
-            <div class="section" id="products" style="page-break-before: always;">
-                <div class="section-head">
-                    <div>
-                        <h2>{{ __('website.products.title') }}</h2>
-                        <p>{{ __('website.products.subtitle') }}</p>
+            <div class="head-meta">
+                <div class="pill"><b>02</b> — المنتجات</div>
+                <div class="pill">{{ __('website.products.subtitle') }}</div>
+            </div>
+        </div>
+
+        <div class="page-inner">
+            <div class="section-header">
+                <div class="sec-left">
+                    <div class="sec-kicker">
+                        <div class="sec-no">02</div>
+                        <div>
+                            <div class="sec-title">{{ __('website.products.title') }}</div>
+                            <div class="sec-title-en">Products</div>
+                        </div>
                     </div>
-                    <span class="chip">Solutions</span>
+                    <div class="sec-line"></div>
                 </div>
+                <div class="pill"><b>{{ __('website.products.subtitle') }}</b></div>
+            </div>
 
-                @php
-                    // Add/edit freely. Each category has items. Icons are optional.
-                    // If you have icons under public/icons/icons/, keep icon value like "on-grid.svg".
-                    $productsByCategory = [
-                        [
-                            'title' => 'Solar Systems',
-                            'subtitle' => 'Complete solutions for homes, businesses and farms.',
-                            'items' => [
-                                ['name'=>'On-Grid Solar System','icon'=>'on-grid.svg','desc'=>'Connect to the grid and reduce bills while exporting surplus energy.','tags'=>['Residential','Commercial']],
-                                ['name'=>'Off-Grid Solar System','icon'=>'off-grid.svg','desc'=>'Energy independence with battery storage for remote areas.','tags'=>['Remote','Backup']],
-                                ['name'=>'Hybrid Solar System','icon'=>'hybrid.svg','desc'=>'Grid + battery backup for uninterrupted power and savings.','tags'=>['Backup','Smart']],
-                            ],
-                        ],
-                        [
-                            'title' => 'Water & Heating',
-                            'subtitle' => 'Efficient solar solutions for water pumping and hot water.',
-                            'items' => [
-                                ['name'=>'Solar Water Pumping','icon'=>'pump.svg','desc'=>'High-efficiency pumping for agriculture and remote use.','tags'=>['Agriculture','Industry']],
-                                ['name'=>'Solar Water Heaters','icon'=>'solar-heater.svg','desc'=>'Eco-friendly hot water, reduces energy costs year-round.','tags'=>['Home','Hotel']],
-                            ],
-                        ],
-                        [
-                            'title' => 'Lighting & Accessories',
-                            'subtitle' => 'Solar lighting + components that complete your system.',
-                            'items' => [
-                                ['name'=>'Solar Lighting Systems','icon'=>'solar-light.svg','desc'=>'Outdoor and indoor solar lighting solutions.','tags'=>['Street','Garden']],
-                                ['name'=>'Inverters','icon'=>null,'desc'=>'Pure sine wave / hybrid inverters with smart monitoring options.','tags'=>['Inverter','Smart']],
-                                ['name'=>'Batteries','icon'=>null,'desc'=>'Lithium & deep-cycle battery solutions for backup and off-grid.','tags'=>['LiFePO4','AGM']],
-                                ['name'=>'Mounting Structures','icon'=>null,'desc'=>'Roof & ground mounting systems engineered for durability.','tags'=>['Roof','Ground']],
-                            ],
-                        ],
-                    ];
-                @endphp
+            @php
+                $sectionData = [
+                    [
+                        'icon' => '🧱',
+                        'title_ar' => Lang::get('website.products.solar_panels.title'),
+                        'title_en' => 'Solar Panels',
+                        'desc' => Lang::get('website.products.solar_panels.description'),
+                        'items' => $panels,
+                        'meta_key' => 'power',
+                        'meta_label' => 'القدرة / Power',
+                    ],
+                    [
+                        'icon' => '💡',
+                        'title_ar' => Lang::get('website.products.solar_lights.title'),
+                        'title_en' => 'Solar Lights',
+                        'desc' => Lang::get('website.products.solar_lights.description'),
+                        'items' => $lights,
+                        'meta_key' => 'power',
+                        'meta_label' => 'القدرة / Power',
+                    ],
+                    [
+                        'icon' => '🔥',
+                        'title_ar' => Lang::get('website.products.swh.title'),
+                        'title_en' => 'Solar Water Heaters',
+                        'desc' => Lang::get('website.products.swh.description'),
+                        'items' => $swh,
+                        'meta_key' => 'capacity',
+                        'meta_label' => 'السعة / Capacity',
+                    ],
+                ];
+            @endphp
 
-                @foreach($productsByCategory as $cat)
-                    <div class="category">
-                        <div class="category-head">
+            <div class="grid-2">
+                @foreach($sectionData as $sec)
+                    <div class="cat-block avoid-break">
+                        <div class="cat-title">
                             <div>
-                                <h3>{{ $cat['title'] }}</h3>
-                                <p>{{ $cat['subtitle'] }}</p>
+                                <h3>{{ $sec['title_ar'] }}</h3>
+                                <div class="en">{{ $sec['title_en'] }}</div>
                             </div>
-                            <span class="chip">{{ count($cat['items']) }} items</span>
+                            <div style="font-size:18px;font-weight:1200">{{ $sec['icon'] }}</div>
                         </div>
 
-                        <div class="products">
-                            @foreach($cat['items'] as $product)
-                                <div class="product">
-                                    <div class="product-top">
-                                        <div class="picon">
-                                            @if(!empty($product['icon']) && file_exists(public_path('icons/icons/' . $product['icon'])))
-                                                <img src="{{ asset('icons/icons/' . $product['icon']) }}" alt="{{ $product['name'] }}">
-                                            @else
-                                                ⚡
+                        @if(!empty($sec['desc']))
+                            <div class="small muted" style="font-weight:800;margin-bottom:10px;line-height:1.7;">
+                                {{ $sec['desc'] }}
+                            </div>
+                        @endif
+
+                        @forelse($sec['items'] as $it)
+                            @php
+                                $name  = $it['name'] ?? '';
+                                $en    = $it['english_name'] ?? '';
+                                $desc  = $it['description'] ?? ($it['full_content'] ?? '');
+                                $img   = $it['image'] ?? null;
+                                $badge = $it['badge'] ?? null;
+                                $meta  = $sec['meta_key'] ? ($it[$sec['meta_key']] ?? '') : '';
+                            @endphp
+
+                            <div class="product avoid-break">
+                                <div class="icon">{{ $sec['icon'] }}</div>
+
+                                <div style="flex:1;min-width:0">
+                                    <div style="display:flex;gap:10px;justify-content:space-between;align-items:flex-start;">
+                                        <div style="min-width:0">
+                                            <div class="name">{{ $name }}</div>
+                                            @if($en)
+                                                <div class="desc" style="font-weight:1000;letter-spacing:.2px">{{ $en }}</div>
                                             @endif
                                         </div>
-                                        <div style="min-width:0;">
-                                            <h4>{{ $product['name'] }}</h4>
-                                            <p>{{ $product['desc'] }}</p>
-                                        </div>
+
+                                        @if($badge)
+                                            <div style="
+                                                background: rgba(255,223,65,.22);
+                                                border: 1px solid rgba(227,160,0,.28);
+                                                color:#7a4b00;
+                                                font-weight:1100;
+                                                font-size:11px;
+                                                padding:6px 10px;
+                                                border-radius:999px;
+                                                white-space:nowrap;
+                                                flex:0 0 auto;
+                                            ">{{ $badge }}</div>
+                                        @endif
                                     </div>
 
-                                    @if(!empty($product['tags']))
-                                        <div class="tag-row">
-                                            @foreach($product['tags'] as $t)
-                                                <span class="tag">{{ $t }}</span>
-                                            @endforeach
+                                    @if($meta)
+                                        <div class="desc" style="margin-top:6px">
+                                            <b style="color:var(--ink)">{{ $sec['meta_label'] }}:</b> {{ $meta }}
+                                        </div>
+                                    @endif
+
+                                    @if($desc)
+                                        <div class="desc" style="margin-top:6px">
+                                            {{ \Illuminate\Support\Str::limit(strip_tags($desc), 220) }}
                                         </div>
                                     @endif
                                 </div>
-                            @endforeach
-                        </div>
+
+                                @if($img)
+                                    <div style="width:86px;flex:0 0 auto">
+                                        <div style="border-radius:16px;overflow:hidden;border:1px solid var(--border);background:#f3f4f6;">
+                                            <img src="{{ asset(ltrim($img,'/')) }}" alt="{{ $safe($name) }}" style="width:86px;height:86px;object-fit:cover;">
+                                        </div>
+                                    </div>
+                                @endif
+                            </div>
+                        @empty
+                            <div class="small muted">لا توجد منتجات في هذا القسم حالياً.</div>
+                        @endforelse
                     </div>
                 @endforeach
             </div>
-
-            {{-- Projects --}}
-            <div class="section" id="projects" style="page-break-before: always;">
-                <div class="section-head">
-                    <div>
-                        <h2>{{ __('website.projects.title') }}</h2>
-                        <p>{{ __('website.projects.subtitle') }}</p>
-                    </div>
-                    <span class="chip">Portfolio</span>
-                </div>
-
-                <div class="projects">
-                    @php
-                        $projectsPath = public_path('our porfolio');
-                        $folders = [];
-                        if (is_dir($projectsPath)) {
-                            $folders = array_filter(scandir($projectsPath), function($item) use ($projectsPath) {
-                                return $item !== '.' && $item !== '..' && is_dir($projectsPath . '/' . $item);
-                            });
-                            $folders = array_slice($folders, 0, 8);
-                        }
-                    @endphp
-
-                    @foreach($folders as $folder)
-                        @php
-                            $folderPath = $projectsPath . '/' . $folder;
-                            $images = glob($folderPath . '/*.{jpg,jpeg,png,gif,JPG,JPEG,PNG,GIF}', GLOB_BRACE);
-                            $firstImage = !empty($images) ? basename($images[0]) : null;
-                        @endphp
-
-                        @if($firstImage)
-                            <div class="project">
-                                <div class="img">
-                                    <img src="{{ asset('our porfolio/' . $folder . '/' . $firstImage) }}" alt="{{ $folder }}">
-                                </div>
-                                <div class="body">
-                                    <h4>{{ $folder }}</h4>
-                                    <p>{{ count($images) }} {{ __('website.projects.photos') }}</p>
-                                </div>
-                            </div>
-                        @endif
-                    @endforeach
-                </div>
-            </div>
-
-            {{-- Contact --}}
-            <div class="section" id="contact">
-                <div class="section-head">
-                    <div>
-                        <h2>{{ __('website.nav.contact') }}</h2>
-                        <p>Get in touch with us</p>
-                    </div>
-                    <span class="chip">Support</span>
-                </div>
-
-                <div class="contact">
-                    <div class="contact-grid">
-                        <div class="citem">
-                            <div class="cicon">📞</div>
-                            <div>
-                                <h4>Phone</h4>
-                                <p>{{ config('website.contact.phone') }}<br>{{ config('website.contact.phone2') }}</p>
-                            </div>
-                        </div>
-
-                        <div class="citem">
-                            <div class="cicon">✉️</div>
-                            <div>
-                                <h4>Email</h4>
-                                <p>{{ config('website.contact.email') }}</p>
-                            </div>
-                        </div>
-
-                        <div class="citem">
-                            <div class="cicon">📱</div>
-                            <div>
-                                <h4>WhatsApp</h4>
-                                <p>{{ config('website.contact.whatsapp') }}</p>
-                            </div>
-                        </div>
-
-                        <div class="citem">
-                            <div class="cicon">📍</div>
-                            <div>
-                                <h4>Address</h4>
-                                <p>{{ config('website.contact.address') }}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div style="margin-top: 18px; color: var(--muted); font-size: 12px; font-weight: 700;">
-                    © {{ date('Y') }} {{ config('website.name') }} — All rights reserved.
-                </div>
-            </div>
-
         </div>
     </div>
 
-    <script>
-        // Ctrl+P and print button
-        (function(){
-            const printNow = () => window.print();
+    {{-- ================= PRODUCT PAGES (individual) ================= --}}
+    @php
+        $langProducts = is_array($langProductsCombined) ? $langProductsCombined : [];
+    @endphp
+    @foreach($langProducts as $pIndex => $prod)
+        @php
+            // Normalize product fields from translation arrays
+            $pName = $prod['name'] ?? ($prod['english_name'] ?? '');
+            $pDesc = $prod['full_content'] ?? ($prod['description'] ?? '');
+            $pImg  = $prod['image'] ?? ($prod['image_path'] ?? null);
+            $pFeatures = is_array($prod['features'] ?? null) ? $prod['features'] : [];
+            $pBadge = $prod['badge'] ?? null;
+        @endphp
 
-            document.getElementById('printBtn')?.addEventListener('click', printNow);
+        <div class="page page-break" data-section="product-{{ $pIndex+1 }}">
+            <div class="page-head">
+                <div class="brand">
+                    <div class="logo">
+                        @if(!empty($pImg))
+                            <img src="{{ asset(ltrim($pImg,'/')) }}" alt="{{ $safe($pName) }}" style="width:100%;height:100%;object-fit:cover">
+                        @elseif($logoPath)
+                            <img src="{{ asset($logoPath) }}" alt="{{ $safe($companyName) }}">
+                        @else
+                            {{ mb_substr((string)$companyName,0,1) }}
+                        @endif
+                    </div>
+                    <div class="txt">
+                        <div class="name">{{ $pName }}</div>
+                        <div class="tag">المنتج {{ sprintf('%02d', $pIndex+1) }}</div>
+                    </div>
+                </div>
 
-            document.addEventListener('keydown', function(e){
-                const isPrint = (e.ctrlKey || e.metaKey) && (e.key === 'p' || e.key === 'P');
-                if(isPrint){
-                    e.preventDefault();
-                    printNow();
-                }
-            });
+                <div class="head-meta">
+                    <div class="pill"><b>{{ sprintf('%02d', $pIndex+1) }}</b> — المنتج</div>
+                    <div class="pill">{{ $pBadge ?? '' }}</div>
+                </div>
+            </div>
 
-            document.getElementById('scrollTopBtn')?.addEventListener('click', function(){
-                window.scrollTo({top:0, behavior:'smooth'});
-            });
-        })();
-    </script>
+            <div class="page-inner">
+                <div class="section-header">
+                    <div class="sec-left">
+                        <div class="sec-kicker">
+                            <div class="sec-no">{{ sprintf('%02d', $pIndex+1) }}</div>
+                            <div>
+                                <div class="sec-title">{{ $pName }}</div>
+                                <div class="sec-title-en">Product Details</div>
+                            </div>
+                        </div>
+                        <div class="sec-line"></div>
+                    </div>
+                    <div class="pill"><b>{{ $prod['price'] ?? '' }} {{ $prod['currency'] ?? '' }}</b></div>
+                </div>
+
+                <div style="display:grid;grid-template-columns: 1fr 1.1fr;gap:18px;align-items:start;">
+                    <div class="card pad" style="min-height:220px; display:flex;align-items:center;justify-content:center;">
+                        @if(!empty($pImg))
+                            <img src="{{ asset(ltrim($pImg,'/')) }}" alt="{{ $safe($pName) }}" style="max-width:100%;max-height:260px;object-fit:contain;">
+                        @else
+                            <div style="width:100%;height:200px;background:#f3f4f6;border-radius:12px;display:flex;align-items:center;justify-content:center;color:var(--muted);">No Image</div>
+                        @endif
+                    </div>
+
+                    <div>
+                        <div class="card pad soft avoid-break" style="margin-bottom:12px;">
+                            <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
+                                <div>
+                                    <div style="font-size:18px;font-weight:1100;color:var(--green);">{{ $pName }}</div>
+                                    @if(!empty($pDesc))
+                                        <div class="muted" style="margin-top:8px;font-weight:700;line-height:1.8;">{!! nl2br(e(strip_tags($pDesc))) !!}</div>
+                                    @endif
+                                </div>
+                                <div style="text-align:right;min-width:120px;">
+                                    @if(!empty($prod['price']) || !empty($prod['currency']))
+                                        <div style="background:var(--primary);color:#10221b;padding:8px 10px;border-radius:10px;font-weight:1100;">{{ $prod['price'] ?? '' }} {{ $prod['currency'] ?? '' }}</div>
+                                    @endif
+                                    @if(!empty($pFeatures))
+                                        <div style="margin-top:10px;font-size:12px;color:var(--muted);">مزايا سريعة:</div>
+                                        <ul style="margin-top:6px;">
+                                            @foreach(array_slice($pFeatures,0,6) as $feat)
+                                                <li style="font-size:13px;color:#333;font-weight:700;line-height:1.8;">{{ $feat }}</li>
+                                            @endforeach
+                                        </ul>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+
+                        @if(!empty($pFeatures))
+                            <div class="card pad avoid-break">
+                                <div class="bold" style="color:var(--green);margin-bottom:8px;font-size:15px;">الخصائص التفصيلية</div>
+                                <ul style="list-style:disc inside; margin-left:12px;">
+                                    @foreach($pFeatures as $f)
+                                        <li style="font-size:13px;color:var(--muted);font-weight:700;line-height:1.8;">{{ $f }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
+
+
+
+    {{-- ================= CONTACT (04) ================= --}}
+    <div class="page" data-section="contact">
+        <div class="page-head">
+            <div class="brand">
+                <div class="logo">
+                    @if($logoPath)
+                        <img src="{{ asset($logoPath) }}" alt="{{ $safe($companyName) }}">
+                    @else
+                        {{ mb_substr((string)$companyName,0,1) }}
+                    @endif
+                </div>
+                <div class="txt">
+                    <div class="name">{{ $companyName }}</div>
+                    <div class="tag">Get in touch</div>
+                </div>
+            </div>
+
+            <div class="head-meta">
+                <div class="pill"><b>04</b> — تواصل معنا</div>
+                <div class="pill">{{ config('website.contact.email') }}</div>
+            </div>
+        </div>
+
+        <div class="page-inner">
+            <div class="section-header">
+                <div class="sec-left">
+                    <div class="sec-kicker">
+                        <div class="sec-no">04</div>
+                        <div>
+                            <div class="sec-title">{{ __('website.nav.contact') }}</div>
+                            <div class="sec-title-en">Contact</div>
+                        </div>
+                    </div>
+                    <div class="sec-line"></div>
+                </div>
+                <div class="pill"><b>We’re here to help</b></div>
+            </div>
+
+            <div class="contact avoid-break">
+                <div class="bold" style="font-size:14px;color:#fff;">بيانات التواصل</div>
+                <div class="contact-grid">
+                    <div class="citem avoid-break">
+                        <div class="cicon">📞</div>
+                        <div class="ctxt">
+                            <h4>Phone</h4>
+                            <p>{{ config('website.contact.phone') }}<br>{{ config('website.contact.phone2') }}</p>
+                        </div>
+                    </div>
+
+                    <div class="citem avoid-break">
+                        <div class="cicon">✉️</div>
+                        <div class="ctxt">
+                            <h4>Email</h4>
+                            <p>{{ config('website.contact.email') }}</p>
+                        </div>
+                    </div>
+
+                    <div class="citem avoid-break">
+                        <div class="cicon">📱</div>
+                        <div class="ctxt">
+                            <h4>WhatsApp</h4>
+                            <p>{{ config('website.contact.whatsapp') }}</p>
+                        </div>
+                    </div>
+
+                    <div class="citem avoid-break">
+                        <div class="cicon">📍</div>
+                        <div class="ctxt">
+                            <h4>Address</h4>
+                            <p>{{ config('website.contact.address') }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top:12px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.18);border-radius:16px;padding:10px;">
+                    <div style="font-size:12px;font-weight:1000;color:var(--primary);">ملاحظة للطباعة</div>
+                    <div style="font-size:11.5px;opacity:.92;line-height:1.7;font-weight:650;margin-top:6px;">
+                        للحصول على PDF نظيف مثل الصورة: من نافذة الطباعة <b>اقفل Headers and footers</b> + فعّل <b>Background graphics</b>.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+/**
+ * - Ctrl+P prints
+ * - Inject footer with page numbers for each .page (except cover data-nofooter=1)
+ * - This gives consistent page numbers in PDF output
+ */
+(function(){
+    function injectFooters(){
+        const pages = Array.from(document.querySelectorAll('.page'));
+        const printablePages = pages.filter(p => !p.dataset.nofooter);
+        const total = printablePages.length;
+
+        // Remove old footers
+        pages.forEach(p=>{
+            const old = p.querySelector('.page-footer');
+            if(old) old.remove();
+        });
+
+        let i = 0;
+        printablePages.forEach(p=>{
+            i++;
+            const foot = document.createElement('div');
+            foot.className = 'page-footer';
+            foot.innerHTML = `
+                <div class="foot-left">{{ addslashes(config('website.name')) }} — Company Catalog</div>
+                <div class="pageno">${i} / ${total}</div>
+                <div class="foot-right">{{ date('Y') }}</div>
+            `;
+            p.appendChild(foot);
+        });
+    }
+
+    document.addEventListener('keydown', function(e){
+        if ((e.ctrlKey || e.metaKey) && (e.key === 'p' || e.key === 'P')) {
+            e.preventDefault();
+            injectFooters();
+            window.print();
+        }
+    });
+
+    window.addEventListener('beforeprint', injectFooters);
+    window.addEventListener('load', injectFooters);
+    window.addEventListener('resize', ()=>{ /* keep it light */ });
+
+})();
+</script>
 </body>
 </html>

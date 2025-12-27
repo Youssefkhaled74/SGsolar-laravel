@@ -663,7 +663,7 @@ return [
 
                 [
                     'name' => 'VOLCA Solar Water Heater',
-                    'capacity' => '100 L / 200 L',
+                    'capacity' => '300 L / 200 L',
                     'image' => 'images/products/swh/volca.jpeg',
                     'description' => 'VOLCA Solar Water Heater is an integrated solar thermal system operating with thermosiphon (natural circulation) technology, engineered to maximize solar energy utilization while maintaining simplicity and reliability. It features strong construction and European specifications, prepared to operate in diverse climatic conditions, making it an ideal choice for the Egyptian market that requires durable solutions capable of handling summer heat and mild winters.',
                     'features' => [
