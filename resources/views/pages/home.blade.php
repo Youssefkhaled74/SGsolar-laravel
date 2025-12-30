@@ -557,6 +557,7 @@ let currentPartnersSlide = 0;
 const partnersSlider = document.getElementById('partnersSlider');
 const totalPartnersSlides = document.querySelectorAll('.partner-slide').length;
 const slidesToShow = window.innerWidth > 1024 ? 4 : (window.innerWidth > 768 ? 3 : (window.innerWidth > 480 ? 2 : 1));
+const isRTL = document.documentElement.getAttribute('dir') === 'rtl';
 
 function movePartnersSlider(direction) {
     const maxSlide = totalPartnersSlides - slidesToShow;
@@ -570,7 +571,9 @@ function movePartnersSlider(direction) {
     
     const slideWidth = partnersSlider.querySelector('.partner-slide').offsetWidth;
     const gap = 32; // 2rem in pixels
-    const offset = -(currentPartnersSlide * (slideWidth + gap));
+    const offset = isRTL 
+        ? (currentPartnersSlide * (slideWidth + gap))
+        : -(currentPartnersSlide * (slideWidth + gap));
     partnersSlider.style.transform = `translateX(${offset}px)`;
 }
 

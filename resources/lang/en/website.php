@@ -3,7 +3,7 @@
 return [
     // Company Info
     'company_name' => 'SgSolar',
-    'slogan' => 'Powering Tomorrow with Clean Energy Today',
+    'slogan' => 'Best Consultant , Optimal Solution',
     'mission' => 'At SgSolar, we are committed to providing sustainable, eco-friendly solar water heating solutions that reduce energy costs and environmental impact. Our mission is to harness the power of the sun to deliver efficient, reliable, and affordable heating systems for homes and businesses.',
 
     // Navigation

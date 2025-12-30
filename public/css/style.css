@@ -37,6 +37,15 @@ body {
     flex-direction: row-reverse;
 }
 
+[dir="rtl"] .navbar-wrapper {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .navbar-dropdown .dropdown-menu {
+    left: auto;
+    right: 0;
+}
+
 [dir="rtl"] .footer-grid {
     direction: rtl;
 }

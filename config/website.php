@@ -18,7 +18,7 @@ return [
         'whatsapp' => '01103740202',
         'email' => 'info@sgsolar.com',
         'address' => '201 - 40 الملتقي العربي شيراتون المطار - النزهة - القاهرة',
-        'maps_link' => 'https://maps.app.goo.gl/tHgYSeWPymNs28868?g_st=aw',
+        'maps_link' => 'https://maps.app.goo.gl/sAVXoxXFAJaGyS3U9',
     ],
 
     // ============================================
