@@ -8,6 +8,7 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Public\DownloadRequestController;
 use App\Http\Controllers\CatalogController;
 
 // Language Switcher
@@ -50,8 +51,16 @@ Route::view('/feedback', 'pages.feedback')->name('feedback');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
 
+// Split route files for clarity
+require __DIR__.'/public.php';
+require __DIR__.'/admin.php';
+require __DIR__.'/sales.php';
+require __DIR__.'/crm.php';
+
+/* Admin CRM routes moved to routes/admin.php */
+
 // Download Request
-Route::post('/download-request', [AdminController::class, 'saveDownloadRequest'])->name('download.request');
+Route::post('/download-request', [DownloadRequestController::class, 'store'])->name('download.request');
 
 // Admin Routes
 Route::prefix('dashboard_admin')->group(function () {
