@@ -17,6 +17,8 @@ return Application::configure(basePath: dirname(__DIR__))
         // Register CRM route middleware aliases for Laravel 12 bootstrap flow
         $middleware->alias([
             'crm.access' => \App\Http\Middleware\CrmAccessMiddleware::class,
+            'crm.auth' => \App\Http\Middleware\CrmAuthenticate::class,
+            'crm.role' => \App\Http\Middleware\EnsureCrmRoleRedirect::class,
             'role' => \App\Http\Middleware\RoleMiddleware::class,
         ]);
     })

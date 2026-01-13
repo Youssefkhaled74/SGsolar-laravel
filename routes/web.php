@@ -57,6 +57,44 @@ require __DIR__.'/admin.php';
 require __DIR__.'/sales.php';
 require __DIR__.'/crm.php';
 
+// Provide a CRM login route if not already defined by the app
+if (! Route::has('crm.login')) {
+    Route::get('/crm/login', function () {
+        return view('auth.login-crm');
+    })->name('crm.login');
+}
+
+// CRM login submit handler (improved) - only create if not present
+if (! Route::has('crm.login.submit')) {
+    Route::post('/crm/login', function (\Illuminate\Http\Request $request) {
+        $credentials = $request->validate([
+            'email' => ['required','email'],
+            'password' => ['required'],
+        ]);
+
+        if (auth()->attempt($credentials, $request->filled('remember'))) {
+            $request->session()->regenerate();
+
+            // Redirect directly to the correct CRM dashboard based on role
+            $user = auth()->user();
+            $roleName = is_string($user->role) ? $user->role : ($user->role->name ?? null);
+            if ($roleName === 'admin') {
+                return redirect()->route('crm.admin.dashboard');
+            }
+            if ($roleName === 'sales') {
+                return redirect()->route('crm.sales.dashboard');
+            }
+
+            // Fallback to crm.home (which will show CRM 403 if role unknown)
+            return redirect()->route('crm.home');
+        }
+
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ])->onlyInput('email');
+    })->name('crm.login.submit');
+}
+
 /* Admin CRM routes moved to routes/admin.php */
 
 // Download Request

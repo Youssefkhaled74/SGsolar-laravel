@@ -4,397 +4,627 @@
 @section('subtitle', 'Profile and timeline')
 
 @section('content')
-    <style>
-        [x-cloak]{display:none!important}
+<style>
+    [x-cloak]{display:none!important}
 
-        .lead-grid{display:grid;grid-template-columns:360px 1fr;gap:18px;align-items:start}
-        @media(max-width:1024px){.lead-grid{grid-template-columns:1fr}}
+    .lead-shell{
+        position:relative;
+        border-radius:20px;
+        overflow: visible;
+        border:1px solid rgba(255,255,255,.10);
+        background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+        box-shadow: 0 22px 60px rgba(0,0,0,.35);
+    }
+    .lead-bg{
+        position:absolute; inset:0; z-index:0; pointer-events:none;
+        background:
+            radial-gradient(900px 520px at 16% 10%, rgba(140,198,63,.14), transparent 55%),
+            radial-gradient(900px 520px at 86% 18%, rgba(255,223,65,.14), transparent 55%),
+            radial-gradient(800px 520px at 72% 90%, rgba(227,160,0,.10), transparent 55%);
+        filter: blur(14px);
+        opacity:.7;
+        border-radius:20px;
+    }
+    .lead-wrap{position:relative; z-index:1; padding:16px}
 
-        .lead-card{background:#fff;border:1px solid var(--crm-border);border-radius:12px;box-shadow:var(--crm-shadow-sm);padding:16px}
-        .lead-card + .lead-card{margin-top:12px}
+    .lead-grid{display:grid;grid-template-columns:380px 1fr;gap:14px;align-items:start}
+    @media(max-width:1024px){.lead-grid{grid-template-columns:1fr}}
 
-        .lead-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
-        .lead-name{margin:0;font-size:20px;font-weight:900}
-        .lead-meta{margin-top:6px;font-size:13px;color:var(--crm-muted)}
-        .lead-divider{border:none;border-top:1px solid var(--crm-border);margin:12px 0}
+    .card{
+        position:relative;
+        z-index:1;
+        border-radius:16px;
+        border:1px solid rgba(255,255,255,.10);
+        background: rgba(0,0,0,.14);
+        box-shadow: 0 12px 26px rgba(0,0,0,.22);
+        backdrop-filter: blur(10px);
+        padding:14px;
+    }
+    .card + .card{margin-top:12px}
 
-        .kv{display:grid;grid-template-columns:92px 1fr;gap:10px;row-gap:10px;font-size:14px}
-        .kv .k{color:var(--crm-muted);font-weight:800}
-        .kv .v{font-weight:700}
+    .head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+    .name{margin:0;font-size:18px;font-weight:900;color:rgba(255,255,255,.92)}
+    .meta{margin-top:6px;font-size:12px;font-weight:800;color:rgba(255,255,255,.62)}
+    .divider{border:none;border-top:1px solid rgba(255,255,255,.10);margin:12px 0}
 
-        .panel-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
-        .panel-title h3{margin:0;font-size:16px;font-weight:900}
-        .panel-title .hint{font-size:13px;color:var(--crm-muted)}
+    .kv{display:grid;grid-template-columns:92px 1fr;gap:10px;row-gap:10px;font-size:13px}
+    .kv .k{color:rgba(255,255,255,.62);font-weight:900}
+    .kv .v{font-weight:800;color:rgba(255,255,255,.88)}
 
-        .form-stack{display:flex;flex-direction:column;gap:10px}
-        .form-actions{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}
-        .full{width:100%}
+    .mini{font-size:12px;font-weight:800;color:rgba(255,255,255,.62)}
+    .panel-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+    .panel-title h3{margin:0;font-size:14px;font-weight:900;color:rgba(255,255,255,.90)}
 
-        .top-actions{display:flex;gap:10px;flex-wrap:wrap}
-        .mini{font-size:12px;color:var(--crm-muted)}
+    .dark-input, .dark-textarea{
+        width:100%;
+        padding:10px 12px;
+        border-radius:14px;
+        border:1px solid rgba(255,255,255,.14);
+        background: rgba(255,255,255,.04);
+        color: rgba(255,255,255,.90);
+        font-weight:800;
+        outline:none;
+    }
+    .dark-textarea{min-height:110px;resize:vertical}
+    .dark-input::placeholder{color: rgba(255,255,255,.55)}
+    .dark-input:focus, .dark-textarea:focus{
+        border-color: rgba(255,223,65,.28);
+        box-shadow: 0 0 0 4px rgba(255,223,65,.10);
+    }
 
-        .tabs-row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
-        .tabs{display:flex;gap:8px;flex-wrap:wrap}
-        .tab{
-            background:#fff;border:1px solid var(--crm-border);
-            padding:9px 12px;border-radius:10px;font-weight:900;
-            cursor:pointer;
-        }
-        .tab:hover{background:#f8fafc}
-        .tab.active{border-color:rgba(14,165,164,0.35);box-shadow:var(--crm-ring)}
+    .actions-row{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}
+    .full{width:100%}
 
-        .toolbar{display:flex;gap:10px;flex-wrap:wrap}
-        .toolbar .crm-input{min-width:180px}
+    .tabs-row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    .tabs{display:flex;gap:8px;flex-wrap:wrap}
+    .tab{
+        background: rgba(255,255,255,.04);
+        border:1px solid rgba(255,255,255,.12);
+        color: rgba(255,255,255,.86);
+        padding:9px 12px;border-radius:12px;font-weight:900;cursor:pointer;
+    }
+    .tab:hover{background: rgba(255,255,255,.07)}
+    .tab.active{
+        border-color: rgba(255,223,65,.26);
+        box-shadow: 0 0 0 4px rgba(255,223,65,.10);
+    }
 
-        .list{display:flex;flex-direction:column;gap:10px}
-        .item{background:#fff;border:1px solid var(--crm-border);border-radius:12px;box-shadow:var(--crm-shadow-sm);padding:12px}
-        .item-head{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
-        .item-title{font-weight:900}
-        .item-sub{font-size:13px;color:var(--crm-muted)}
-        .item-body{margin-top:8px;font-weight:600}
+    .list{display:flex;flex-direction:column;gap:10px}
+    .item{
+        border-radius:14px;
+        border:1px solid rgba(255,255,255,.10);
+        background: rgba(0,0,0,.10);
+        padding:12px;
+    }
+    .item-head{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+    .item-title{font-weight:900;color:rgba(255,255,255,.90)}
+    .item-sub{font-size:12px;font-weight:800;color:rgba(255,255,255,.62)}
+    .item-body{margin-top:8px;font-weight:800;color:rgba(255,255,255,.86);line-height:1.55}
 
-        .pill{
-            display:inline-flex;align-items:center;gap:8px;
-            padding:6px 10px;border-radius:999px;border:1px solid var(--crm-border);
-            font-size:12px;font-weight:900;background:#fff;
-        }
-        .pill.ok{border-color:#a7f3d0;background:#ecfdf5;color:#065f46}
-        .pill.warn{border-color:#fde68a;background:#fffbeb;color:#92400e}
-        .pill.bad{border-color:#fecaca;background:#fff5f5;color:#7f1d1d}
+    .pill{
+        display:inline-flex;align-items:center;gap:8px;
+        padding:6px 10px;border-radius:999px;
+        border:1px solid rgba(255,255,255,.14);
+        background: rgba(255,255,255,.05);
+        font-size:12px;font-weight:900;color: rgba(255,255,255,.82);
+        white-space:nowrap;
+    }
+    .pill.ok{border-color:#a7f3d0;background:rgba(16,185,129,.14);color:#c7f9e9}
+    .pill.warn{border-color:#fde68a;background:rgba(245,158,11,.12);color:#ffe9b5}
+    .pill.bad{border-color:#fecaca;background:rgba(239,68,68,.12);color:#ffd0d0}
 
-        .toast{position:fixed;right:18px;bottom:18px;z-index:60;max-width:420px}
-        .toast-card{
-            background:#fff;border:1px solid var(--crm-border);border-radius:12px;padding:12px 14px;
-            box-shadow:var(--crm-shadow-md);display:flex;justify-content:space-between;gap:12px
-        }
-        .toast .close{background:transparent;border:none;cursor:pointer;font-weight:900;opacity:.8}
-        .toast .close:hover{opacity:1}
+    .toast{position:fixed;right:18px;bottom:18px;z-index:9999;max-width:420px}
+    .toast-card{
+        background: rgba(0,0,0,.35);
+        border:1px solid rgba(255,255,255,.12);
+        border-radius:14px;
+        padding:12px 14px;
+        box-shadow: 0 18px 40px rgba(0,0,0,.35);
+        backdrop-filter: blur(10px);
+        display:flex;justify-content:space-between;gap:12px;
+        color: rgba(255,255,255,.88);
+    }
+    .toast .close{background:transparent;border:none;cursor:pointer;font-weight:900;opacity:.8;color:rgba(255,255,255,.9)}
+    .toast .close:hover{opacity:1}
 
-        .alert{
-            border-radius:12px;padding:12px 14px;border:1px solid var(--crm-border);background:#fff;
-        }
-        .alert.error{border-color:#fecaca;background:#fff5f5;color:#7f1d1d}
-    </style>
+    .crumb{display:flex;gap:8px;align-items:center;font-size:12px;font-weight:900;color:rgba(255,255,255,.62);margin-bottom:10px}
+    .crumb a{color:rgba(255,255,255,.86);text-decoration:none}
+    .crumb a:hover{text-decoration:underline}
 
-    <script>
-        document.addEventListener('alpine:init', () => {
-            Alpine.data('leadDetails', () => ({
-                tab: localStorage.getItem('crm_lead_tab') || 'comments',
-                setTab(t){
-                    this.tab = t;
-                    localStorage.setItem('crm_lead_tab', t);
-                }
-            }));
-        });
-    </script>
+    /* ===== Custom Select (Dark) ===== */
+    .cselect{position:relative;min-width:220px;flex:1;z-index:5}
+    .cselect.open{z-index:5000}
+    .cselect-btn{
+        width:100%;
+        display:flex;align-items:center;justify-content:space-between;gap:10px;
+        padding:10px 12px;
+        border-radius:14px;
+        border:1px solid rgba(255,255,255,.14);
+        background: rgba(255,255,255,.04);
+        color: rgba(255,255,255,.90);
+        font-weight:900;
+        cursor:pointer;
+        outline:none;
+    }
+    .cselect-btn:hover{background: rgba(255,255,255,.06)}
+    .cselect-btn:focus{
+        border-color: rgba(255,223,65,.28);
+        box-shadow: 0 0 0 4px rgba(255,223,65,.10);
+    }
+    .cselect-label{display:flex;align-items:center;gap:10px;min-width:0}
+    .cselect-pill{
+        font-size:11px;font-weight:900;
+        padding:5px 8px;border-radius:999px;
+        border:1px solid rgba(255,255,255,.14);
+        background: rgba(0,0,0,.14);
+        color: rgba(255,255,255,.72);
+        white-space:nowrap;
+    }
+    .cselect-text{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .cselect-menu{
+        position:absolute;left:0;right:0;top:calc(100% + 8px);
+        border-radius:14px;
+        border:1px solid rgba(255,255,255,.12);
+        background: rgba(7,11,18,.94);
+        box-shadow: 0 22px 60px rgba(0,0,0,.55);
+        backdrop-filter: blur(10px);
+        overflow:hidden;
+        z-index:9000;
+    }
+    .cselect-search{
+        padding:10px;
+        border-bottom:1px solid rgba(255,255,255,.08);
+        background: rgba(255,255,255,.03);
+    }
+    .cselect-item{
+        padding:10px 12px;
+        display:flex;align-items:center;justify-content:space-between;gap:10px;
+        color: rgba(255,255,255,.86);
+        font-weight:900;
+        cursor:pointer;
+    }
+    .cselect-item:hover{background: rgba(255,255,255,.06)}
+    .cselect-item.active{background: rgba(255,223,65,.10)}
+    .cselect-muted{font-weight:800;color: rgba(255,255,255,.62);font-size:12px}
+</style>
 
-    {{-- Toast Success --}}
-    @if(session('success'))
-        <div class="toast" x-data="{show:true}" x-init="setTimeout(()=>show=false, 2600)" x-show="show" x-transition>
-            <div class="toast-card">
-                <div>
-                    <strong>Success</strong>
-                    <div class="mini" style="margin-top:2px">{{ session('success') }}</div>
-                </div>
-                <button class="close" @click="show=false" aria-label="Close">✕</button>
+<script>
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('leadDetails', () => ({
+            tab: localStorage.getItem('crm_lead_tab') || 'comments',
+            setTab(t){ this.tab=t; localStorage.setItem('crm_lead_tab', t); }
+        }));
+
+        Alpine.data('cselect', (opts) => ({
+            open:false,
+            q:'',
+            value: opts.value || '',
+            label: opts.label || 'Select…',
+            items: opts.items || [],
+            get filtered(){
+                if(!this.q) return this.items;
+                const s = this.q.toLowerCase();
+                return this.items.filter(i => (i.label || '').toLowerCase().includes(s));
+            },
+            pick(item){
+                this.value = item.value;
+                this.label = item.label;
+                this.open = false;
+                this.q = '';
+            }
+        }));
+    });
+</script>
+
+@if(session('success'))
+    <div class="toast" x-data="{show:true}" x-init="setTimeout(()=>show=false, 2600)" x-show="show" x-transition>
+        <div class="toast-card">
+            <div>
+                <strong>Success</strong>
+                <div class="mini" style="margin-top:2px">{{ session('success') }}</div>
             </div>
+            <button class="close" @click="show=false" aria-label="Close">✕</button>
         </div>
-    @endif
+    </div>
+@endif
 
-    {{-- Validation Errors --}}
-    @if ($errors->any())
-        <div class="alert error" style="margin-bottom:12px">
-            <strong style="display:block;margin-bottom:6px">Please fix:</strong>
-            <ul style="margin:0;padding-left:18px">
-                @foreach ($errors->all() as $error)
-                    <li style="margin:2px 0">{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+@php
+    $assigneeItems = collect($sales)->map(fn($u) => ['value'=>(string)$u->id,'label'=>$u->name])->values();
+    $statusItems = \App\Models\LeadStatus::orderBy('sort_order')->get()->map(fn($st)=>['value'=>(string)$st->id,'label'=>$st->name])->values();
+    $actionItems = $actionTypes->map(fn($t)=>['value'=>(string)$t->id,'label'=>$t->name])->values();
 
-    <nav class="crm-breadcrumb">
-        <a href="{{ route('crm.admin.leads.index') }}">Leads</a>
-        <span>›</span>
-        <span>Lead Details</span>
-    </nav>
+    $currentAssigneeId = optional($lead->assignedTo)->id ? (string)optional($lead->assignedTo)->id : '';
+    $currentAssigneeLabel = optional($lead->assignedTo)->name ?? 'Unassigned';
 
-    <div class="lead-grid" x-data="leadDetails">
-        {{-- LEFT COLUMN --}}
-        <div>
-            {{-- Profile --}}
-            <div class="lead-card">
-                <div class="lead-head">
-                    <div>
-                        <h2 class="lead-name">{{ $lead->name }}</h2>
-                        <div class="lead-meta">
-                            Created:
-                            {{ optional($lead)->created_at ? \Carbon\Carbon::parse($lead->created_at)->toDayDateTimeString() : '—' }}
+    $currentStatusId = optional($lead->status)->id ? (string)optional($lead->status)->id : '';
+    $currentStatusLabel = optional($lead->status)->name ?? '—';
+@endphp
+
+<div class="lead-shell">
+    <div class="lead-bg" aria-hidden="true"></div>
+
+    <div class="lead-wrap">
+        <nav class="crumb">
+            <a href="{{ route('crm.admin.leads.index') }}">Leads</a>
+            <span>›</span>
+            <span>Lead Details</span>
+        </nav>
+
+        <div class="lead-grid" x-data="leadDetails">
+            {{-- LEFT --}}
+            <div>
+                <div class="card">
+                    <div class="head">
+                        <div>
+                            <h2 class="name">{{ $lead->name }}</h2>
+                            <div class="meta">
+                                Created: {{ $lead->created_at ? $lead->created_at->toDayDateTimeString() : '—' }}
+                            </div>
                         </div>
+                        <div class="crm-avatar">{{ strtoupper(substr($lead->name ?? 'G',0,1)) }}</div>
                     </div>
-                    <div class="crm-avatar">{{ strtoupper(substr($lead->name ?? 'G',0,1)) }}</div>
-                </div>
 
-                <hr class="lead-divider">
+                    <hr class="divider">
 
-                <div class="kv">
-                    <div class="k">Phone</div><div class="v">{{ $lead->phone ?? '—' }}</div>
-                    <div class="k">Email</div><div class="v">{{ $lead->email ?? '—' }}</div>
-                    <div class="k">Source</div>
-                    <div class="v"><span class="crm-badge crm-badge--source">{{ $lead->source->name ?? '—' }}</span></div>
-
-                    <div class="k">Status</div>
-                    <div class="v"><span class="crm-badge crm-badge--status">{{ $lead->status->name ?? '—' }}</span></div>
-
-                    <div class="k">Assigned</div>
-                    <div class="v">{{ optional($lead->assignedTo)->name ?? 'Unassigned' }}</div>
-                </div>
-            </div>
-
-            {{-- Manage Lead --}}
-            <div class="lead-card">
-                <div class="panel-title">
-                    <h3>Manage</h3>
-                    <div class="hint">Assign & update status</div>
-                </div>
-
-                <form method="POST" action="{{ route('crm.admin.leads.assign', $lead->id) }}" class="form-stack">
-                    @csrf
-                    @method('PATCH')
-                    <div>
-                        <div class="mini" style="margin-bottom:6px">Assign to</div>
-                        <select name="assigned_to" class="crm-select crm-input">
-                            <option value="">Unassigned</option>
-                            @foreach($sales as $s)
-                                <option value="{{ $s->id }}" {{ optional($lead->assignedTo)->id == $s->id ? 'selected' : '' }}>
-                                    {{ $s->name }}
-                                </option>
-                            @endforeach
-                        </select>
+                    <div class="kv">
+                        <div class="k">Phone</div><div class="v">{{ $lead->phone ?? '—' }}</div>
+                        <div class="k">Email</div><div class="v">{{ $lead->email ?? '—' }}</div>
+                        <div class="k">Source</div><div class="v">{{ optional($lead->source)->name ?? '—' }}</div>
+                        <div class="k">Status</div><div class="v">{{ optional($lead->status)->name ?? '—' }}</div>
+                        <div class="k">Assigned</div><div class="v">{{ optional($lead->assignedTo)->name ?? 'Unassigned' }}</div>
                     </div>
-                    <button class="crm-btn crm-btn-primary full">Save Assignment</button>
-                </form>
-
-                <hr class="lead-divider">
-
-                <form method="POST" action="{{ route('crm.admin.leads.status', $lead->id) }}" class="form-stack">
-                    @csrf
-                    @method('PATCH')
-                    <div>
-                        <div class="mini" style="margin-bottom:6px">Lead status</div>
-                        <select name="status_id" class="crm-select crm-input">
-                            @foreach(\App\Models\LeadStatus::orderBy('sort_order')->get() as $st)
-                                <option value="{{ $st->id }}" {{ optional($lead->status)->id == $st->id ? 'selected' : '' }}>
-                                    {{ $st->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <button class="crm-btn crm-btn-ghost full">Update Status</button>
-                </form>
-            </div>
-
-            {{-- Add Comment --}}
-            <div class="lead-card">
-                <div class="panel-title">
-                    <h3>Add Comment</h3>
-                    <div class="hint">Notes are saved to the timeline</div>
                 </div>
 
-                <form method="POST" action="{{ route('crm.admin.leads.comments.store', $lead->id) }}" class="form-stack">
-                    @csrf
-                    <textarea name="comment" class="crm-textarea crm-input" placeholder="Write a quick note...">{{ old('comment') }}</textarea>
-                    <div class="form-actions">
-                        <a href="{{ route('crm.admin.leads.index') }}" class="crm-btn crm-btn-ghost">Back</a>
-                        <button class="crm-btn crm-btn-primary">Add Comment</button>
+                {{-- MANAGE --}}
+                <div class="card">
+                    <div class="panel-title">
+                        <h3>Manage</h3>
+                        <div class="mini">Assign & update status</div>
                     </div>
-                </form>
-            </div>
-        </div>
 
-        {{-- RIGHT COLUMN --}}
-        <div>
-            <div class="tabs-row">
-                <div class="tabs">
-                    <button class="tab" :class="tab==='comments' ? 'tab active' : 'tab'" @click.prevent="setTab('comments')">Comments</button>
-                    <button class="tab" :class="tab==='actions' ? 'tab active' : 'tab'" @click.prevent="setTab('actions')">Actions</button>
-                    <button class="tab" :class="tab==='followups' ? 'tab active' : 'tab'" @click.prevent="setTab('followups')">Followups</button>
-                </div>
-
-                {{-- Quick create toolbar --}}
-                <div class="toolbar">
-                    <form method="POST" action="{{ route('crm.admin.leads.actions.store', $lead->id) }}" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+                    {{-- Assign --}}
+                    <form method="POST" action="{{ route('crm.admin.leads.assign', $lead->id) }}" style="display:flex;flex-direction:column;gap:10px">
                         @csrf
-                        <select name="action_type_id" class="crm-select crm-input">
-                            <option value="">Action Type</option>
-                            @foreach($actionTypes as $at)
-                                <option value="{{ $at->id }}">{{ $at->name }}</option>
-                            @endforeach
-                        </select>
+                        @method('PATCH')
 
-                        <input name="scheduled_at" type="datetime-local" class="crm-input" />
+                        <div>
+                            <div class="mini" style="margin-bottom:6px">Assign to</div>
 
-                        <button class="crm-btn crm-btn-ghost">Log Action</button>
+                            <div class="cselect"
+                                 x-data="cselect({ value:'{{ $currentAssigneeId }}', label:'{{ addslashes($currentAssigneeLabel) }}', items:[{value:'',label:'Unassigned'}, ...{{ $assigneeItems->toJson() }}] })"
+                                 :class="open ? 'open' : ''"
+                                 @click.outside="open=false"
+                            >
+                                <input type="hidden" name="assigned_to" :value="value">
+
+                                <button type="button" class="cselect-btn" @click="open=!open">
+                                    <span class="cselect-label">
+                                        <span class="cselect-pill">Assign</span>
+                                        <span class="cselect-text" x-text="label"></span>
+                                    </span>
+                                    <span style="opacity:.8;font-weight:900" x-text="open ? '▲' : '▼'"></span>
+                                </button>
+
+                                <div class="cselect-menu" x-show="open" x-transition.opacity x-cloak>
+                                    <div class="cselect-search">
+                                        <input class="dark-input" style="padding:9px 10px;border-radius:12px" placeholder="Search assignee…" x-model="q">
+                                    </div>
+                                    <div style="max-height:260px;overflow:auto">
+                                        <template x-for="item in filtered" :key="item.value">
+                                            <div class="cselect-item" :class="(item.value===value) ? 'active' : ''" @click="pick(item)">
+                                                <span x-text="item.label"></span>
+                                                <span class="cselect-muted" x-show="item.value===value">Selected</span>
+                                            </div>
+                                        </template>
+                                        <div class="cselect-item cselect-muted" x-show="filtered.length===0" style="justify-content:center">No results</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="crm-btn crm-btn-primary full">Save Assignment</button>
+                    </form>
+
+                    <hr class="divider">
+
+                    {{-- Status --}}
+                    <form method="POST" action="{{ route('crm.admin.leads.status', $lead->id) }}" style="display:flex;flex-direction:column;gap:10px">
+                        @csrf
+                        @method('PATCH')
+
+                        <div>
+                            <div class="mini" style="margin-bottom:6px">Lead status</div>
+
+                            <div class="cselect"
+                                 x-data="cselect({ value:'{{ $currentStatusId }}', label:'{{ addslashes($currentStatusLabel) }}', items: {{ $statusItems->toJson() }} })"
+                                 :class="open ? 'open' : ''"
+                                 @click.outside="open=false"
+                            >
+                                <input type="hidden" name="status_id" :value="value">
+
+                                <button type="button" class="cselect-btn" @click="open=!open">
+                                    <span class="cselect-label">
+                                        <span class="cselect-pill">Status</span>
+                                        <span class="cselect-text" x-text="label"></span>
+                                    </span>
+                                    <span style="opacity:.8;font-weight:900" x-text="open ? '▲' : '▼'"></span>
+                                </button>
+
+                                <div class="cselect-menu" x-show="open" x-transition.opacity x-cloak>
+                                    <div class="cselect-search">
+                                        <input class="dark-input" style="padding:9px 10px;border-radius:12px" placeholder="Search status…" x-model="q">
+                                    </div>
+                                    <div style="max-height:260px;overflow:auto">
+                                        <template x-for="item in filtered" :key="item.value">
+                                            <div class="cselect-item" :class="(item.value===value) ? 'active' : ''" @click="pick(item)">
+                                                <span x-text="item.label"></span>
+                                                <span class="cselect-muted" x-show="item.value===value">Selected</span>
+                                            </div>
+                                        </template>
+                                        <div class="cselect-item cselect-muted" x-show="filtered.length===0" style="justify-content:center">No results</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="crm-btn crm-btn-ghost full">Update Status</button>
+                    </form>
+                </div>
+
+                {{-- Add Comment --}}
+                <div class="card">
+                    <div class="panel-title">
+                        <h3>Add Comment</h3>
+                        <div class="mini">Saved to timeline</div>
+                    </div>
+
+                    <form method="POST" action="{{ route('crm.admin.leads.comments.store', $lead->id) }}" style="display:flex;flex-direction:column;gap:10px">
+                        @csrf
+                        <textarea name="comment" class="dark-textarea" placeholder="Write a quick note...">{{ old('comment') }}</textarea>
+
+                        <div class="actions-row">
+                            <a href="{{ route('crm.admin.leads.index') }}" class="crm-btn crm-btn-ghost">Back</a>
+                            <button class="crm-btn crm-btn-primary">Add Comment</button>
+                        </div>
                     </form>
                 </div>
             </div>
 
-            {{-- COMMENTS --}}
-            <div x-show="tab==='comments'" x-cloak x-transition.opacity style="margin-top:12px">
-                <div class="lead-card">
-                    <div class="panel-title">
-                        <h3>Comments</h3>
-                        <div class="hint">{{ isset($comments) ? $comments->count() : 0 }} items</div>
-                    </div>
-
-                    @if(isset($comments) && $comments->count())
-                        <div class="list">
-                            @foreach($comments as $c)
-                                <div class="item">
-                                    <div class="item-head">
-                                        <div>
-                                            <div class="item-title">{{ optional($c->author)->name ?? 'System' }}</div>
-                                            <div class="item-sub">{{ optional($c->created_at) ? \Carbon\Carbon::parse($c->created_at)->diffForHumans() : '' }}</div>
-                                        </div>
-                                        <span class="pill ok">Comment</span>
-                                    </div>
-                                    <div class="item-body">{{ $c->comment }}</div>
-                                </div>
-                            @endforeach
+            {{-- RIGHT --}}
+            <div>
+                <div class="card">
+                    <div class="tabs-row">
+                        <div class="tabs">
+                            <button class="tab" :class="tab==='comments' ? 'tab active' : 'tab'" @click.prevent="setTab('comments')">Comments</button>
+                            <button class="tab" :class="tab==='actions' ? 'tab active' : 'tab'" @click.prevent="setTab('actions')">Actions</button>
+                            <button class="tab" :class="tab==='followups' ? 'tab active' : 'tab'" @click.prevent="setTab('followups')">Followups</button>
                         </div>
-                    @else
-                        <div class="crm-empty-state">No comments yet. Add one from the left panel.</div>
-                    @endif
-                </div>
-            </div>
 
-            {{-- ACTIONS --}}
-            <div x-show="tab==='actions'" x-cloak x-transition.opacity style="margin-top:12px">
-                <div class="lead-card">
-                    <div class="panel-title">
-                        <h3>Actions</h3>
-                        <div class="hint">{{ isset($actions) ? $actions->count() : 0 }} items</div>
-                    </div>
+                        {{-- Action Toolbar --}}
+                        <form method="POST" action="{{ route('crm.admin.leads.actions.store', $lead->id) }}"
+                              style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;flex:1;justify-content:flex-end">
+                            @csrf
 
-                    @if(isset($actions) && $actions->count())
-                        <div class="list">
-                            @foreach($actions as $act)
-                                <div class="item">
-                                    <div class="item-head">
-                                        <div>
-                                            <div class="item-title">{{ optional($act->type)->name ?? 'Action' }}</div>
-                                            <div class="item-sub">
-                                                {{ optional($act->scheduled_at) ? \Carbon\Carbon::parse($act->scheduled_at)->toDayDateTimeString() : '—' }}
+                            <div class="cselect"
+                                 x-data="cselect({ value:'', label:'Action Type', items: {{ $actionItems->toJson() }} })"
+                                 :class="open ? 'open' : ''"
+                                 @click.outside="open=false"
+                            >
+                                <input type="hidden" name="action_type_id" :value="value">
+
+                                <button type="button" class="cselect-btn" @click="open=!open">
+                                    <span class="cselect-label">
+                                        <span class="cselect-pill">Type</span>
+                                        <span class="cselect-text" x-text="label"></span>
+                                    </span>
+                                    <span style="opacity:.8;font-weight:900" x-text="open ? '▲' : '▼'"></span>
+                                </button>
+
+                                <div class="cselect-menu" x-show="open" x-transition.opacity x-cloak>
+                                    <div class="cselect-search">
+                                        <input class="dark-input" style="padding:9px 10px;border-radius:12px" placeholder="Search action type…" x-model="q">
+                                    </div>
+                                    <div style="max-height:260px;overflow:auto">
+                                        <template x-for="item in filtered" :key="item.value">
+                                            <div class="cselect-item" :class="(item.value===value) ? 'active' : ''" @click="pick(item)">
+                                                <span x-text="item.label"></span>
+                                                <span class="cselect-muted" x-show="item.value===value">Selected</span>
                                             </div>
-                                        </div>
-                                        <span class="pill warn">Action</span>
+                                        </template>
+                                        <div class="cselect-item cselect-muted" x-show="filtered.length===0" style="justify-content:center">No results</div>
                                     </div>
-                                    <div class="item-body">{{ $act->notes ?: '—' }}</div>
                                 </div>
-                            @endforeach
-                        </div>
-                    @else
-                        <div class="crm-empty-state">No actions logged yet. Use the toolbar to log the first action.</div>
-                    @endif
-                </div>
-            </div>
+                            </div>
 
-            {{-- FOLLOWUPS --}}
-            <div x-show="tab==='followups'" x-cloak x-transition.opacity style="margin-top:12px">
-                <div class="lead-card">
-                    <div class="panel-title">
-                        <h3>Followups</h3>
-                        <div class="hint">{{ isset($followups) ? $followups->count() : 0 }} items</div>
+                            <input name="scheduled_at" type="datetime-local" class="dark-input" style="min-width:210px" />
+                            <button class="crm-btn crm-btn-ghost">Log Action</button>
+                        </form>
                     </div>
+                </div>
 
-                    {{-- Schedule followup (moved here for better UX) --}}
-                    <div class="lead-card" style="background:#fbfcfd;border-style:dashed;margin-bottom:12px">
+                {{-- COMMENTS --}}
+                <div x-show="tab==='comments'" x-cloak x-transition.opacity style="margin-top:12px">
+                    <div class="card">
+                        <div class="panel-title">
+                            <h3>Comments</h3>
+                            <div class="mini">{{ $comments?->count() ?? 0 }} items</div>
+                        </div>
+
+                        @if(isset($comments) && $comments->count())
+                            <div class="list">
+                                @foreach($comments as $c)
+                                    <div class="item">
+                                        <div class="item-head">
+                                            <div>
+                                                <div class="item-title">{{ optional($c->author)->name ?? 'System' }}</div>
+                                                <div class="item-sub">{{ $c->created_at?->diffForHumans() }}</div>
+                                            </div>
+                                            <span class="pill ok">Comment</span>
+                                        </div>
+                                        <div class="item-body">{{ $c->comment }}</div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @else
+                            <div class="mini">No comments yet.</div>
+                        @endif
+                    </div>
+                </div>
+
+                {{-- ACTIONS --}}
+                <div x-show="tab==='actions'" x-cloak x-transition.opacity style="margin-top:12px">
+                    <div class="card">
+                        <div class="panel-title">
+                            <h3>Actions</h3>
+                            <div class="mini">{{ $actions?->count() ?? 0 }} items</div>
+                        </div>
+
+                        @if(isset($actions) && $actions->count())
+                            <div class="list">
+                                @foreach($actions as $act)
+                                    <div class="item">
+                                        <div class="item-head">
+                                            <div>
+                                                <div class="item-title">{{ optional($act->type)->name ?? 'Action' }}</div>
+                                                <div class="item-sub">{{ $act->scheduled_at ? \Carbon\Carbon::parse($act->scheduled_at)->toDayDateTimeString() : '—' }}</div>
+                                            </div>
+                                            <span class="pill warn">Action</span>
+                                        </div>
+                                        <div class="item-body">{{ $act->notes ?: '—' }}</div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @else
+                            <div class="mini">No actions logged yet.</div>
+                        @endif
+                    </div>
+                </div>
+
+                {{-- FOLLOWUPS --}}
+                <div x-show="tab==='followups'" x-cloak x-transition.opacity style="margin-top:12px">
+                    <div class="card">
                         <div class="panel-title">
                             <h3>Schedule Followup</h3>
-                            <div class="hint">Set next step with a date/time</div>
+                            <div class="mini">Set next step with date/time</div>
                         </div>
 
-                        <form method="POST" action="{{ route('crm.admin.leads.followups.store', $lead->id) }}" class="form-stack">
+                        <form method="POST" action="{{ route('crm.admin.leads.followups.store', $lead->id) }}" style="display:flex;flex-direction:column;gap:10px">
                             @csrf
-                            <div class="crm-form-row">
-                                <div style="flex:1">
+
+                            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+                                <div>
                                     <div class="mini" style="margin-bottom:6px">When</div>
-                                    <input type="datetime-local" name="scheduled_at" class="crm-input" />
+                                    <input type="datetime-local" name="scheduled_at" class="dark-input" />
                                 </div>
-                                <div style="flex:1">
-                                    <div class="mini" style="margin-bottom:6px">Assign To</div>
-                                    <select name="assigned_to" class="crm-input">
-                                        <option value="">Unassigned</option>
-                                        @foreach($sales as $s)
-                                            <option value="{{ $s->id }}">{{ $s->name }}</option>
-                                        @endforeach
-                                    </select>
+
+                                <div>
+                                    <div class="mini" style="margin-bottom:6px">Assign to</div>
+
+                                    <div class="cselect"
+                                         x-data="cselect({ value:'', label:'Unassigned', items:[{value:'',label:'Unassigned'}, ...{{ $assigneeItems->toJson() }}] })"
+                                         :class="open ? 'open' : ''"
+                                         @click.outside="open=false"
+                                    >
+                                        <input type="hidden" name="assigned_to" :value="value">
+
+                                        <button type="button" class="cselect-btn" @click="open=!open">
+                                            <span class="cselect-label">
+                                                <span class="cselect-pill">Assign</span>
+                                                <span class="cselect-text" x-text="label"></span>
+                                            </span>
+                                            <span style="opacity:.8;font-weight:900" x-text="open ? '▲' : '▼'"></span>
+                                        </button>
+
+                                        <div class="cselect-menu" x-show="open" x-transition.opacity x-cloak>
+                                            <div class="cselect-search">
+                                                <input class="dark-input" style="padding:9px 10px;border-radius:12px" placeholder="Search assignee…" x-model="q">
+                                            </div>
+                                            <div style="max-height:260px;overflow:auto">
+                                                <template x-for="item in filtered" :key="item.value">
+                                                    <div class="cselect-item" :class="(item.value===value) ? 'active' : ''" @click="pick(item)">
+                                                        <span x-text="item.label"></span>
+                                                        <span class="cselect-muted" x-show="item.value===value">Selected</span>
+                                                    </div>
+                                                </template>
+                                                <div class="cselect-item cselect-muted" x-show="filtered.length===0" style="justify-content:center">No results</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
+
                             <div>
                                 <div class="mini" style="margin-bottom:6px">Note</div>
-                                <input name="note" class="crm-input" placeholder="e.g., Call to confirm installation date" />
+                                <input name="note" class="dark-input" placeholder="e.g., Call to confirm installation date" />
                             </div>
-                            <div class="form-actions">
+
+                            <div class="actions-row">
                                 <button class="crm-btn crm-btn-primary">Schedule</button>
                             </div>
                         </form>
-                    </div>
 
-                    @if(isset($followups) && $followups->count())
-                        <div class="list">
-                            @foreach($followups as $fup)
-                                @php
-                                    $when = $fup->scheduled_at ? \Carbon\Carbon::parse($fup->scheduled_at) : null;
-                                    $isDone = (bool)($fup->completed ?? false);
-                                    $isOverdue = $when && !$isDone && $when->isPast();
-                                    $isToday = $when && !$isDone && $when->isToday();
-                                @endphp
+                        <hr class="divider">
 
-                                <div class="item">
-                                    <div class="item-head">
-                                        <div>
-                                            <div class="item-title">Followup</div>
-                                            <div class="item-sub">
-                                                {{ $when ? $when->toDayDateTimeString() : '—' }}
+                        <div class="panel-title">
+                            <h3>Followups</h3>
+                            <div class="mini">{{ $followups?->count() ?? 0 }} items</div>
+                        </div>
+
+                        @if(isset($followups) && $followups->count())
+                            <div class="list">
+                                @foreach($followups as $fup)
+                                    @php
+                                        $when = $fup->scheduled_at ? \Carbon\Carbon::parse($fup->scheduled_at) : null;
+                                        $isDone = (bool)($fup->completed ?? false);
+                                        $isOverdue = $when && !$isDone && $when->isPast();
+                                        $isToday = $when && !$isDone && $when->isToday();
+                                    @endphp
+
+                                    <div class="item">
+                                        <div class="item-head">
+                                            <div>
+                                                <div class="item-title">Followup</div>
+                                                <div class="item-sub">{{ $when ? $when->toDayDateTimeString() : '—' }}</div>
                                             </div>
+
+                                            @if($isDone)
+                                                <span class="pill ok">Done</span>
+                                            @elseif($isOverdue)
+                                                <span class="pill bad">Overdue</span>
+                                            @elseif($isToday)
+                                                <span class="pill warn">Today</span>
+                                            @else
+                                                <span class="pill">Planned</span>
+                                            @endif
                                         </div>
 
-                                        @if($isDone)
-                                            <span class="pill ok">Done</span>
-                                        @elseif($isOverdue)
-                                            <span class="pill bad">Overdue</span>
-                                        @elseif($isToday)
-                                            <span class="pill warn">Today</span>
-                                        @else
-                                            <span class="pill">Planned</span>
-                                        @endif
-                                    </div>
+                                        <div class="item-body">{{ $fup->note ?? '—' }}</div>
 
-                                    <div class="item-body">{{ $fup->note ?? '—' }}</div>
-
-                                    <div style="margin-top:10px;display:flex;justify-content:flex-end">
-                                        @if(!$isDone)
-                                            <form method="POST" action="{{ route('crm.admin.followups.done', $fup->id) }}">
-                                                @csrf
-                                                @method('PATCH')
-                                                <button class="crm-btn crm-btn-ghost">Mark Done</button>
-                                            </form>
-                                        @else
-                                            <div class="mini">
-                                                Completed at
-                                                {{ optional($fup->completed_at) ? \Carbon\Carbon::parse($fup->completed_at)->toDayDateTimeString() : '—' }}
-                                            </div>
-                                        @endif
+                                        <div class="actions-row" style="margin-top:10px">
+                                            @if(!$isDone)
+                                                <form method="POST" action="{{ route('crm.admin.followups.done', $fup->id) }}">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                    <button class="crm-btn crm-btn-ghost">Mark Done</button>
+                                                </form>
+                                            @else
+                                                <div class="mini">
+                                                    Completed at {{ $fup->completed_at ? \Carbon\Carbon::parse($fup->completed_at)->toDayDateTimeString() : '—' }}
+                                                </div>
+                                            @endif
+                                        </div>
                                     </div>
-                                </div>
-                            @endforeach
-                        </div>
-                    @else
-                        <div class="crm-empty-state">No followups scheduled yet. Schedule one above.</div>
-                    @endif
+                                @endforeach
+                            </div>
+                        @else
+                            <div class="mini">No followups scheduled yet.</div>
+                        @endif
+                    </div>
                 </div>
+
             </div>
         </div>
     </div>
+</div>
 @endsection

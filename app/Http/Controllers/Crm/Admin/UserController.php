@@ -8,8 +8,10 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Role;
+use App\Models\Lead;
 use App\Http\Requests\Crm\StoreSalesUserRequest;
 use App\Http\Requests\Crm\ToggleUserRequest;
+use App\Http\Requests\Crm\UpdateSalesUserRequest;
 
 class UserController extends Controller
 {
@@ -58,5 +60,49 @@ class UserController extends Controller
         $user->save();
 
         return redirect()->route('crm.admin.users.index')->with('success', 'User status updated.');
+    }
+
+    public function destroy(Request $request, User $user): RedirectResponse
+    {
+        if ($user->isAdmin()) {
+            abort(403, 'Cannot delete admin accounts.');
+        }
+
+        if (! $user->isSales()) {
+            abort(403, 'Can only delete sales users.');
+        }
+
+        // Check for related leads (assigned or created)
+        $hasLeads = Lead::where('assigned_to', $user->id)->exists() || Lead::where('created_by', $user->id)->exists();
+        if ($hasLeads) {
+            return redirect()->route('crm.admin.users.index')->with('error', 'Cannot delete user: user has leads assigned or created.');
+        }
+
+        $user->delete();
+
+        return redirect()->route('crm.admin.users.index')->with('success', 'User deleted.');
+    }
+
+    public function update(UpdateSalesUserRequest $request, User $user): RedirectResponse
+    {
+        if ($user->isAdmin()) {
+            abort(403, 'Cannot update admin accounts.');
+        }
+
+        if (! $user->isSales()) {
+            abort(403, 'Can only update sales users.');
+        }
+
+        $data = $request->validated();
+
+        $user->name = $data['name'];
+        $user->email = $data['email'];
+        $user->phone = $data['phone'] ?? null;
+        if (! empty($data['password'])) {
+            $user->password = $data['password'];
+        }
+        $user->save();
+
+        return redirect()->route('crm.admin.users.index')->with('success', 'User updated.');
     }
 }

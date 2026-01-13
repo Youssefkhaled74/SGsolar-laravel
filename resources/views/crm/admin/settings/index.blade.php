@@ -4,156 +4,271 @@
 @section('subtitle', 'Manage statuses, sources, and action types')
 
 @section('content')
-    {{-- Page-scoped CSS (kept here as requested) --}}
-    <style>
-        [x-cloak]{display:none!important}
+<style>
+    [x-cloak]{display:none!important}
 
-        .settings-wrap{display:flex;flex-direction:column;gap:14px}
+    /* ===== Shell (same theme) ===== */
+    .settings-shell{
+        position:relative;
+        border-radius:20px;
+        overflow:hidden;
+        border:1px solid rgba(255,255,255,.10);
+        background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+        box-shadow: 0 22px 60px rgba(0,0,0,.35);
+    }
+    .settings-bg{
+        position:absolute; inset:0; z-index:0; pointer-events:none;
+        background:
+            radial-gradient(900px 520px at 16% 10%, rgba(140,198,63,.14), transparent 55%),
+            radial-gradient(900px 520px at 86% 18%, rgba(255,223,65,.14), transparent 55%),
+            radial-gradient(800px 520px at 72% 90%, rgba(227,160,0,.10), transparent 55%),
+            linear-gradient(180deg, rgba(7,11,18,.45), rgba(10,18,32,.25));
+        filter: blur(14px);
+        opacity:.75;
+    }
+    .settings-wrap{
+        position:relative; z-index:1; padding:16px;
+        display:flex;flex-direction:column;gap:14px;
+    }
 
-        .crm-alert{
-            border-radius:12px;
-            padding:12px 14px;
-            border:1px solid var(--crm-border);
-            background:#fff;
-            display:flex;
-            align-items:flex-start;
-            justify-content:space-between;
-            gap:12px;
-        }
-        .crm-alert-success{border-color:#a7f3d0;background:#ecfdf5;color:#065f46}
-        .crm-alert-error{border-color:#fecaca;background:#fff5f5;color:#7f1d1d}
-        .crm-alert .close{background:transparent;border:none;cursor:pointer;font-weight:900;opacity:.8}
-        .crm-alert .close:hover{opacity:1}
+    /* ===== Text helpers ===== */
+    .title{margin:0;font-size:18px;font-weight:900;color:rgba(255,255,255,.92)}
+    .hint{font-size:13px;font-weight:800;color:rgba(255,255,255,.62)}
+    .muted{color:rgba(255,255,255,.62)!important}
 
-        .settings-header{
-            display:flex;
-            align-items:center;
-            justify-content:space-between;
-            gap:12px;
-            flex-wrap:wrap;
-        }
-        .settings-header .hint{color:var(--crm-muted);font-size:13px}
+    .topline{
+        display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
+        margin-bottom:2px;
+    }
+    .count-pill{
+        display:inline-flex;align-items:center;gap:8px;
+        padding:7px 10px;border-radius:999px;
+        border:1px solid rgba(255,255,255,.12);
+        background: rgba(255,255,255,.04);
+        font-weight:900;font-size:12px;
+        color: rgba(255,255,255,.78);
+    }
 
-        .settings-tabs{
-            display:flex;
-            gap:8px;
-            flex-wrap:wrap;
-            padding:6px;
-            border:1px solid var(--crm-border);
-            border-radius:12px;
-            background:#fff;
-            box-shadow: var(--crm-shadow-sm, 0 6px 18px rgba(16,24,40,0.03));
-        }
-        .settings-tab{
-            border:1px solid transparent;
-            background:transparent;
-            padding:10px 12px;
-            border-radius:10px;
-            font-weight:900;
-            cursor:pointer;
-            color:var(--crm-muted);
-            transition:background .15s ease, color .15s ease, border-color .15s ease;
-        }
-        .settings-tab:hover{background:#f8fafc;color:var(--crm-text)}
-        .settings-tab.active{
-            background:rgba(14,165,164,0.10);
-            border-color:rgba(14,165,164,0.25);
-            color:var(--crm-text);
-        }
+    /* ===== Alerts / Toast ===== */
+    .crm-alert{
+        border-radius:14px;
+        padding:12px 14px;
+        border:1px solid rgba(255,255,255,.12);
+        background: rgba(0,0,0,.18);
+        box-shadow: 0 12px 26px rgba(0,0,0,.22);
+        backdrop-filter: blur(10px);
+        display:flex;
+        align-items:flex-start;
+        justify-content:space-between;
+        gap:12px;
+        color:rgba(255,255,255,.88);
+    }
+    .crm-alert-error{border-color:rgba(239,68,68,.25);background:rgba(239,68,68,.10);color:#ffd0d0}
+    .crm-alert .close{
+        background:transparent;border:none;cursor:pointer;font-weight:900;
+        opacity:.85;color:rgba(255,255,255,.9)
+    }
+    .crm-alert .close:hover{opacity:1}
 
-        .settings-panel{
-            background:#fff;
-            border:1px solid var(--crm-border);
-            border-radius:12px;
-            padding:14px;
-            box-shadow: var(--crm-shadow-sm, 0 6px 18px rgba(16,24,40,0.03));
-        }
+    .toast{
+        position:fixed;
+        right:18px;
+        bottom:18px;
+        z-index:9999;
+        max-width:420px;
+    }
+    .toast-card{
+        background: rgba(0,0,0,.35);
+        border:1px solid rgba(255,255,255,.12);
+        border-radius:14px;
+        padding:12px 14px;
+        box-shadow: 0 18px 40px rgba(0,0,0,.35);
+        backdrop-filter: blur(10px);
+        display:flex;justify-content:space-between;gap:12px;
+        color: rgba(255,255,255,.88);
+    }
+    .toast .close{
+        background:transparent;border:none;cursor:pointer;font-weight:900;
+        opacity:.85;color:rgba(255,255,255,.9)
+    }
+    .toast .close:hover{opacity:1}
 
-        .panel-title{
-            display:flex;
-            align-items:center;
-            justify-content:space-between;
-            gap:12px;
-            flex-wrap:wrap;
-            margin-bottom:10px;
-        }
-        .panel-title h3{margin:0;font-size:16px;font-weight:900}
-        .panel-title .meta{font-size:13px;color:var(--crm-muted)}
+    /* ===== Tabs ===== */
+    .settings-tabs{
+        display:flex;
+        gap:8px;
+        flex-wrap:wrap;
+        padding:8px;
+        border-radius:16px;
+        border:1px solid rgba(255,255,255,.10);
+        background: rgba(0,0,0,.16);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 10px 26px rgba(0,0,0,.22);
+    }
+    .settings-tab{
+        border:1px solid rgba(255,255,255,.12);
+        background: rgba(255,255,255,.03);
+        padding:10px 12px;
+        border-radius:14px;
+        font-weight:900;
+        cursor:pointer;
+        color: rgba(255,255,255,.72);
+        transition: background .15s ease, border-color .15s ease, box-shadow .15s ease;
+        display:inline-flex;align-items:center;gap:8px;
+    }
+    .settings-tab:hover{background: rgba(255,255,255,.06); color: rgba(255,255,255,.86)}
+    .settings-tab.active{
+        border-color: rgba(255,223,65,.26);
+        box-shadow: 0 0 0 4px rgba(255,223,65,.10);
+        color: rgba(255,255,255,.92);
+    }
+    .tab-dot{
+        width:8px;height:8px;border-radius:999px;background:rgba(255,223,65,.35);
+    }
 
-        .add-row{
-            display:flex;
-            gap:10px;
-            align-items:center;
-            flex-wrap:wrap;
-            margin-bottom:12px;
-        }
-        .add-row .crm-input{max-width:420px}
-        .add-row .helper{font-size:12px;color:var(--crm-muted)}
+    /* ===== Panels ===== */
+    .settings-panel{
+        border-radius:16px;
+        border:1px solid rgba(255,255,255,.10);
+        background: rgba(0,0,0,.14);
+        box-shadow: 0 12px 26px rgba(0,0,0,.22);
+        backdrop-filter: blur(10px);
+        padding:14px;
+    }
+    .panel-title{
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        gap:12px;
+        flex-wrap:wrap;
+        margin-bottom:10px;
+    }
+    .panel-title h3{margin:0;font-size:14px;font-weight:900;color:rgba(255,255,255,.92)}
+    .panel-title .meta{font-size:12px;font-weight:800;color:rgba(255,255,255,.62)}
 
-        .actions-inline{display:flex;gap:8px;flex-wrap:wrap}
-        .btn-sm{padding:8px 10px;border-radius:10px;font-weight:900}
+    /* ===== Add row ===== */
+    .add-row{
+        display:flex;
+        gap:10px;
+        align-items:center;
+        flex-wrap:wrap;
+        margin-bottom:12px;
+        padding:12px;
+        border-radius:14px;
+        border:1px solid rgba(255,255,255,.10);
+        background: rgba(255,255,255,.03);
+    }
+    .helper{font-size:12px;font-weight:800;color:rgba(255,255,255,.62)}
+    .btn-sm{padding:8px 12px;border-radius:12px;font-weight:900}
 
-        .status-pill{
-            display:inline-flex;
-            align-items:center;
-            gap:8px;
-            font-weight:900;
-        }
-        .dot{
-            width:10px;height:10px;border-radius:999px;
-            background:#22c55e;
-            box-shadow:0 0 0 3px rgba(34,197,94,0.12);
-        }
-        .dot.off{
-            background:#ef4444;
-            box-shadow:0 0 0 3px rgba(239,68,68,0.12);
-        }
+    /* ===== Inputs (dark) ===== */
+    .dark-input{
+        width:100%;
+        max-width:420px;
+        padding:10px 12px;
+        border-radius:14px;
+        border:1px solid rgba(255,255,255,.14);
+        background: rgba(255,255,255,.04);
+        color: rgba(255,255,255,.90);
+        font-weight:800;
+        outline:none;
+    }
+    .dark-input::placeholder{color: rgba(255,255,255,.55)}
+    .dark-input:focus{
+        border-color: rgba(255,223,65,.28);
+        box-shadow: 0 0 0 4px rgba(255,223,65,.10);
+    }
 
-        .row-edit{
-            display:flex;
-            align-items:center;
-            gap:8px;
-            flex-wrap:wrap;
-        }
-        .row-edit .crm-input{min-width:240px}
+    /* ===== Table ===== */
+    .table-card{
+        border-radius:14px;
+        border:1px solid rgba(255,255,255,.10);
+        background: rgba(0,0,0,.10);
+        overflow:hidden;
+    }
+    .table-wrap{overflow-x:auto}
+    .dark-table{width:100%; border-collapse:collapse}
+    .dark-table th{
+        text-align:left;
+        font-size:12px;
+        font-weight:900;
+        color: rgba(255,255,255,.62);
+        padding:12px 14px;
+        background: rgba(255,255,255,.04);
+        border-bottom:1px solid rgba(255,255,255,.08);
+        white-space:nowrap;
+    }
+    .dark-table td{
+        padding:12px 14px;
+        color: rgba(255,255,255,.86);
+        font-weight:800;
+        border-bottom:1px solid rgba(255,255,255,.06);
+        background: rgba(0,0,0,.06);
+        vertical-align:middle;
+        white-space:nowrap;
+    }
+    .dark-table td:first-child{white-space:normal;min-width:240px}
+    .dark-table tbody tr:hover td{background: rgba(255,255,255,.03)}
 
-        /* Improve table spacing on small screens */
-        .table-wrap{overflow-x:auto}
-        .crm-table td, .crm-table th{white-space:nowrap}
-        .crm-table td:first-child{white-space:normal;min-width:240px}
+    .actions-inline{display:flex;gap:8px;flex-wrap:wrap}
 
-        /* Small toast */
-        .toast{
-            position:fixed;
-            right:18px;
-            bottom:18px;
-            z-index:60;
-            max-width:380px;
-        }
-        .toast-card{
-            border-radius:12px;
-            padding:12px 14px;
-            border:1px solid var(--crm-border);
-            background:#fff;
-            box-shadow: var(--crm-shadow-md, 0 10px 24px rgba(16,24,40,0.06));
-            display:flex;
-            justify-content:space-between;
-            gap:12px;
-        }
-    </style>
+    /* ===== Active pill ===== */
+    .status-pill{
+        display:inline-flex;align-items:center;gap:8px;
+        font-weight:900;
+        font-size:12px;
+        padding:6px 10px;
+        border-radius:999px;
+        border:1px solid rgba(255,255,255,.14);
+        background: rgba(255,255,255,.05);
+        color: rgba(255,255,255,.85);
+    }
+    .dot{
+        width:8px;height:8px;border-radius:999px;
+        background: rgba(16,185,129,.55);
+        box-shadow: 0 0 0 3px rgba(16,185,129,.12);
+    }
+    .dot.off{
+        background: rgba(239,68,68,.55);
+        box-shadow: 0 0 0 3px rgba(239,68,68,.12);
+    }
 
-    {{-- Page-scoped JS (kept here as requested) --}}
-    <script>
-        document.addEventListener('alpine:init', () => {
-            Alpine.data('crmSettings', () => ({
-                tab: localStorage.getItem('crm_settings_tab') || 'statuses',
-                setTab(t){
-                    this.tab = t;
-                    localStorage.setItem('crm_settings_tab', t);
-                }
-            }));
-        });
-    </script>
+    /* ===== Inline edit ===== */
+    .row-edit{
+        display:flex;
+        align-items:center;
+        gap:8px;
+        flex-wrap:wrap;
+    }
+    .row-edit .dark-input{min-width:260px;max-width:520px}
+
+    /* Empty */
+    .empty{
+        padding:14px;
+        border-radius:14px;
+        border:1px dashed rgba(255,255,255,.14);
+        background: rgba(0,0,0,.14);
+        color:rgba(255,255,255,.65);
+        font-weight:800;
+        margin:14px;
+        text-align:center;
+    }
+</style>
+
+<script>
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('crmSettings', () => ({
+            tab: localStorage.getItem('crm_settings_tab') || 'statuses',
+            setTab(t){
+                this.tab = t;
+                localStorage.setItem('crm_settings_tab', t);
+            }
+        }));
+    });
+</script>
+
+<div class="settings-shell">
+    <div class="settings-bg" aria-hidden="true"></div>
 
     <div class="settings-wrap" x-data="crmSettings">
         {{-- Inline alert area (errors) --}}
@@ -177,19 +292,26 @@
                 <div class="toast-card">
                     <div>
                         <strong>Success</strong>
-                        <div class="muted text-sm" style="margin-top:2px;">{{ session('success') }}</div>
+                        <div class="muted" style="margin-top:2px;font-size:12px;font-weight:800">{{ session('success') }}</div>
                     </div>
                     <button class="close" @click="show=false" aria-label="Close">✕</button>
                 </div>
             </div>
         @endif
 
-        <div class="settings-header">
+        <div class="topline">
             <div>
-                <div class="h2">Settings</div>
-                <div class="hint">Manage lead statuses, sources, and action types used across the CRM.</div>
+                <div class="count-pill">
+                    <span style="width:8px;height:8px;border-radius:999px;background:rgba(255,223,65,.35)"></span>
+                    Settings Center
+                </div>
+                <div style="margin-top:10px">
+                    <h2 class="title">Settings</h2>
+                    <div class="hint">Manage lead statuses, sources, and action types used across the CRM.</div>
+                </div>
             </div>
-            <div class="muted text-sm">
+
+            <div class="hint">
                 Tip: Changes apply immediately across Leads & Followups.
             </div>
         </div>
@@ -197,239 +319,262 @@
         {{-- Tabs --}}
         <div class="settings-tabs">
             <button class="settings-tab" :class="tab==='statuses' ? 'settings-tab active' : 'settings-tab'"
-                    @click.prevent="setTab('statuses')">Statuses</button>
+                    @click.prevent="setTab('statuses')">
+                <span class="tab-dot" style="background:rgba(255,223,65,.35)"></span>
+                Statuses
+            </button>
             <button class="settings-tab" :class="tab==='sources' ? 'settings-tab active' : 'settings-tab'"
-                    @click.prevent="setTab('sources')">Sources</button>
+                    @click.prevent="setTab('sources')">
+                <span class="tab-dot" style="background:rgba(140,198,63,.35)"></span>
+                Sources
+            </button>
             <button class="settings-tab" :class="tab==='actions' ? 'settings-tab active' : 'settings-tab'"
-                    @click.prevent="setTab('actions')">Action Types</button>
+                    @click.prevent="setTab('actions')">
+                <span class="tab-dot" style="background:rgba(227,160,0,.32)"></span>
+                Action Types
+            </button>
         </div>
 
         {{-- Statuses --}}
         <div class="settings-panel" x-show="tab==='statuses'" x-cloak x-transition.opacity>
             <div class="panel-title">
-                <h3>Lead Statuses</h3>
-                <div class="meta">Used to track lead progress (e.g., New, In Progress, Closed).</div>
+                <div>
+                    <h3>Lead Statuses</h3>
+                    <div class="meta">Track lead progress (New, In Progress, Closed).</div>
+                </div>
+                <div class="hint">Total: {{ $statuses->count() }}</div>
             </div>
 
             <form method="POST" action="{{ route('crm.admin.settings.statuses.store') }}" class="add-row">
                 @csrf
-                <input name="name" placeholder="Add new status (e.g., Waiting Payment)" class="crm-input" />
+                <input name="name" placeholder="Add new status (e.g., Waiting Payment)" class="dark-input" />
                 <button class="crm-btn crm-btn-primary btn-sm">Add</button>
                 <div class="helper">Keep names short & clear.</div>
             </form>
 
-            <div class="table-wrap">
-                <table class="crm-table">
-                    <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Active</th>
-                        <th style="width:240px;">Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @forelse($statuses as $status)
-                        <tr x-data="{editing:false, name:@js($status->name)}">
-                            <td>
-                                <div x-show="!editing">
-                                    <strong>{{ $status->name }}</strong>
-                                </div>
-
-                                <div x-show="editing" x-cloak>
-                                    <form method="POST" action="{{ route('crm.admin.settings.statuses.update', $status->id) }}" class="row-edit">
-                                        @csrf
-                                        @method('PATCH')
-                                        <input name="name" x-model="name" class="crm-input" />
-                                        <button class="crm-btn crm-btn-primary btn-sm">Save</button>
-                                        <button type="button" class="crm-btn crm-btn-ghost btn-sm" @click="editing=false; name=@js($status->name)">Cancel</button>
-                                    </form>
-                                </div>
-                            </td>
-
-                            <td>
-                                <span class="status-pill">
-                                    <span class="dot {{ $status->is_active ? '' : 'off' }}"></span>
-                                    {{ $status->is_active ? 'Yes' : 'No' }}
-                                </span>
-                            </td>
-
-                            <td>
-                                <div class="actions-inline">
-                                    <button class="crm-btn crm-btn-ghost btn-sm" @click.prevent="editing=!editing" x-text="editing ? 'Close' : 'Edit'"></button>
-
-                                    <form method="POST" action="{{ route('crm.admin.settings.statuses.toggle', $status->id) }}"
-                                          onsubmit="return confirm('Toggle status active state?')" style="display:inline">
-                                        @csrf
-                                        @method('PATCH')
-                                        <button class="crm-btn crm-btn-ghost btn-sm">
-                                            {{ $status->is_active ? 'Disable' : 'Enable' }}
-                                        </button>
-                                    </form>
-                                </div>
-                            </td>
-                        </tr>
-                    @empty
+            <div class="table-card">
+                <div class="table-wrap">
+                    <table class="dark-table">
+                        <thead>
                         <tr>
-                            <td colspan="3">
-                                <div class="crm-empty-state">No statuses found. Add one above.</div>
-                            </td>
+                            <th>Name</th>
+                            <th>Active</th>
+                            <th style="width:260px;">Actions</th>
                         </tr>
-                    @endforelse
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        @forelse($statuses as $status)
+                            <tr x-data="{editing:false, name:@js($status->name)}">
+                                <td>
+                                    <div x-show="!editing">
+                                        <strong class="row-title">{{ $status->name }}</strong>
+                                    </div>
+
+                                    <div x-show="editing" x-cloak>
+                                        <form method="POST" action="{{ route('crm.admin.settings.statuses.update', $status->id) }}" class="row-edit">
+                                            @csrf
+                                            @method('PATCH')
+                                            <input name="name" x-model="name" class="dark-input" />
+                                            <button class="crm-btn crm-btn-primary btn-sm">Save</button>
+                                            <button type="button" class="crm-btn crm-btn-ghost btn-sm"
+                                                    @click="editing=false; name=@js($status->name)">Cancel</button>
+                                        </form>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <span class="status-pill">
+                                        <span class="dot {{ $status->is_active ? '' : 'off' }}"></span>
+                                        {{ $status->is_active ? 'Yes' : 'No' }}
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <div class="actions-inline">
+                                        <button class="crm-btn crm-btn-ghost btn-sm"
+                                                @click.prevent="editing=!editing"
+                                                x-text="editing ? 'Close' : 'Edit'"></button>
+
+                                        <form method="POST" action="{{ route('crm.admin.settings.statuses.toggle', $status->id) }}"
+                                              onsubmit="return confirm('Toggle status active state?')" style="display:inline">
+                                            @csrf
+                                            @method('PATCH')
+                                            <button class="crm-btn crm-btn-ghost btn-sm">
+                                                {{ $status->is_active ? 'Disable' : 'Enable' }}
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr><td colspan="3"><div class="empty">No statuses found. Add one above.</div></td></tr>
+                        @endforelse
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
         {{-- Sources --}}
         <div class="settings-panel" x-show="tab==='sources'" x-cloak x-transition.opacity>
             <div class="panel-title">
-                <h3>Lead Sources</h3>
-                <div class="meta">Where the lead came from (Contact Us, Product Page, Manual, Excel Import).</div>
+                <div>
+                    <h3>Lead Sources</h3>
+                    <div class="meta">Where the lead came from (Contact Us, Product Page, Manual).</div>
+                </div>
+                <div class="hint">Total: {{ $sources->count() }}</div>
             </div>
 
             <form method="POST" action="{{ route('crm.admin.settings.sources.store') }}" class="add-row">
                 @csrf
-                <input name="name" placeholder="Add new source (e.g., Facebook Ads)" class="crm-input" />
+                <input name="name" placeholder="Add new source (e.g., Facebook Ads)" class="dark-input" />
                 <button class="crm-btn crm-btn-primary btn-sm">Add</button>
                 <div class="helper">Use a consistent naming style.</div>
             </form>
 
-            <div class="table-wrap">
-                <table class="crm-table">
-                    <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Active</th>
-                        <th style="width:240px;">Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @forelse($sources as $source)
-                        <tr x-data="{editing:false, name:@js($source->name)}">
-                            <td>
-                                <div x-show="!editing">
-                                    <strong>{{ $source->name }}</strong>
-                                </div>
-
-                                <div x-show="editing" x-cloak>
-                                    <form method="POST" action="{{ route('crm.admin.settings.sources.update', $source->id) }}" class="row-edit">
-                                        @csrf
-                                        @method('PATCH')
-                                        <input name="name" x-model="name" class="crm-input" />
-                                        <button class="crm-btn crm-btn-primary btn-sm">Save</button>
-                                        <button type="button" class="crm-btn crm-btn-ghost btn-sm" @click="editing=false; name=@js($source->name)">Cancel</button>
-                                    </form>
-                                </div>
-                            </td>
-
-                            <td>
-                                <span class="status-pill">
-                                    <span class="dot {{ $source->is_active ? '' : 'off' }}"></span>
-                                    {{ $source->is_active ? 'Yes' : 'No' }}
-                                </span>
-                            </td>
-
-                            <td>
-                                <div class="actions-inline">
-                                    <button class="crm-btn crm-btn-ghost btn-sm" @click.prevent="editing=!editing" x-text="editing ? 'Close' : 'Edit'"></button>
-
-                                    <form method="POST" action="{{ route('crm.admin.settings.sources.toggle', $source->id) }}"
-                                          onsubmit="return confirm('Toggle source active state?')" style="display:inline">
-                                        @csrf
-                                        @method('PATCH')
-                                        <button class="crm-btn crm-btn-ghost btn-sm">
-                                            {{ $source->is_active ? 'Disable' : 'Enable' }}
-                                        </button>
-                                    </form>
-                                </div>
-                            </td>
-                        </tr>
-                    @empty
+            <div class="table-card">
+                <div class="table-wrap">
+                    <table class="dark-table">
+                        <thead>
                         <tr>
-                            <td colspan="3">
-                                <div class="crm-empty-state">No sources found. Add one above.</div>
-                            </td>
+                            <th>Name</th>
+                            <th>Active</th>
+                            <th style="width:260px;">Actions</th>
                         </tr>
-                    @endforelse
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        @forelse($sources as $source)
+                            <tr x-data="{editing:false, name:@js($source->name)}">
+                                <td>
+                                    <div x-show="!editing">
+                                        <strong class="row-title">{{ $source->name }}</strong>
+                                    </div>
+
+                                    <div x-show="editing" x-cloak>
+                                        <form method="POST" action="{{ route('crm.admin.settings.sources.update', $source->id) }}" class="row-edit">
+                                            @csrf
+                                            @method('PATCH')
+                                            <input name="name" x-model="name" class="dark-input" />
+                                            <button class="crm-btn crm-btn-primary btn-sm">Save</button>
+                                            <button type="button" class="crm-btn crm-btn-ghost btn-sm"
+                                                    @click="editing=false; name=@js($source->name)">Cancel</button>
+                                        </form>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <span class="status-pill">
+                                        <span class="dot {{ $source->is_active ? '' : 'off' }}"></span>
+                                        {{ $source->is_active ? 'Yes' : 'No' }}
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <div class="actions-inline">
+                                        <button class="crm-btn crm-btn-ghost btn-sm"
+                                                @click.prevent="editing=!editing"
+                                                x-text="editing ? 'Close' : 'Edit'"></button>
+
+                                        <form method="POST" action="{{ route('crm.admin.settings.sources.toggle', $source->id) }}"
+                                              onsubmit="return confirm('Toggle source active state?')" style="display:inline">
+                                            @csrf
+                                            @method('PATCH')
+                                            <button class="crm-btn crm-btn-ghost btn-sm">
+                                                {{ $source->is_active ? 'Disable' : 'Enable' }}
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr><td colspan="3"><div class="empty">No sources found. Add one above.</div></td></tr>
+                        @endforelse
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
         {{-- Action Types --}}
         <div class="settings-panel" x-show="tab==='actions'" x-cloak x-transition.opacity>
             <div class="panel-title">
-                <h3>Action Types</h3>
-                <div class="meta">Used in Actions log (Call, WhatsApp, Meeting, Follow Up).</div>
+                <div>
+                    <h3>Action Types</h3>
+                    <div class="meta">Used in Actions log (Call, WhatsApp, Meeting, Follow Up).</div>
+                </div>
+                <div class="hint">Total: {{ $actionTypes->count() }}</div>
             </div>
 
             <form method="POST" action="{{ route('crm.admin.settings.actionTypes.store') }}" class="add-row">
                 @csrf
-                <input name="name" placeholder="Add new action type (e.g., Site Visit)" class="crm-input" />
+                <input name="name" placeholder="Add new action type (e.g., Site Visit)" class="dark-input" />
                 <button class="crm-btn crm-btn-primary btn-sm">Add</button>
                 <div class="helper">Keep action verbs clear.</div>
             </form>
 
-            <div class="table-wrap">
-                <table class="crm-table">
-                    <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Active</th>
-                        <th style="width:240px;">Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @forelse($actionTypes as $type)
-                        <tr x-data="{editing:false, name:@js($type->name)}">
-                            <td>
-                                <div x-show="!editing">
-                                    <strong>{{ $type->name }}</strong>
-                                </div>
-
-                                <div x-show="editing" x-cloak>
-                                    <form method="POST" action="{{ route('crm.admin.settings.actionTypes.update', $type->id) }}" class="row-edit">
-                                        @csrf
-                                        @method('PATCH')
-                                        <input name="name" x-model="name" class="crm-input" />
-                                        <button class="crm-btn crm-btn-primary btn-sm">Save</button>
-                                        <button type="button" class="crm-btn crm-btn-ghost btn-sm" @click="editing=false; name=@js($type->name)">Cancel</button>
-                                    </form>
-                                </div>
-                            </td>
-
-                            <td>
-                                <span class="status-pill">
-                                    <span class="dot {{ $type->is_active ? '' : 'off' }}"></span>
-                                    {{ $type->is_active ? 'Yes' : 'No' }}
-                                </span>
-                            </td>
-
-                            <td>
-                                <div class="actions-inline">
-                                    <button class="crm-btn crm-btn-ghost btn-sm" @click.prevent="editing=!editing" x-text="editing ? 'Close' : 'Edit'"></button>
-
-                                    <form method="POST" action="{{ route('crm.admin.settings.actionTypes.toggle', $type->id) }}"
-                                          onsubmit="return confirm('Toggle action type active state?')" style="display:inline">
-                                        @csrf
-                                        @method('PATCH')
-                                        <button class="crm-btn crm-btn-ghost btn-sm">
-                                            {{ $type->is_active ? 'Disable' : 'Enable' }}
-                                        </button>
-                                    </form>
-                                </div>
-                            </td>
-                        </tr>
-                    @empty
+            <div class="table-card">
+                <div class="table-wrap">
+                    <table class="dark-table">
+                        <thead>
                         <tr>
-                            <td colspan="3">
-                                <div class="crm-empty-state">No action types found. Add one above.</div>
-                            </td>
+                            <th>Name</th>
+                            <th>Active</th>
+                            <th style="width:260px;">Actions</th>
                         </tr>
-                    @endforelse
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        @forelse($actionTypes as $type)
+                            <tr x-data="{editing:false, name:@js($type->name)}">
+                                <td>
+                                    <div x-show="!editing">
+                                        <strong class="row-title">{{ $type->name }}</strong>
+                                    </div>
+
+                                    <div x-show="editing" x-cloak>
+                                        <form method="POST" action="{{ route('crm.admin.settings.actionTypes.update', $type->id) }}" class="row-edit">
+                                            @csrf
+                                            @method('PATCH')
+                                            <input name="name" x-model="name" class="dark-input" />
+                                            <button class="crm-btn crm-btn-primary btn-sm">Save</button>
+                                            <button type="button" class="crm-btn crm-btn-ghost btn-sm"
+                                                    @click="editing=false; name=@js($type->name)">Cancel</button>
+                                        </form>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <span class="status-pill">
+                                        <span class="dot {{ $type->is_active ? '' : 'off' }}"></span>
+                                        {{ $type->is_active ? 'Yes' : 'No' }}
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <div class="actions-inline">
+                                        <button class="crm-btn crm-btn-ghost btn-sm"
+                                                @click.prevent="editing=!editing"
+                                                x-text="editing ? 'Close' : 'Edit'"></button>
+
+                                        <form method="POST" action="{{ route('crm.admin.settings.actionTypes.toggle', $type->id) }}"
+                                              onsubmit="return confirm('Toggle action type active state?')" style="display:inline">
+                                            @csrf
+                                            @method('PATCH')
+                                            <button class="crm-btn crm-btn-ghost btn-sm">
+                                                {{ $type->is_active ? 'Disable' : 'Enable' }}
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr><td colspan="3"><div class="empty">No action types found. Add one above.</div></td></tr>
+                        @endforelse
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
+
     </div>
+</div>
 @endsection

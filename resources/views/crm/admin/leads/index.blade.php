@@ -4,44 +4,369 @@
 @section('subtitle', 'Manage and review leads')
 
 @section('content')
-    <div class="crm-section">
-        <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
-            <div style="flex:1;min-width:220px">
-                    <form method="GET" action="{{ route('crm.admin.leads.index') }}">
-                        <input name="q" value="{{ request('q') }}" placeholder="Search leads by name, phone or email" style="width:100%;padding:10px;border-radius:8px;border:1px solid var(--crm-border)" />
-                    </form>
-                </div>
+<style>
+    [x-cloak]{display:none!important}
 
-            <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-                <form method="GET" action="{{ route('crm.admin.leads.index') }}" style="display:flex;gap:8px">
-                    <select name="status_id" style="padding:8px;border-radius:8px;border:1px solid var(--crm-border)">
-                        <option value="">Status</option>
-                        @foreach($statuses as $s)
-                            <option value="{{ $s->id }}" {{ request('status_id') == $s->id ? 'selected' : '' }}>{{ $s->name }}</option>
-                        @endforeach
-                    </select>
-                    <select name="source_id" style="padding:8px;border-radius:8px;border:1px solid var(--crm-border)">
-                        <option value="">Source</option>
-                        @foreach($sources as $src)
-                            <option value="{{ $src->id }}" {{ request('source_id') == $src->id ? 'selected' : '' }}>{{ $src->name }}</option>
-                        @endforeach
-                    </select>
-                    <select name="assigned_to" style="padding:8px;border-radius:8px;border:1px solid var(--crm-border)">
-                        <option value="">Assigned</option>
-                        @foreach($sales as $s)
-                            <option value="{{ $s->id }}" {{ request('assigned_to') == $s->id ? 'selected' : '' }}>{{ $s->name }}</option>
-                        @endforeach
-                    </select>
-                    <button class="crm-btn crm-btn-primary">Apply</button>
+    .leads-shell{
+        border-radius:20px;
+        border:1px solid rgba(255,255,255,.10);
+        background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+        box-shadow: 0 22px 60px rgba(0,0,0,.35);
+        overflow:hidden;
+        position:relative;
+    }
+    .leads-bg{
+        position:absolute; inset:0; z-index:0; pointer-events:none;
+        background:
+            radial-gradient(900px 520px at 16% 10%, rgba(140,198,63,.14), transparent 55%),
+            radial-gradient(900px 520px at 86% 18%, rgba(255,223,65,.14), transparent 55%),
+            radial-gradient(800px 520px at 72% 90%, rgba(227,160,0,.10), transparent 55%);
+        filter: blur(14px);
+        opacity:.7;
+    }
+    .leads-wrap{position:relative; padding:16px; z-index:1}
+
+    .topline{
+        display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;
+        margin: 6px 2px 10px;
+    }
+    .count-pill{
+        display:inline-flex;align-items:center;gap:8px;
+        padding:7px 10px;border-radius:999px;
+        border:1px solid rgba(255,255,255,.12);
+        background: rgba(255,255,255,.04);
+        font-weight:900;font-size:12px;
+        color: rgba(255,255,255,.78);
+    }
+    .muted{color: rgba(255,255,255,.62) !important}
+
+    .toolbar{
+        display:flex; gap:12px; flex-wrap:wrap; align-items:center; justify-content:space-between;
+        padding:14px;
+        border-radius:16px;
+        border:1px solid rgba(255,255,255,.10);
+        background: rgba(0,0,0,.16);
+        backdrop-filter: blur(10px);
+    }
+    .toolbar .left{flex:1; min-width:260px}
+    .toolbar .right{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+
+    .dark-input{
+        width:100%;
+        padding:10px 12px;
+        border-radius:14px;
+        border:1px solid rgba(255,255,255,.14);
+        background: rgba(255,255,255,.04);
+        color: rgba(255,255,255,.90);
+        font-weight:800;
+        outline:none;
+    }
+    .dark-input::placeholder{color: rgba(255,255,255,.55)}
+    .dark-input:focus{
+        border-color: rgba(255,223,65,.30);
+        box-shadow: 0 0 0 4px rgba(255,223,65,.10);
+    }
+
+    /* FILTER BUTTON */
+    .filter-btn{
+        display:inline-flex;align-items:center;gap:10px;
+        padding:10px 12px;border-radius:14px;
+        border:1px solid rgba(255,255,255,.14);
+        background: rgba(255,255,255,.04);
+        color: rgba(255,255,255,.90);
+        font-weight:900;
+        cursor:pointer;
+        transition:.15s ease;
+    }
+    .filter-btn:hover{background: rgba(255,255,255,.07)}
+    .filter-btn .icon{width:18px;height:18px;opacity:.9}
+
+    /* CHIPS */
+    .chips{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px}
+    .chip{
+        display:inline-flex;align-items:center;gap:8px;
+        padding:7px 10px;border-radius:999px;
+        border:1px solid rgba(255,255,255,.12);
+        background: rgba(0,0,0,.12);
+        color: rgba(255,255,255,.82);
+        font-size:12px;font-weight:900;
+        white-space:nowrap;
+    }
+    .chip .dot{width:8px;height:8px;border-radius:999px;background:rgba(255,223,65,.28)}
+
+    /* FILTER PANEL */
+    .panel{
+        margin-top:12px;
+        border-radius:16px;
+        border:1px solid rgba(255,255,255,.10);
+        background: rgba(0,0,0,.16);
+        box-shadow: 0 12px 26px rgba(0,0,0,.22);
+        backdrop-filter: blur(10px);
+        overflow:hidden;
+    }
+    .panel-head{
+        display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
+        padding:12px 14px;
+        background: rgba(255,255,255,.04);
+        border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .panel-title{
+        margin:0;
+        font-size:13px;
+        font-weight:900;
+        color: rgba(255,255,255,.90);
+        letter-spacing:.2px;
+    }
+    .panel-sub{
+        font-size:12px;
+        font-weight:800;
+        color: rgba(255,255,255,.62);
+        margin-top:4px;
+    }
+    .panel-body{padding:14px}
+    .grid{
+        display:grid;
+        grid-template-columns:1fr;
+        gap:10px;
+    }
+    @media(min-width:900px){ .grid{grid-template-columns:1fr 1fr 1fr} }
+
+    .field label{
+        display:block;
+        font-size:12px;
+        font-weight:900;
+        color: rgba(255,255,255,.62);
+        margin-bottom:6px;
+    }
+    .dark-select{
+        width:100%;
+        padding:11px 12px;
+        border-radius:14px;
+        border:1px solid rgba(255,255,255,.14);
+        background: rgba(255,255,255,.04);
+        color: rgba(255,255,255,.90);
+        font-weight:900;
+        outline:none;
+        appearance:none;
+        background-image:
+            linear-gradient(45deg, transparent 50%, rgba(255,255,255,.65) 50%),
+            linear-gradient(135deg, rgba(255,255,255,.65) 50%, transparent 50%);
+        background-position:
+            calc(100% - 18px) calc(50% - 3px),
+            calc(100% - 13px) calc(50% - 3px);
+        background-size: 5px 5px, 5px 5px;
+        background-repeat:no-repeat;
+    }
+    .dark-select:focus{
+        border-color: rgba(255,223,65,.30);
+        box-shadow: 0 0 0 4px rgba(255,223,65,.10);
+    }
+    /* help native dropdown look dark */
+    select.dark-select option{
+        background:#0b1220;
+        color:#fff;
+    }
+
+    .panel-actions{
+        display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;
+        margin-top:12px;
+    }
+
+    .table-card{
+        margin-top:14px;
+        border-radius:16px;
+        border:1px solid rgba(255,255,255,.10);
+        background: rgba(0,0,0,.14);
+        box-shadow: 0 12px 26px rgba(0,0,0,.22);
+        backdrop-filter: blur(10px);
+        overflow:hidden;
+    }
+    .dark-table{width:100%; border-collapse:collapse}
+    .dark-table thead th{
+        text-align:left;
+        font-size:12px;
+        font-weight:900;
+        color: rgba(255,255,255,.62);
+        padding:12px 14px;
+        background: rgba(255,255,255,.04);
+        border-bottom:1px solid rgba(255,255,255,.08);
+        white-space:nowrap;
+    }
+    .dark-table td{
+        padding:12px 14px;
+        color: rgba(255,255,255,.86);
+        font-weight:800;
+        border-bottom:1px solid rgba(255,255,255,.06);
+        background: rgba(0,0,0,.06);
+        vertical-align:middle;
+    }
+    .dark-table tbody tr:hover td{background: rgba(255,255,255,.03)}
+    .row-title{font-weight:900;color:rgba(255,255,255,.92)}
+
+    .badge{
+        display:inline-flex;align-items:center;gap:8px;
+        padding:6px 10px;border-radius:999px;
+        border:1px solid rgba(255,255,255,.14);
+        background: rgba(255,255,255,.05);
+        font-size:12px;font-weight:900;
+        color: rgba(255,255,255,.85);
+        white-space:nowrap;
+    }
+    .badge .dot{width:8px;height:8px;border-radius:999px;background: rgba(255,255,255,.22)}
+    .badge.status .dot{background: rgba(255,223,65,.35)}
+    .badge.source .dot{background: rgba(140,198,63,.30)}
+
+    .pagination{margin-top:12px}
+    .pagination *{color: rgba(255,255,255,.85)!important}
+</style>
+
+<div
+    class="leads-shell"
+    x-data="{ openFilters:false }"
+>
+    <div class="leads-bg" aria-hidden="true"></div>
+
+    <div class="leads-wrap">
+        <div class="topline">
+            <div class="count-pill">
+                <span style="width:8px;height:8px;border-radius:999px;background:rgba(255,223,65,.35)"></span>
+                Showing <strong style="color:rgba(255,255,255,.92)">{{ $leads->total() }}</strong> leads
+            </div>
+
+            <div class="muted" style="font-weight:800;font-size:12px">
+                Tip: Use filters then click “Apply”.
+            </div>
+        </div>
+
+        {{-- Toolbar --}}
+        <div class="toolbar">
+            {{-- Search (keeps filters by sending them as hidden inputs) --}}
+            <div class="left">
+                <form method="GET" action="{{ route('crm.admin.leads.index') }}">
+                    <input type="hidden" name="status_id" value="{{ request('status_id') }}">
+                    <input type="hidden" name="source_id" value="{{ request('source_id') }}">
+                    <input type="hidden" name="assigned_to" value="{{ request('assigned_to') }}">
+
+                    <input
+                        name="q"
+                        value="{{ request('q') }}"
+                        class="dark-input"
+                        placeholder="Search by name, phone, or email…"
+                    />
+                </form>
+            </div>
+
+            {{-- Filters button + Reset --}}
+            <div class="right">
+                <button type="button" class="filter-btn" @click="openFilters = !openFilters">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none">
+                        <path d="M4 6h16M7 12h10M10 18h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    Filters
+                    <span style="opacity:.75;font-weight:900" x-text="openFilters ? '▲' : '▼'"></span>
+                </button>
+
+                @if(request()->hasAny(['q','status_id','source_id','assigned_to']))
+                    <a href="{{ route('crm.admin.leads.index') }}" class="crm-btn crm-btn-ghost">Reset</a>
+                @endif
+            </div>
+
+            {{-- Active filter chips --}}
+            @if(request()->hasAny(['q','status_id','source_id','assigned_to']))
+                <div class="chips" style="flex-basis:100%">
+                    @if(request('q'))
+                        <span class="chip"><span class="dot"></span> Search: “{{ request('q') }}”</span>
+                    @endif
+                    @if(request('status_id'))
+                        <span class="chip">
+                            <span class="dot"></span>
+                            Status:
+                            {{ optional($statuses->firstWhere('id', (int)request('status_id')))->name }}
+                        </span>
+                    @endif
+                    @if(request('source_id'))
+                        <span class="chip">
+                            <span class="dot"></span>
+                            Source:
+                            {{ optional($sources->firstWhere('id', (int)request('source_id')))->name }}
+                        </span>
+                    @endif
+                    @if(request('assigned_to'))
+                        <span class="chip">
+                            <span class="dot"></span>
+                            Assigned:
+                            {{ optional($sales->firstWhere('id', (int)request('assigned_to')))->name }}
+                        </span>
+                    @endif
+                </div>
+            @endif
+        </div>
+
+        {{-- Filters Panel --}}
+        <div class="panel" x-show="openFilters" x-transition.opacity x-cloak>
+            <div class="panel-head">
+                <div>
+                    <div class="panel-title">Refine Leads</div>
+                    <div class="panel-sub">Choose filters then click Apply.</div>
+                </div>
+                <button type="button" class="crm-btn crm-btn-ghost" @click="openFilters=false">Close</button>
+            </div>
+
+            <div class="panel-body">
+                <form method="GET" action="{{ route('crm.admin.leads.index') }}">
+                    <input type="hidden" name="q" value="{{ request('q') }}">
+
+                    <div class="grid">
+                        <div class="field">
+                            <label>Status</label>
+                            <select name="status_id" class="dark-select">
+                                <option value="">All Statuses</option>
+                                @foreach($statuses as $s)
+                                    <option value="{{ $s->id }}" {{ request('status_id') == $s->id ? 'selected' : '' }}>
+                                        {{ $s->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label>Source</label>
+                            <select name="source_id" class="dark-select">
+                                <option value="">All Sources</option>
+                                @foreach($sources as $src)
+                                    <option value="{{ $src->id }}" {{ request('source_id') == $src->id ? 'selected' : '' }}>
+                                        {{ $src->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label>Assigned to</label>
+                            <select name="assigned_to" class="dark-select">
+                                <option value="">All Assignees</option>
+                                @foreach($sales as $s)
+                                    <option value="{{ $s->id }}" {{ request('assigned_to') == $s->id ? 'selected' : '' }}>
+                                        {{ $s->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="panel-actions">
+                        <a href="{{ route('crm.admin.leads.index') }}" class="crm-btn crm-btn-ghost">Reset</a>
+                        <button class="crm-btn crm-btn-primary" type="submit">Apply Filters</button>
+                    </div>
                 </form>
             </div>
         </div>
-    </div>
 
-    <div class="crm-section" style="margin-top:18px">
-        <div style="overflow-x:auto">
-            <table class="crm-table">
-                <thead>
+        {{-- Table --}}
+        <div class="table-card">
+            <div style="overflow-x:auto">
+                <table class="dark-table">
+                    <thead>
                     <tr>
                         <th>Name</th>
                         <th>Phone</th>
@@ -49,27 +374,55 @@
                         <th>Status</th>
                         <th>Assigned</th>
                         <th>Created</th>
-                        <th>Action</th>
+                        <th style="width:130px">Action</th>
                     </tr>
-                </thead>
-                <tbody>
+                    </thead>
+                    <tbody>
                     @forelse($leads as $lead)
                         <tr>
-                            <td>{{ $lead->name }}</td>
-                            <td>{{ $lead->phone }}</td>
-                            <td>{{ optional($lead->source)->name }}</td>
-                            <td><span class="crm-badge crm-badge--status">{{ optional($lead->status)->name }}</span></td>
+                            <td class="row-title">{{ $lead->name }}</td>
+                            <td>{{ $lead->phone ?? '—' }}</td>
+
+                            <td>
+                                <span class="badge source">
+                                    <span class="dot"></span>
+                                    {{ optional($lead->source)->name ?? '—' }}
+                                </span>
+                            </td>
+
+                            <td>
+                                <span class="badge status">
+                                    <span class="dot"></span>
+                                    {{ optional($lead->status)->name ?? '—' }}
+                                </span>
+                            </td>
+
                             <td>{{ optional($lead->assignedTo)->name ?? 'Unassigned' }}</td>
-                            <td>{{ $lead->created_at ? $lead->created_at->format('Y-m-d') : '—' }}</td>
-                            <td><a href="{{ route('crm.admin.leads.show', ['lead' => $lead->id]) }}" class="crm-btn crm-btn-ghost">View</a></td>
+                            <td class="muted">{{ $lead->created_at ? $lead->created_at->format('Y-m-d') : '—' }}</td>
+
+                            <td>
+                                <a href="{{ route('crm.admin.leads.show', ['lead' => $lead->id]) }}" class="crm-btn crm-btn-ghost">
+                                    View
+                                </a>
+                            </td>
                         </tr>
                     @empty
-                        <tr><td colspan="7" class="crm-empty-state">No leads found</td></tr>
+                        <tr>
+                            <td colspan="7">
+                                <div style="padding:16px" class="muted">
+                                    No leads found. Try changing filters or search.
+                                </div>
+                            </td>
+                        </tr>
                     @endforelse
-                </tbody>
-            </table>
-        </div>
-        <div style="margin-top:12px">{{ $leads->links() }}</div>
-    </div>
+                    </tbody>
+                </table>
+            </div>
 
+            <div style="padding:12px 14px">
+                {{ $leads->links() }}
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
