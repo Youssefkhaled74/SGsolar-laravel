@@ -21,6 +21,8 @@ use App\Http\Requests\Crm\StoreLeadCommentRequest;
 use App\Http\Requests\Crm\StoreLeadActionRequest;
 use App\Http\Requests\Crm\StoreLeadFollowupRequest;
 use App\Http\Requests\Crm\MarkFollowupDoneRequest;
+use App\Http\Requests\Crm\StoreLeadRequest;
+use Illuminate\Support\Facades\Log;
 
 class LeadController extends Controller
 {
@@ -56,6 +58,15 @@ class LeadController extends Controller
         $sales = User::whereHas('role', function($r){ $r->where('name','sales'); })->get();
 
         return view('crm.admin.leads.index', compact('leads','statuses','sources','sales'));
+    }
+
+    public function create()
+    {
+        $statuses = LeadStatus::orderBy('sort_order')->get();
+        $sources = LeadSource::orderBy('name')->get();
+        $sales = User::whereHas('role', function($r){ $r->where('name','sales'); })->get();
+
+        return view('crm.admin.leads.create', compact('statuses','sources','sales'));
     }
 
     public function show($lead)
@@ -147,5 +158,24 @@ class LeadController extends Controller
         $followup->save();
 
         return redirect()->route('crm.admin.leads.show', $followup->lead_id)->with('success', 'Followup marked done.');
+    }
+
+    public function store(StoreLeadRequest $request)
+    {
+        $data = $request->validated();
+
+        // If assigned_to is provided ensure the user is a sales user
+        if (! empty($data['assigned_to'])) {
+            $assignee = User::find($data['assigned_to']);
+            if (! $assignee || ! $assignee->isSales()) {
+                return redirect()->back()->with('error', 'Assigned user must be a sales user.')->withInput();
+            }
+        }
+
+        $lead = Lead::create(array_merge($data, [
+            'created_by' => Auth::id(),
+        ]));
+
+        return redirect()->route('crm.admin.leads.show', $lead->id)->with('success', 'Lead created.');
     }
 }

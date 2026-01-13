@@ -75,6 +75,24 @@ Route::middleware(['web', 'crm.auth', 'crm.access', 'crm.role'])->group(function
             'index'
     ])->name('crm.admin.leads.index');
 
+        // New lead form (accessible to CRM users)
+        Route::get('/crm/leads/create', [
+            App\Http\Controllers\Crm\Admin\LeadController::class,
+            'create'
+        ])->name('crm.leads.create');
+
+            // Import leads from CSV (Excel -> CSV)
+            Route::post('/crm/leads/import', [
+                App\Http\Controllers\Crm\Admin\LeadController::class,
+                'import'
+            ])->name('crm.leads.import');
+
+        // Store new lead (from Add New Lead modal)
+        Route::post('/crm/admin/leads', [
+            App\Http\Controllers\Crm\Admin\LeadController::class,
+            'store'
+        ])->name('crm.admin.leads.store');
+
     Route::get('/crm/admin/leads/{lead}', [
             App\Http\Controllers\Crm\Admin\LeadController::class,
             'show'

@@ -211,6 +211,10 @@
                     Leads
                 </a>
 
+                <a href="{{ route('crm.leads.create') }}" class="crm-nav-item {{ request()->routeIs('crm.leads.create') ? 'active' : '' }}">
+                    Add New Lead
+                </a>
+
                 <a href="{{ route('crm.admin.users.index') }}" class="crm-nav-item {{ request()->routeIs('crm.admin.users.*') ? 'active' : '' }}">
                     Users
                 </a>
@@ -286,5 +290,6 @@
             </main>
         </div>
     </div>
+    @include('crm.partials.add-lead-modal')
 </body>
 </html>

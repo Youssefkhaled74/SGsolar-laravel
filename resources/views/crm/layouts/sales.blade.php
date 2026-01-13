@@ -14,6 +14,7 @@
             <nav class="p-4 space-y-1">
                 <a href="{{ route('crm.sales.dashboard') }}" class="block px-3 py-2 rounded text-sm text-gray-700 hover:bg-gray-50">Dashboard</a>
                 <a href="{{ route('crm.sales.leads.index') }}" class="block px-3 py-2 rounded text-sm text-gray-700 hover:bg-gray-50">My Leads</a>
+                <a href="{{ route('crm.leads.create') }}" class="block px-3 py-2 rounded text-sm text-gray-700 hover:bg-gray-50">Add New Lead</a>
                 <a href="{{ route('crm.sales.followups.today') }}" class="block px-3 py-2 rounded text-sm text-gray-700 hover:bg-gray-50">Followups Today</a>
             </nav>
         </aside>
@@ -43,5 +44,6 @@
             </main>
         </div>
     </div>
+    @include('crm.partials.add-lead-modal')
 </body>
 </html>
