@@ -1,0 +1,3 @@
+name,phone,email,source,status,assigned_to,message,product_text
+John Doe,+20 10 0000 0000,john@example.com,Website,New,alice@example.com,"Interested in 5kW system","5kW panel"
+Jane Ahmed,+20 10 1111 1111,jane@example.com,Referral,Contacted,,"Requested callback","3kW panel"

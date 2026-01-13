@@ -23,6 +23,7 @@ use App\Http\Requests\Crm\StoreLeadFollowupRequest;
 use App\Http\Requests\Crm\MarkFollowupDoneRequest;
 use App\Http\Requests\Crm\StoreLeadRequest;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Http\UploadedFile;
 
 class LeadController extends Controller
 {
@@ -177,5 +178,106 @@ class LeadController extends Controller
         ]));
 
         return redirect()->route('crm.admin.leads.show', $lead->id)->with('success', 'Lead created.');
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => ['required','file'],
+        ]);
+
+        $file = $request->file('file');
+        $ext = strtolower($file->getClientOriginalExtension());
+
+        // Only accept CSV uploads for now
+        if ($ext !== 'csv') {
+            return redirect()->back()->with('error', 'Please upload a CSV file (export Excel as CSV).');
+        }
+
+        $path = $file->getRealPath();
+
+        $handle = fopen($path, 'r');
+        if (! $handle) {
+            return redirect()->back()->with('error', 'Unable to read uploaded file.');
+        }
+
+        $header = fgetcsv($handle);
+        if (! $header || ! is_array($header)) {
+            fclose($handle);
+            return redirect()->back()->with('error', 'CSV appears empty or malformed.');
+        }
+
+        $columns = array_map(function($c){ return strtolower(trim($c)); }, $header);
+
+        $created = 0;
+        $errors = [];
+        $rowNumber = 1;
+
+        while (($row = fgetcsv($handle)) !== false) {
+            $rowNumber++;
+            $data = [];
+            foreach ($columns as $i => $col) {
+                $data[$col] = isset($row[$i]) ? trim($row[$i]) : null;
+            }
+
+            // Require name
+            if (empty($data['name'])) {
+                $errors[] = "Row {$rowNumber}: missing name.";
+                continue;
+            }
+
+            // Map source/status by name if provided
+            $sourceId = null;
+            if (! empty($data['source'])) {
+                $src = \App\Models\LeadSource::where('name', $data['source'])->first();
+                $sourceId = $src ? $src->id : null;
+            }
+
+            $statusId = null;
+            if (! empty($data['status'])) {
+                $st = \App\Models\LeadStatus::where('name', $data['status'])->first();
+                $statusId = $st ? $st->id : null;
+            }
+
+            // Assigned to: allow email or numeric id or name
+            $assignedTo = null;
+            if (! empty($data['assigned_to'])) {
+                $val = $data['assigned_to'];
+                if (is_numeric($val)) {
+                    $u = \App\Models\User::find((int)$val);
+                } else {
+                    $u = \App\Models\User::where('email', $val)->orWhere('name', $val)->first();
+                }
+                $assignedTo = $u ? $u->id : null;
+            }
+
+            try {
+                \App\Models\Lead::create([
+                    'name' => $data['name'],
+                    'phone' => $data['phone'] ?? null,
+                    'email' => $data['email'] ?? null,
+                    'message' => $data['message'] ?? null,
+                    'product_text' => $data['product_text'] ?? null,
+                    'source_id' => $sourceId,
+                    'status_id' => $statusId,
+                    'assigned_to' => $assignedTo,
+                    'created_by' => Auth::id(),
+                ]);
+                $created++;
+            } catch (\Exception $e) {
+                Log::error('Lead import row '.$rowNumber.' error: '.$e->getMessage());
+                $errors[] = "Row {$rowNumber}: failed to create ({$e->getMessage()})";
+            }
+        }
+
+        fclose($handle);
+
+        $msg = "Imported {$created} leads.";
+        if (! empty($errors)) {
+            $msg .= ' Some rows failed.';
+            return redirect()->back()->with('success', $msg)->with('import_errors', $errors);
+        }
+
+        return redirect()->back()->with('success', $msg);
     }
 }

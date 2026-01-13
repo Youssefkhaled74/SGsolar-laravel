@@ -28,7 +28,9 @@
     }
     .lead-create-wrap{position:relative; z-index:1; padding:16px}
 
+    /* IMPORTANT: allow dropdowns to overlay (fix native select clipping) */
     .lead-card{
+        position:relative;
         max-width:980px;
         margin:0 auto;
         border-radius:16px;
@@ -36,7 +38,7 @@
         background: rgba(0,0,0,.14);
         box-shadow: 0 12px 26px rgba(0,0,0,.22);
         backdrop-filter: blur(10px);
-        overflow:hidden;
+        overflow: visible; /* <-- key */
     }
 
     .lead-card-head{
@@ -44,6 +46,8 @@
         padding:14px 16px;
         border-bottom:1px solid rgba(255,255,255,.08);
         background: rgba(255,255,255,.03);
+        border-top-left-radius:16px;
+        border-top-right-radius:16px;
     }
     .lead-card-head .title{
         margin:0;
@@ -100,7 +104,7 @@
         white-space:nowrap;
     }
 
-    .dark-input, .dark-select, .dark-textarea{
+    .dark-input, .dark-textarea{
         width:100%;
         padding:11px 12px;
         border-radius:14px;
@@ -112,7 +116,7 @@
     }
     .dark-textarea{min-height:120px;resize:vertical}
     .dark-input::placeholder, .dark-textarea::placeholder{color: rgba(255,255,255,.55)}
-    .dark-input:focus, .dark-select:focus, .dark-textarea:focus{
+    .dark-input:focus, .dark-textarea:focus{
         border-color: rgba(255,223,65,.28);
         box-shadow: 0 0 0 4px rgba(255,223,65,.10);
     }
@@ -165,8 +169,92 @@
         font-size:12px;
         font-weight:800;
         color: rgba(255,255,255,.62);
+        line-height:1.3;
     }
+
+    /* ===== Custom Select (Dark) - fixes native dropdown white box issue ===== */
+    .cselect{position:relative; z-index:5}
+    .cselect.open{z-index:9999}
+    .cselect-btn{
+        width:100%;
+        display:flex;align-items:center;justify-content:space-between;gap:10px;
+        padding:11px 12px;
+        border-radius:14px;
+        border:1px solid rgba(255,255,255,.14);
+        background: rgba(255,255,255,.04);
+        color: rgba(255,255,255,.90);
+        font-weight:900;
+        cursor:pointer;
+        outline:none;
+    }
+    .cselect-btn:hover{background: rgba(255,255,255,.06)}
+    .cselect-btn:focus{
+        border-color: rgba(255,223,65,.28);
+        box-shadow: 0 0 0 4px rgba(255,223,65,.10);
+    }
+    .cselect-text{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .cselect-menu{
+        position:absolute;left:0;right:0;top:calc(100% + 8px);
+        border-radius:14px;
+        border:1px solid rgba(255,255,255,.12);
+        background: rgba(7,11,18,.94);
+        box-shadow: 0 22px 60px rgba(0,0,0,.55);
+        backdrop-filter: blur(10px);
+        overflow:hidden;
+        z-index:99999;
+    }
+    .cselect-search{
+        padding:10px;
+        border-bottom:1px solid rgba(255,255,255,.08);
+        background: rgba(255,255,255,.03);
+    }
+    .cselect-item{
+        padding:10px 12px;
+        display:flex;align-items:center;justify-content:space-between;gap:10px;
+        color: rgba(255,255,255,.86);
+        font-weight:900;
+        cursor:pointer;
+    }
+    .cselect-item:hover{background: rgba(255,255,255,.06)}
+    .cselect-item.active{background: rgba(255,223,65,.10)}
+    .cselect-muted{font-weight:800;color: rgba(255,255,255,.62);font-size:12px}
 </style>
+
+<script>
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('cselect', (opts) => ({
+            open:false,
+            q:'',
+            value: opts.value ?? '',
+            placeholder: opts.placeholder ?? 'Select…',
+            items: opts.items ?? [],
+            get label(){
+                const found = this.items.find(i => String(i.value) === String(this.value));
+                return found ? found.label : this.placeholder;
+            },
+            get filtered(){
+                if(!this.q) return this.items;
+                const s = this.q.toLowerCase();
+                return this.items.filter(i => (i.label || '').toLowerCase().includes(s));
+            },
+            pick(val){
+                this.value = val;
+                this.open = false;
+                this.q = '';
+            }
+        }));
+    });
+</script>
+
+@php
+    $sourceItems = collect($sources ?? [])->map(fn($s) => ['value' => (string)$s->id, 'label' => $s->name])->values();
+    $statusItems = collect($statuses ?? [])->map(fn($s) => ['value' => (string)$s->id, 'label' => $s->name])->values();
+    $salesItems  = collect($sales ?? [])->map(fn($s) => ['value' => (string)$s->id, 'label' => $s->name])->values();
+
+    $oldSource = (string)old('source_id', '');
+    $oldStatus = (string)old('status_id', '');
+    $oldAssign = (string)old('assigned_to', '');
+@endphp
 
 <div class="lead-create-shell">
     <div class="lead-create-bg" aria-hidden="true"></div>
@@ -261,50 +349,153 @@
                             <div class="help">We’ll use this for follow-up messages (if enabled).</div>
                         </div>
 
-                        <div>
+                        {{-- Source (custom dropdown - fixes white native dropdown) --}}
+                        <div
+                            class="cselect"
+                            x-data="cselect({ value: @js($oldSource), placeholder: 'Select source', items: {{ $sourceItems->toJson() }} })"
+                            :class="open ? 'open' : ''"
+                            @click.outside="open=false"
+                            @keydown.escape.window="open=false"
+                        >
                             <div class="label">
                                 <span>Source</span>
                                 <span class="req">Optional</span>
                             </div>
-                            <select name="source_id" class="dark-select">
-                                <option value="">Select source</option>
-                                @foreach($sources as $src)
-                                    <option value="{{ $src->id }}" {{ old('source_id') == $src->id ? 'selected' : '' }}>
-                                        {{ $src->name }}
-                                    </option>
-                                @endforeach
-                            </select>
+
+                            <input type="hidden" name="source_id" :value="value">
+
+                            <button type="button" class="cselect-btn" @click="open=!open" :aria-expanded="open">
+                                <span class="cselect-text" x-text="label"></span>
+                                <span style="opacity:.8;font-weight:900" x-text="open ? '▲' : '▼'"></span>
+                            </button>
+
+                            <div class="cselect-menu" x-show="open" x-transition.opacity x-cloak>
+                                <div class="cselect-search">
+                                    <input class="dark-input" style="padding:9px 10px;border-radius:12px"
+                                           placeholder="Search source…"
+                                           x-model="q">
+                                </div>
+
+                                <div style="max-height:260px;overflow:auto">
+                                    <div class="cselect-item" :class="value==='' ? 'active' : ''" @click="pick('')">
+                                        <span>Select source</span>
+                                        <span class="cselect-muted" x-show="value===''">Selected</span>
+                                    </div>
+
+                                    <template x-for="item in filtered" :key="item.value">
+                                        <div class="cselect-item"
+                                             :class="String(item.value)===String(value) ? 'active' : ''"
+                                             @click="pick(item.value)">
+                                            <span x-text="item.label"></span>
+                                            <span class="cselect-muted" x-show="String(item.value)===String(value)">Selected</span>
+                                        </div>
+                                    </template>
+
+                                    <div class="cselect-item cselect-muted" x-show="filtered.length===0" style="justify-content:center">
+                                        No results
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
-                        <div>
+                        {{-- Status (custom dropdown - fixes white native dropdown) --}}
+                        <div
+                            class="cselect"
+                            x-data="cselect({ value: @js($oldStatus), placeholder: 'Select status', items: {{ $statusItems->toJson() }} })"
+                            :class="open ? 'open' : ''"
+                            @click.outside="open=false"
+                            @keydown.escape.window="open=false"
+                        >
                             <div class="label">
                                 <span>Status</span>
                                 <span class="req">Optional</span>
                             </div>
-                            <select name="status_id" class="dark-select">
-                                <option value="">Select status</option>
-                                @foreach($statuses as $st)
-                                    <option value="{{ $st->id }}" {{ old('status_id') == $st->id ? 'selected' : '' }}>
-                                        {{ $st->name }}
-                                    </option>
-                                @endforeach
-                            </select>
+
+                            <input type="hidden" name="status_id" :value="value">
+
+                            <button type="button" class="cselect-btn" @click="open=!open" :aria-expanded="open">
+                                <span class="cselect-text" x-text="label"></span>
+                                <span style="opacity:.8;font-weight:900" x-text="open ? '▲' : '▼'"></span>
+                            </button>
+
+                            <div class="cselect-menu" x-show="open" x-transition.opacity x-cloak>
+                                <div class="cselect-search">
+                                    <input class="dark-input" style="padding:9px 10px;border-radius:12px"
+                                           placeholder="Search status…"
+                                           x-model="q">
+                                </div>
+
+                                <div style="max-height:260px;overflow:auto">
+                                    <div class="cselect-item" :class="value==='' ? 'active' : ''" @click="pick('')">
+                                        <span>Select status</span>
+                                        <span class="cselect-muted" x-show="value===''">Selected</span>
+                                    </div>
+
+                                    <template x-for="item in filtered" :key="item.value">
+                                        <div class="cselect-item"
+                                             :class="String(item.value)===String(value) ? 'active' : ''"
+                                             @click="pick(item.value)">
+                                            <span x-text="item.label"></span>
+                                            <span class="cselect-muted" x-show="String(item.value)===String(value)">Selected</span>
+                                        </div>
+                                    </template>
+
+                                    <div class="cselect-item cselect-muted" x-show="filtered.length===0" style="justify-content:center">
+                                        No results
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         @if(optional(Auth::user())->isAdmin())
-                            <div class="full">
+                            {{-- Assign to (custom dropdown - fixes native) --}}
+                            <div
+                                class="cselect full"
+                                x-data="cselect({ value: @js($oldAssign), placeholder: 'Unassigned', items: {{ $salesItems->toJson() }} })"
+                                :class="open ? 'open' : ''"
+                                @click.outside="open=false"
+                                @keydown.escape.window="open=false"
+                            >
                                 <div class="label">
                                     <span>Assign to</span>
                                     <span class="req">Optional</span>
                                 </div>
-                                <select name="assigned_to" class="dark-select">
-                                    <option value="">Unassigned</option>
-                                    @foreach($sales as $s)
-                                        <option value="{{ $s->id }}" {{ old('assigned_to') == $s->id ? 'selected' : '' }}>
-                                            {{ $s->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
+
+                                <input type="hidden" name="assigned_to" :value="value">
+
+                                <button type="button" class="cselect-btn" @click="open=!open" :aria-expanded="open">
+                                    <span class="cselect-text" x-text="label"></span>
+                                    <span style="opacity:.8;font-weight:900" x-text="open ? '▲' : '▼'"></span>
+                                </button>
+
+                                <div class="cselect-menu" x-show="open" x-transition.opacity x-cloak>
+                                    <div class="cselect-search">
+                                        <input class="dark-input" style="padding:9px 10px;border-radius:12px"
+                                               placeholder="Search assignee…"
+                                               x-model="q">
+                                    </div>
+
+                                    <div style="max-height:260px;overflow:auto">
+                                        <div class="cselect-item" :class="value==='' ? 'active' : ''" @click="pick('')">
+                                            <span>Unassigned</span>
+                                            <span class="cselect-muted" x-show="value===''">Selected</span>
+                                        </div>
+
+                                        <template x-for="item in filtered" :key="item.value">
+                                            <div class="cselect-item"
+                                                 :class="String(item.value)===String(value) ? 'active' : ''"
+                                                 @click="pick(item.value)">
+                                                <span x-text="item.label"></span>
+                                                <span class="cselect-muted" x-show="String(item.value)===String(value)">Selected</span>
+                                            </div>
+                                        </template>
+
+                                        <div class="cselect-item cselect-muted" x-show="filtered.length===0" style="justify-content:center">
+                                            No results
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="help">Assigning a sales user will show the lead in their queue.</div>
                             </div>
                         @endif
@@ -329,6 +520,41 @@
                         <button class="crm-btn crm-btn-primary" type="submit">Create Lead</button>
                     </div>
                 </form>
+
+                {{-- Import from Excel/CSV --}}
+                <div style="margin-top:18px">
+                    <div class="section-title">
+                        <div class="left">Import from Excel / CSV</div>
+                        <div class="right">
+                            Upload a CSV exported from Excel (columns: name,phone,email,source,status,assigned_to,message)
+                        </div>
+                    </div>
+
+                    @if(session('import_errors'))
+                        <div class="alert alert-error" style="margin-bottom:12px">
+                            <strong style="display:block;font-weight:900">Import issues:</strong>
+                            <ul>
+                                @foreach(session('import_errors') as $ie)
+                                    <li style="margin:2px 0">{{ $ie }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
+                    <form method="POST" action="{{ route('crm.leads.import') }}" enctype="multipart/form-data" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+                        @csrf
+                        <input type="file" name="file" accept=".csv" class="dark-input" style="padding:8px;flex:1;min-width:260px" />
+                        <div style="display:flex;gap:8px;flex-wrap:wrap">
+                            <a href="{{ asset('crm/templates/lead_import_template.csv') }}" class="crm-btn crm-btn-ghost" download>Download template</a>
+                            <button class="crm-btn crm-btn-primary">Import CSV</button>
+                        </div>
+                    </form>
+
+                    <div class="help" style="margin-top:8px">
+                        Tip: Open the template in Excel, fill rows, then <b>Save As → CSV UTF-8</b> and upload. First row must keep headers.
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
