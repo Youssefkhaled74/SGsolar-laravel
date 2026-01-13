@@ -241,7 +241,7 @@
                             </svg>
                         </div>
                     </div>
-                    <div class="kpi-value">—</div>
+                    <div class="kpi-value">{{ number_format($totalLeads ?? 0) }}</div>
                     <div class="kpi-meta">Trend: —</div>
                 </div>
 
@@ -255,8 +255,8 @@
                             </svg>
                         </div>
                     </div>
-                    <div class="kpi-value">—</div>
-                    <div class="kpi-meta">Trend: —</div>
+                    <div class="kpi-value">{{ number_format($newLeads ?? 0) }}</div>
+                    <div class="kpi-meta">(last 7 days)</div>
                 </div>
 
                 <div class="kpi-card">
@@ -271,8 +271,8 @@
                             </svg>
                         </div>
                     </div>
-                    <div class="kpi-value">—</div>
-                    <div class="kpi-meta">Trend: —</div>
+                    <div class="kpi-value">{{ number_format($unassigned ?? 0) }}</div>
+                    <div class="kpi-meta">Need assignment</div>
                 </div>
 
                 <div class="kpi-card">
@@ -288,8 +288,8 @@
                             </svg>
                         </div>
                     </div>
-                    <div class="kpi-value">—</div>
-                    <div class="kpi-meta">Trend: —</div>
+                    <div class="kpi-value">{{ number_format($followupsToday ?? 0) }}</div>
+                    <div class="kpi-meta">Due by end of day</div>
                 </div>
             </div>
 
@@ -333,14 +333,16 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @for ($i=0;$i<5;$i++)
+                            @forelse($activities as $act)
                                 <tr>
-                                    <td>—</td>
-                                    <td>—</td>
-                                    <td>—</td>
-                                    <td>—</td>
+                                    <td>{{ optional($act->time)->format('Y-m-d H:i') ?? '—' }}</td>
+                                    <td>{{ $act->actor ?? '—' }}</td>
+                                    <td>{{ $act->action ?? '—' }}</td>
+                                    <td>{{ $act->target ?? '—' }}</td>
                                 </tr>
-                            @endfor
+                            @empty
+                                <tr><td colspan="4">No recent activity</td></tr>
+                            @endforelse
                             </tbody>
                         </table>
                     </div>

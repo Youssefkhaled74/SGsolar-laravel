@@ -28,4 +28,9 @@ class LeadAction extends Model
     {
         return $this->belongsTo(ActionType::class, 'action_type_id');
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

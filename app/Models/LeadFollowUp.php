@@ -29,4 +29,14 @@ class LeadFollowUp extends Model
     {
         return $this->belongsTo(LeadAction::class, 'lead_action_id');
     }
+
+    public function creator()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function assignee()
+    {
+        return $this->belongsTo(User::class, 'assigned_to');
+    }
 }
