@@ -95,6 +95,14 @@ if (! Route::has('crm.login.submit')) {
     })->name('crm.login.submit');
 }
 
+// Global logout route (handles POST from forms that submit to /logout)
+Route::post('/logout', function (\Illuminate\Http\Request $request) {
+    auth()->logout();
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+    return redirect('/');
+})->name('logout');
+
 /* Admin CRM routes moved to routes/admin.php */
 
 // Download Request

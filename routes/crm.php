@@ -63,11 +63,21 @@ Route::middleware(['web', 'crm.auth', 'crm.access', 'crm.role'])->group(function
             App\Http\Controllers\Crm\Sales\LeadController::class,
             'markFollowupDone'
     ])->name('crm.sales.followups.done');
-
     Route::get('/crm/sales/followups/today', [
             App\Http\Controllers\Crm\Sales\LeadController::class,
             'followupsToday'
     ])->name('crm.sales.followups.today');
+
+        // Followups index (alias to today's view) — used by dashboard "View all" link
+        Route::get('/crm/sales/followups', [
+            App\Http\Controllers\Crm\Sales\LeadController::class,
+            'followupsToday'
+        ])->name('crm.sales.followups.index');
+
+        Route::get('/crm/sales/followups/today', [
+            App\Http\Controllers\Crm\Sales\LeadController::class,
+            'followupsToday'
+        ])->name('crm.sales.followups.today');
 
     // Admin Leads (UI only)
     Route::get('/crm/admin/leads', [
