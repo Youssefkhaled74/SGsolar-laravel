@@ -39,16 +39,16 @@
 
         /* Light Mode */
         html:not(.dark) {
-            --s-border:rgba(0,0,0,.10);
-            --s-text:rgba(0,0,0,.92);
-            --s-muted:rgba(0,0,0,.62);
+            --s-border:rgba(0,0,0,.12);
+            --s-text:rgba(0,0,0,.95);
+            --s-muted:rgba(0,0,0,.70);
             --s-bg0:#FFFFFF;
             --s-bg1:#F8F9FA;
             --topbar-bg: rgba(255,255,255,.95);
-            --nav-bg: rgba(0,0,0,.04);
-            --nav-border: rgba(0,0,0,.14);
-            --nav-color: rgba(0,0,0,.88);
-            --nav-hover-bg: rgba(0,0,0,.08);
+            --nav-bg: rgba(0,0,0,.05);
+            --nav-border: rgba(0,0,0,.18);
+            --nav-color: rgba(0,0,0,.92);
+            --nav-hover-bg: rgba(0,0,0,.10);
         }
 
         body{

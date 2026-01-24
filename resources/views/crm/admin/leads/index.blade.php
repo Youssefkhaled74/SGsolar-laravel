@@ -7,15 +7,65 @@
 <style>
     [x-cloak]{display:none!important}
 
+    /* Theme Variables */
+    .dark {
+        --leads-border: rgba(255,255,255,.10);
+        --leads-bg: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+        --leads-shadow: 0 22px 60px rgba(0,0,0,.35);
+        --leads-text: rgba(255,255,255,.90);
+        --leads-muted: rgba(255,255,255,.62);
+        --leads-input-bg: rgba(255,255,255,.04);
+        --leads-input-border: rgba(255,255,255,.14);
+        --leads-input-color: rgba(255,255,255,.90);
+        --leads-input-placeholder: rgba(255,255,255,.55);
+        --leads-panel-bg: rgba(0,0,0,.16);
+        --leads-panel-head: rgba(255,255,255,.04);
+        --leads-table-bg: rgba(0,0,0,.14);
+        --leads-table-head: rgba(255,255,255,.04);
+        --leads-table-row: rgba(0,0,0,.06);
+        --leads-table-hover: rgba(255,255,255,.03);
+        --leads-table-border: rgba(255,255,255,.06);
+        --leads-pill-bg: rgba(255,255,255,.04);
+        --leads-pill-border: rgba(255,255,255,.12);
+        --leads-pill-text: rgba(255,255,255,.78);
+        --leads-chip-bg: rgba(0,0,0,.12);
+        --leads-chip-text: rgba(255,255,255,.82);
+    }
+
+    html:not(.dark) {
+        --leads-border: rgba(0,0,0,.12);
+        --leads-bg: #FFFFFF;
+        --leads-shadow: 0 4px 12px rgba(0,0,0,.08);
+        --leads-text: rgba(0,0,0,.95);
+        --leads-muted: rgba(0,0,0,.70);
+        --leads-input-bg: rgba(0,0,0,.03);
+        --leads-input-border: rgba(0,0,0,.18);
+        --leads-input-color: rgba(0,0,0,.95);
+        --leads-input-placeholder: rgba(0,0,0,.50);
+        --leads-panel-bg: rgba(0,0,0,.03);
+        --leads-panel-head: rgba(0,0,0,.05);
+        --leads-table-bg: #FFFFFF;
+        --leads-table-head: rgba(0,0,0,.05);
+        --leads-table-row: #FFFFFF;
+        --leads-table-hover: rgba(0,0,0,.03);
+        --leads-table-border: rgba(0,0,0,.10);
+        --leads-pill-bg: rgba(0,0,0,.05);
+        --leads-pill-border: rgba(0,0,0,.15);
+        --leads-pill-text: rgba(0,0,0,.85);
+        --leads-chip-bg: rgba(0,0,0,.08);
+        --leads-chip-text: rgba(0,0,0,.90);
+    }
+
     .leads-shell{
         border-radius:20px;
-        border:1px solid rgba(255,255,255,.10);
-        background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
-        box-shadow: 0 22px 60px rgba(0,0,0,.35);
+        border:1px solid var(--leads-border);
+        background: var(--leads-bg);
+        box-shadow: var(--leads-shadow);
         overflow:hidden;
         position:relative;
+        transition: all 0.3s ease;
     }
-    .leads-bg{
+    .dark .leads-bg{
         position:absolute; inset:0; z-index:0; pointer-events:none;
         background:
             radial-gradient(900px 520px at 16% 10%, rgba(140,198,63,.14), transparent 55%),
@@ -24,6 +74,7 @@
         filter: blur(14px);
         opacity:.7;
     }
+    html:not(.dark) .leads-bg { display: none; }
     .leads-wrap{position:relative; padding:16px; z-index:1}
 
     .topline{
@@ -33,20 +84,22 @@
     .count-pill{
         display:inline-flex;align-items:center;gap:8px;
         padding:7px 10px;border-radius:999px;
-        border:1px solid rgba(255,255,255,.12);
-        background: rgba(255,255,255,.04);
+        border:1px solid var(--leads-pill-border);
+        background: var(--leads-pill-bg);
         font-weight:900;font-size:12px;
-        color: rgba(255,255,255,.78);
+        color: var(--leads-pill-text);
+        transition: all 0.3s ease;
     }
-    .muted{color: rgba(255,255,255,.62) !important}
+    .muted{color: var(--leads-muted) !important}
 
     .toolbar{
         display:flex; gap:12px; flex-wrap:wrap; align-items:center; justify-content:space-between;
         padding:14px;
         border-radius:16px;
-        border:1px solid rgba(255,255,255,.10);
-        background: rgba(0,0,0,.16);
+        border:1px solid var(--leads-border);
+        background: var(--leads-panel-bg);
         backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
     }
     .toolbar .left{flex:1; min-width:260px}
     .toolbar .right{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
@@ -55,15 +108,16 @@
         width:100%;
         padding:10px 12px;
         border-radius:14px;
-        border:1px solid rgba(255,255,255,.14);
-        background: rgba(255,255,255,.04);
-        color: rgba(255,255,255,.90);
+        border:1px solid var(--leads-input-border);
+        background: var(--leads-input-bg);
+        color: var(--leads-input-color);
         font-weight:800;
         outline:none;
+        transition: all 0.3s ease;
     }
-    .dark-input::placeholder{color: rgba(255,255,255,.55)}
+    .dark-input::placeholder{color: var(--leads-input-placeholder)}
     .dark-input:focus{
-        border-color: rgba(255,223,65,.30);
+        border-color: rgba(255,223,65,.38);
         box-shadow: 0 0 0 4px rgba(255,223,65,.10);
     }
 
@@ -71,14 +125,14 @@
     .filter-btn{
         display:inline-flex;align-items:center;gap:10px;
         padding:10px 12px;border-radius:14px;
-        border:1px solid rgba(255,255,255,.14);
-        background: rgba(255,255,255,.04);
-        color: rgba(255,255,255,.90);
+        border:1px solid var(--leads-input-border);
+        background: var(--leads-input-bg);
+        color: var(--leads-text);
         font-weight:900;
         cursor:pointer;
-        transition:.15s ease;
+        transition:all .2s ease;
     }
-    .filter-btn:hover{background: rgba(255,255,255,.07)}
+    .filter-btn:hover{background: var(--leads-table-hover)}
     .filter-btn .icon{width:18px;height:18px;opacity:.9}
 
     /* CHIPS */
@@ -86,41 +140,43 @@
     .chip{
         display:inline-flex;align-items:center;gap:8px;
         padding:7px 10px;border-radius:999px;
-        border:1px solid rgba(255,255,255,.12);
-        background: rgba(0,0,0,.12);
-        color: rgba(255,255,255,.82);
+        border:1px solid var(--leads-pill-border);
+        background: var(--leads-chip-bg);
+        color: var(--leads-chip-text);
         font-size:12px;font-weight:900;
         white-space:nowrap;
+        transition: all 0.3s ease;
     }
-    .chip .dot{width:8px;height:8px;border-radius:999px;background:rgba(255,223,65,.28)}
+    .chip .dot{width:8px;height:8px;border-radius:999px;background:rgba(255,223,65,.45)}
 
     /* FILTER PANEL */
     .panel{
         margin-top:12px;
         border-radius:16px;
-        border:1px solid rgba(255,255,255,.10);
-        background: rgba(0,0,0,.16);
-        box-shadow: 0 12px 26px rgba(0,0,0,.22);
+        border:1px solid var(--leads-border);
+        background: var(--leads-panel-bg);
+        box-shadow: var(--leads-shadow);
         backdrop-filter: blur(10px);
         overflow:hidden;
+        transition: all 0.3s ease;
     }
     .panel-head{
         display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
         padding:12px 14px;
-        background: rgba(255,255,255,.04);
-        border-bottom:1px solid rgba(255,255,255,.08);
+        background: var(--leads-panel-head);
+        border-bottom:1px solid var(--leads-border);
     }
     .panel-title{
         margin:0;
         font-size:13px;
         font-weight:900;
-        color: rgba(255,255,255,.90);
+        color: var(--leads-text);
         letter-spacing:.2px;
     }
     .panel-sub{
         font-size:12px;
         font-weight:800;
-        color: rgba(255,255,255,.62);
+        color: var(--leads-muted);
         margin-top:4px;
     }
     .panel-body{padding:14px}
@@ -135,22 +191,23 @@
         display:block;
         font-size:12px;
         font-weight:900;
-        color: rgba(255,255,255,.62);
+        color: var(--leads-muted);
         margin-bottom:6px;
     }
     .dark-select{
         width:100%;
         padding:11px 12px;
         border-radius:14px;
-        border:1px solid rgba(255,255,255,.14);
-        background: rgba(255,255,255,.04);
-        color: rgba(255,255,255,.90);
+        border:1px solid var(--leads-input-border);
+        background: var(--leads-input-bg);
+        color: var(--leads-input-color);
         font-weight:900;
         outline:none;
         appearance:none;
+        transition: all 0.3s ease;
         background-image:
-            linear-gradient(45deg, transparent 50%, rgba(255,255,255,.65) 50%),
-            linear-gradient(135deg, rgba(255,255,255,.65) 50%, transparent 50%);
+            linear-gradient(45deg, transparent 50%, var(--leads-text) 50%),
+            linear-gradient(135deg, var(--leads-text) 50%, transparent 50%);
         background-position:
             calc(100% - 18px) calc(50% - 3px),
             calc(100% - 13px) calc(50% - 3px);
@@ -158,13 +215,17 @@
         background-repeat:no-repeat;
     }
     .dark-select:focus{
-        border-color: rgba(255,223,65,.30);
+        border-color: rgba(255,223,65,.38);
         box-shadow: 0 0 0 4px rgba(255,223,65,.10);
     }
-    /* help native dropdown look dark */
-    select.dark-select option{
+    /* help native dropdown look appropriate for theme */
+    .dark select.dark-select option{
         background:#0b1220;
         color:#fff;
+    }
+    html:not(.dark) select.dark-select option{
+        background:#ffffff;
+        color:#000;
     }
 
     .panel-actions{
@@ -175,46 +236,48 @@
     .table-card{
         margin-top:14px;
         border-radius:16px;
-        border:1px solid rgba(255,255,255,.10);
-        background: rgba(0,0,0,.14);
-        box-shadow: 0 12px 26px rgba(0,0,0,.22);
+        border:1px solid var(--leads-border);
+        background: var(--leads-table-bg);
+        box-shadow: var(--leads-shadow);
         backdrop-filter: blur(10px);
         overflow:hidden;
+        transition: all 0.3s ease;
     }
     .dark-table{width:100%; border-collapse:collapse}
     .dark-table thead th{
         text-align:left;
         font-size:12px;
         font-weight:900;
-        color: rgba(255,255,255,.62);
+        color: var(--leads-muted);
         padding:12px 14px;
-        background: rgba(255,255,255,.04);
-        border-bottom:1px solid rgba(255,255,255,.08);
+        background: var(--leads-table-head);
+        border-bottom:1px solid var(--leads-table-border);
         white-space:nowrap;
     }
     .dark-table td{
         padding:12px 14px;
-        color: rgba(255,255,255,.86);
+        color: var(--leads-text);
         font-weight:800;
-        border-bottom:1px solid rgba(255,255,255,.06);
-        background: rgba(0,0,0,.06);
+        border-bottom:1px solid var(--leads-table-border);
+        background: var(--leads-table-row);
         vertical-align:middle;
     }
-    .dark-table tbody tr:hover td{background: rgba(255,255,255,.03)}
-    .row-title{font-weight:900;color:rgba(255,255,255,.92)}
+    .dark-table tbody tr:hover td{background: var(--leads-table-hover)}
+    .row-title{font-weight:900;color:var(--leads-text)}
 
     .badge{
         display:inline-flex;align-items:center;gap:8px;
         padding:6px 10px;border-radius:999px;
-        border:1px solid rgba(255,255,255,.14);
-        background: rgba(255,255,255,.05);
+        border:1px solid var(--leads-pill-border);
+        background: var(--leads-pill-bg);
         font-size:12px;font-weight:900;
-        color: rgba(255,255,255,.85);
+        color: var(--leads-pill-text);
         white-space:nowrap;
+        transition: all 0.3s ease;
     }
-    .badge .dot{width:8px;height:8px;border-radius:999px;background: rgba(255,255,255,.22)}
-    .badge.status .dot{background: rgba(255,223,65,.35)}
-    .badge.source .dot{background: rgba(140,198,63,.30)}
+    .badge .dot{width:8px;height:8px;border-radius:999px;background: var(--leads-muted)}
+    .badge.status .dot{background: rgba(255,223,65,.55)}
+    .badge.source .dot{background: rgba(140,198,63,.50)}
 
     .pagination{margin-top:12px}
     .pagination *{color: rgba(255,255,255,.85)!important}

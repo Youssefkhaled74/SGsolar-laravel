@@ -7,16 +7,50 @@
 <style>
     [x-cloak]{display:none!important}
 
+    /* Theme Variables */
+    .dark {
+        --create-border: rgba(255,255,255,.10);
+        --create-bg: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+        --create-shadow: 0 22px 60px rgba(0,0,0,.35);
+        --create-text: rgba(255,255,255,.92);
+        --create-muted: rgba(255,255,255,.62);
+        --create-card-bg: rgba(0,0,0,.14);
+        --create-card-head: rgba(255,255,255,.03);
+        --create-input-bg: rgba(255,255,255,.04);
+        --create-input-border: rgba(255,255,255,.14);
+        --create-input-color: rgba(255,255,255,.90);
+        --create-input-placeholder: rgba(255,255,255,.55);
+        --create-label-bg: rgba(0,0,0,.14);
+        --create-label-border: rgba(255,255,255,.12);
+    }
+
+    html:not(.dark) {
+        --create-border: rgba(0,0,0,.12);
+        --create-bg: #FFFFFF;
+        --create-shadow: 0 4px 12px rgba(0,0,0,.08);
+        --create-text: rgba(0,0,0,.95);
+        --create-muted: rgba(0,0,0,.70);
+        --create-card-bg: #FFFFFF;
+        --create-card-head: rgba(248,249,250,.8);
+        --create-input-bg: rgba(0,0,0,.03);
+        --create-input-border: rgba(0,0,0,.18);
+        --create-input-color: rgba(0,0,0,.95);
+        --create-input-placeholder: rgba(0,0,0,.50);
+        --create-label-bg: rgba(0,0,0,.05);
+        --create-label-border: rgba(0,0,0,.15);
+    }
+
     /* ===== Shell (same theme) ===== */
     .lead-create-shell{
         position:relative;
         border-radius:20px;
         overflow:hidden;
-        border:1px solid rgba(255,255,255,.10);
-        background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
-        box-shadow: 0 22px 60px rgba(0,0,0,.35);
+        border:1px solid var(--create-border);
+        background: var(--create-bg);
+        box-shadow: var(--create-shadow);
+        transition: all 0.3s ease;
     }
-    .lead-create-bg{
+    .dark .lead-create-bg{
         position:absolute; inset:0; z-index:0; pointer-events:none;
         background:
             radial-gradient(900px 520px at 16% 10%, rgba(140,198,63,.14), transparent 55%),
@@ -26,6 +60,7 @@
         filter: blur(14px);
         opacity:.78;
     }
+    html:not(.dark) .lead-create-bg { display: none; }
     .lead-create-wrap{position:relative; z-index:1; padding:16px}
 
     /* IMPORTANT: allow dropdowns to overlay (fix native select clipping) */
@@ -34,18 +69,19 @@
         max-width:980px;
         margin:0 auto;
         border-radius:16px;
-        border:1px solid rgba(255,255,255,.10);
-        background: rgba(0,0,0,.14);
-        box-shadow: 0 12px 26px rgba(0,0,0,.22);
+        border:1px solid var(--create-border);
+        background: var(--create-card-bg);
+        box-shadow: var(--create-shadow);
         backdrop-filter: blur(10px);
         overflow: visible; /* <-- key */
+        transition: all 0.3s ease;
     }
 
     .lead-card-head{
         display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;
         padding:14px 16px;
-        border-bottom:1px solid rgba(255,255,255,.08);
-        background: rgba(255,255,255,.03);
+        border-bottom:1px solid var(--create-border);
+        background: var(--create-card-head);
         border-top-left-radius:16px;
         border-top-right-radius:16px;
     }
@@ -53,22 +89,22 @@
         margin:0;
         font-size:16px;
         font-weight:900;
-        color: rgba(255,255,255,.92);
+        color: var(--create-text);
     }
     .lead-card-head .hint{
         margin-top:4px;
         font-size:12px;
         font-weight:800;
-        color: rgba(255,255,255,.62);
+        color: var(--create-muted);
     }
     .lead-card-body{padding:16px}
 
     .crumb{
         display:flex;gap:8px;align-items:center;
-        font-size:12px;font-weight:900;color:rgba(255,255,255,.62);
+        font-size:12px;font-weight:900;color:var(--create-muted);
         margin-bottom:12px;
     }
-    .crumb a{color:rgba(255,255,255,.86);text-decoration:none}
+    .crumb a{color:var(--create-text);text-decoration:none;opacity:.85}
     .crumb a:hover{text-decoration:underline}
 
     /* Grid */
@@ -86,7 +122,7 @@
     .label{
         font-size:12px;
         font-weight:900;
-        color: rgba(255,255,255,.62);
+        color: var(--create-muted);
         margin-bottom:6px;
         display:flex;
         align-items:center;
@@ -98,9 +134,9 @@
         font-weight:900;
         padding:4px 8px;
         border-radius:999px;
-        border:1px solid rgba(255,255,255,.14);
-        background: rgba(0,0,0,.14);
-        color: rgba(255,255,255,.70);
+        border:1px solid var(--create-label-border);
+        background: var(--create-label-bg);
+        color: var(--create-muted);
         white-space:nowrap;
     }
 
@@ -108,16 +144,17 @@
         width:100%;
         padding:11px 12px;
         border-radius:14px;
-        border:1px solid rgba(255,255,255,.14);
-        background: rgba(255,255,255,.04);
-        color: rgba(255,255,255,.90);
+        border:1px solid var(--create-input-border);
+        background: var(--create-input-bg);
+        color: var(--create-input-color);
         font-weight:800;
         outline:none;
+        transition: all 0.3s ease;
     }
     .dark-textarea{min-height:120px;resize:vertical}
-    .dark-input::placeholder, .dark-textarea::placeholder{color: rgba(255,255,255,.55)}
+    .dark-input::placeholder, .dark-textarea::placeholder{color: var(--create-input-placeholder)}
     .dark-input:focus, .dark-textarea:focus{
-        border-color: rgba(255,223,65,.28);
+        border-color: rgba(255,223,65,.38);
         box-shadow: 0 0 0 4px rgba(255,223,65,.10);
     }
 
@@ -125,7 +162,7 @@
         margin-top:6px;
         font-size:12px;
         font-weight:800;
-        color: rgba(255,255,255,.58);
+        color: var(--create-muted);
         line-height:1.35;
     }
 
@@ -133,15 +170,17 @@
     .alert{
         border-radius:14px;
         padding:12px 14px;
-        border:1px solid rgba(255,255,255,.12);
-        background: rgba(255,255,255,.04);
-        color: rgba(255,255,255,.86);
+        border:1px solid var(--create-border);
+        background: var(--create-input-bg);
+        color: var(--create-text);
+        transition: all 0.3s ease;
     }
     .alert-error{
-        border-color:rgba(239,68,68,.25);
-        background:rgba(239,68,68,.10);
-        color:#ffd0d0;
+        border-color:rgba(239,68,68,.35);
+        background:rgba(239,68,68,.12);
+        color:#ff6b6b;
     }
+    .dark .alert-error{color:#ffd0d0}
     .alert ul{margin:8px 0 0;padding-left:18px}
 
     /* Footer actions */
@@ -152,7 +191,7 @@
         flex-wrap:wrap;
         margin-top:14px;
         padding-top:14px;
-        border-top:1px solid rgba(255,255,255,.08);
+        border-top:1px solid var(--create-border);
     }
 
     /* Sub section divider */
@@ -162,13 +201,13 @@
     }
     .section-title .left{
         font-weight:900;
-        color: rgba(255,255,255,.90);
+        color: var(--create-text);
         font-size:13px;
     }
     .section-title .right{
         font-size:12px;
         font-weight:800;
-        color: rgba(255,255,255,.62);
+        color: var(--create-muted);
         line-height:1.3;
     }
 
@@ -180,44 +219,49 @@
         display:flex;align-items:center;justify-content:space-between;gap:10px;
         padding:11px 12px;
         border-radius:14px;
-        border:1px solid rgba(255,255,255,.14);
-        background: rgba(255,255,255,.04);
-        color: rgba(255,255,255,.90);
+        border:1px solid var(--create-input-border);
+        background: var(--create-input-bg);
+        color: var(--create-input-color);
         font-weight:900;
         cursor:pointer;
         outline:none;
+        transition: all 0.3s ease;
     }
-    .cselect-btn:hover{background: rgba(255,255,255,.06)}
+    .cselect-btn:hover{background: var(--create-label-bg)}
     .cselect-btn:focus{
-        border-color: rgba(255,223,65,.28);
+        border-color: rgba(255,223,65,.38);
         box-shadow: 0 0 0 4px rgba(255,223,65,.10);
     }
     .cselect-text{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
     .cselect-menu{
         position:absolute;left:0;right:0;top:calc(100% + 8px);
         border-radius:14px;
-        border:1px solid rgba(255,255,255,.12);
-        background: rgba(7,11,18,.94);
-        box-shadow: 0 22px 60px rgba(0,0,0,.55);
+        border:1px solid var(--create-border);
+        background: var(--create-card-bg);
+        box-shadow: var(--create-shadow);
         backdrop-filter: blur(10px);
         overflow:hidden;
         z-index:99999;
     }
+    .dark .cselect-menu{
+        background: rgba(7,11,18,.94);
+    }
     .cselect-search{
         padding:10px;
-        border-bottom:1px solid rgba(255,255,255,.08);
-        background: rgba(255,255,255,.03);
+        border-bottom:1px solid var(--create-border);
+        background: var(--create-card-head);
     }
     .cselect-item{
         padding:10px 12px;
         display:flex;align-items:center;justify-content:space-between;gap:10px;
-        color: rgba(255,255,255,.86);
+        color: var(--create-text);
         font-weight:900;
         cursor:pointer;
+        transition: all 0.2s ease;
     }
-    .cselect-item:hover{background: rgba(255,255,255,.06)}
-    .cselect-item.active{background: rgba(255,223,65,.10)}
-    .cselect-muted{font-weight:800;color: rgba(255,255,255,.62);font-size:12px}
+    .cselect-item:hover{background: var(--create-label-bg)}
+    .cselect-item.active{background: rgba(255,223,65,.12)}
+    .cselect-muted{font-weight:800;color: var(--create-muted);font-size:12px}
 </style>
 
 <script>

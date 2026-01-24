@@ -39,26 +39,26 @@
 
         /* Light Mode Variables */
         html:not(.dark) {
-            --dash-border:rgba(0,0,0,.10);
-            --dash-text:rgba(0,0,0,.92);
-            --dash-muted:rgba(0,0,0,.62);
+            --dash-border:rgba(0,0,0,.12);
+            --dash-text:rgba(0,0,0,.95);
+            --dash-muted:rgba(0,0,0,.70);
             --dash-card:#FFFFFF;
             --dash-card2:#FFFFFF;
             --dash-shadow: 0 4px 12px rgba(0,0,0,.08);
             --dash-shadow2: 0 2px 8px rgba(0,0,0,.06);
             --dash-wrap-bg: #FFFFFF;
             --dash-head-bg: rgba(248,249,250,.8);
-            --kpi-icon-bg: rgba(0,0,0,.04);
-            --kpi-icon-border: rgba(0,0,0,.10);
-            --table-head-bg: rgba(0,0,0,.04);
+            --kpi-icon-bg: rgba(0,0,0,.05);
+            --kpi-icon-border: rgba(0,0,0,.12);
+            --table-head-bg: rgba(0,0,0,.05);
             --table-row-bg: #FFFFFF;
-            --table-row-hover: rgba(0,0,0,.02);
-            --table-border: rgba(0,0,0,.08);
-            --pill-bg: rgba(0,0,0,.04);
-            --pill-border: rgba(0,0,0,.12);
-            --pill-text: rgba(0,0,0,.78);
-            --empty-bg: rgba(0,0,0,.02);
-            --empty-border: rgba(0,0,0,.14);
+            --table-row-hover: rgba(0,0,0,.03);
+            --table-border: rgba(0,0,0,.10);
+            --pill-bg: rgba(0,0,0,.05);
+            --pill-border: rgba(0,0,0,.15);
+            --pill-text: rgba(0,0,0,.85);
+            --empty-bg: rgba(0,0,0,.03);
+            --empty-border: rgba(0,0,0,.18);
         }
 
         .dash-wrap{

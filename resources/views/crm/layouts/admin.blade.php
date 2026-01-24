@@ -55,20 +55,20 @@
         html:not(.dark) {
             --bg-0:#FFFFFF;
             --bg-1:#F8F9FA;
-            --dash-border:rgba(0,0,0,.10);
-            --dash-text:rgba(0,0,0,.92);
-            --dash-muted:rgba(0,0,0,.62);
+            --dash-border:rgba(0,0,0,.12);
+            --dash-text:rgba(0,0,0,.95);
+            --dash-muted:rgba(0,0,0,.70);
             --glass: rgba(255,255,255,.95);
             --glass2: rgba(255,255,255,.98);
             --shadow: 0 4px 12px rgba(0,0,0,.08);
             --shadow2: 0 2px 8px rgba(0,0,0,.06);
             --sidebar-bg: #FFFFFF;
             --topbar-bg: rgba(255,255,255,.95);
-            --btn-ghost-bg: rgba(0,0,0,.04);
-            --btn-ghost-border: rgba(0,0,0,.14);
-            --btn-ghost-color: rgba(0,0,0,.86);
-            --nav-hover-bg: rgba(0,0,0,.05);
-            --nav-hover-border: rgba(0,0,0,.08);
+            --btn-ghost-bg: rgba(0,0,0,.05);
+            --btn-ghost-border: rgba(0,0,0,.18);
+            --btn-ghost-color: rgba(0,0,0,.92);
+            --nav-hover-bg: rgba(0,0,0,.08);
+            --nav-hover-border: rgba(0,0,0,.12);
         }
 
         *{box-sizing:border-box}

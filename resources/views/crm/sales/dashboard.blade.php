@@ -40,28 +40,28 @@
 
     /* Light Mode Variables */
     html:not(.dark) {
-        --s-border:rgba(0,0,0,.10);
-        --s-text:rgba(0,0,0,.92);
-        --s-muted:rgba(0,0,0,.62);
+        --s-border:rgba(0,0,0,.12);
+        --s-text:rgba(0,0,0,.95);
+        --s-muted:rgba(0,0,0,.70);
         --s-card:#FFFFFF;
         --s-card2:#FFFFFF;
         --s-shadow: 0 4px 12px rgba(0,0,0,.08);
         --s-shadow2: 0 2px 8px rgba(0,0,0,.06);
         --s-shell-bg: #FFFFFF;
         --s-head-bg: rgba(248,249,250,.8);
-        --s-pill-bg: rgba(0,0,0,.04);
-        --s-pill-border: rgba(0,0,0,.12);
-        --s-pill-text: rgba(0,0,0,.78);
-        --s-input-bg: rgba(0,0,0,.02);
-        --s-input-border: rgba(0,0,0,.14);
-        --s-input-color: rgba(0,0,0,.90);
-        --s-input-placeholder: rgba(0,0,0,.45);
-        --s-table-head-bg: rgba(0,0,0,.04);
+        --s-pill-bg: rgba(0,0,0,.05);
+        --s-pill-border: rgba(0,0,0,.15);
+        --s-pill-text: rgba(0,0,0,.85);
+        --s-input-bg: rgba(0,0,0,.03);
+        --s-input-border: rgba(0,0,0,.18);
+        --s-input-color: rgba(0,0,0,.95);
+        --s-input-placeholder: rgba(0,0,0,.50);
+        --s-table-head-bg: rgba(0,0,0,.05);
         --s-table-row-bg: #FFFFFF;
-        --s-table-row-hover: rgba(0,0,0,.02);
-        --s-table-border: rgba(0,0,0,.08);
-        --s-empty-bg: rgba(0,0,0,.02);
-        --s-empty-border: rgba(0,0,0,.14);
+        --s-table-row-hover: rgba(0,0,0,.03);
+        --s-table-border: rgba(0,0,0,.10);
+        --s-empty-bg: rgba(0,0,0,.03);
+        --s-empty-border: rgba(0,0,0,.18);
     }
 
     /* Shell */
