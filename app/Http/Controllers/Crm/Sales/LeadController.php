@@ -9,6 +9,8 @@ use App\Models\LeadComment;
 use App\Models\LeadAction;
 use App\Models\LeadFollowUp;
 use App\Models\ActionType;
+use App\Models\LeadSource;
+use App\Models\LeadStatus;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Schema;
@@ -16,9 +18,31 @@ use App\Http\Requests\Crm\StoreLeadCommentRequest;
 use App\Http\Requests\Crm\StoreLeadActionRequest;
 use App\Http\Requests\Crm\StoreLeadFollowupRequest;
 use App\Http\Requests\Crm\MarkFollowupDoneRequest;
+use App\Http\Requests\Crm\StoreLeadRequest;
 
 class LeadController extends Controller
 {
+    public function create()
+    {
+        $statuses = LeadStatus::orderBy('sort_order')->get();
+        $sources = LeadSource::orderBy('name')->get();
+
+        return view('crm.sales.leads.create', compact('statuses', 'sources'));
+    }
+
+    public function store(StoreLeadRequest $request): RedirectResponse
+    {
+        $userId = Auth::id();
+
+        $data = $request->validated();
+        $data['assigned_to'] = $userId; // Sales users can only create leads assigned to themselves
+        $data['created_by'] = $userId;
+
+        Lead::create($data);
+
+        return redirect()->route('crm.sales.leads.index')->with('success', 'Lead created successfully.');
+    }
+
     public function index()
     {
         $userId = Auth::id();

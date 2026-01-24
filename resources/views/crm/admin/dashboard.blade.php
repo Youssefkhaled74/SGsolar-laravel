@@ -5,10 +5,16 @@
 
 @section('content')
     <style>
-        /* ============ Dark dashboard theme (clean + professional) ============ */
+        /* ============ Theme-Aware Dashboard Styles ============ */
         :root{
-            --dash-bg0:#070B12;
-            --dash-bg1:#0A1220;
+            --brand-yellow: {{ config('website.primary_color', '#FFDF41') }};
+            --brand-orange: {{ config('website.secondary_color', '#E3A000') }};
+            --brand-green: {{ config('website.forest_green', '#115F45') }};
+            --brand-light: {{ config('website.light_green', '#8CC63F') }};
+        }
+
+        /* Dark Mode Variables */
+        .dark {
             --dash-border:rgba(255,255,255,.10);
             --dash-text:rgba(255,255,255,.92);
             --dash-muted:rgba(255,255,255,.62);
@@ -16,10 +22,43 @@
             --dash-card2:rgba(0,0,0,.14);
             --dash-shadow: 0 22px 60px rgba(0,0,0,.35);
             --dash-shadow2: 0 12px 26px rgba(0,0,0,.22);
-            --brand-yellow: {{ config('website.primary_color', '#FFDF41') }};
-            --brand-orange: {{ config('website.secondary_color', '#E3A000') }};
-            --brand-green: {{ config('website.forest_green', '#115F45') }};
-            --brand-light: {{ config('website.light_green', '#8CC63F') }};
+            --dash-wrap-bg: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+            --dash-head-bg: rgba(0,0,0,.14);
+            --kpi-icon-bg: rgba(255,255,255,.05);
+            --kpi-icon-border: rgba(255,255,255,.12);
+            --table-head-bg: rgba(255,255,255,.04);
+            --table-row-bg: rgba(0,0,0,.06);
+            --table-row-hover: rgba(255,255,255,.03);
+            --table-border: rgba(255,255,255,.06);
+            --pill-bg: rgba(255,255,255,.05);
+            --pill-border: rgba(255,255,255,.12);
+            --pill-text: rgba(255,255,255,.78);
+            --empty-bg: rgba(0,0,0,.14);
+            --empty-border: rgba(255,255,255,.14);
+        }
+
+        /* Light Mode Variables */
+        html:not(.dark) {
+            --dash-border:rgba(0,0,0,.10);
+            --dash-text:rgba(0,0,0,.92);
+            --dash-muted:rgba(0,0,0,.62);
+            --dash-card:#FFFFFF;
+            --dash-card2:#FFFFFF;
+            --dash-shadow: 0 4px 12px rgba(0,0,0,.08);
+            --dash-shadow2: 0 2px 8px rgba(0,0,0,.06);
+            --dash-wrap-bg: #FFFFFF;
+            --dash-head-bg: rgba(248,249,250,.8);
+            --kpi-icon-bg: rgba(0,0,0,.04);
+            --kpi-icon-border: rgba(0,0,0,.10);
+            --table-head-bg: rgba(0,0,0,.04);
+            --table-row-bg: #FFFFFF;
+            --table-row-hover: rgba(0,0,0,.02);
+            --table-border: rgba(0,0,0,.08);
+            --pill-bg: rgba(0,0,0,.04);
+            --pill-border: rgba(0,0,0,.12);
+            --pill-text: rgba(0,0,0,.78);
+            --empty-bg: rgba(0,0,0,.02);
+            --empty-border: rgba(0,0,0,.14);
         }
 
         .dash-wrap{
@@ -27,15 +66,16 @@
             border-radius:20px;
             overflow:hidden;
             border:1px solid var(--dash-border);
-            background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+            background: var(--dash-wrap-bg);
             box-shadow: var(--dash-shadow);
+            transition: all 0.3s ease;
         }
 
-        /* Animated background layer (subtle, always on) */
-        .dash-bg{
+        /* Dark mode animated background layer */
+        .dark .dash-bg{
             position:absolute; inset:0; z-index:0; pointer-events:none; overflow:hidden;
         }
-        .dash-bg::before{
+        .dark .dash-bg::before{
             content:"";
             position:absolute; inset:-40%;
             background:
@@ -47,7 +87,7 @@
             filter: blur(14px);
             animation: dashDrift 18s ease-in-out infinite alternate;
         }
-        .dash-bg::after{
+        .dark .dash-bg::after{
             content:"";
             position:absolute; inset:0;
             background-image:
@@ -57,6 +97,12 @@
             opacity:.08;
             mask-image: radial-gradient(closest-side at 50% 35%, black 0%, transparent 72%);
         }
+        
+        /* Light mode - no animated background */
+        html:not(.dark) .dash-bg {
+            display: none;
+        }
+        
         @keyframes dashDrift{
             0%   { transform: translate3d(-1.5%, -1%, 0) scale(1.02) rotate(-.5deg); }
             50%  { transform: translate3d( 1.5%,  1.5%, 0) scale(1.06) rotate( .5deg); }
@@ -69,16 +115,17 @@
             padding:18px;
         }
 
-        /* Header strip inside dashboard (helps UX) */
+        /* Header strip inside dashboard */
         .dash-head{
             display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;
             padding:14px 14px;
             border:1px solid var(--dash-border);
             border-radius:16px;
-            background: rgba(0,0,0,.14);
+            background: var(--dash-head-bg);
             box-shadow: var(--dash-shadow2);
             backdrop-filter: blur(10px);
             margin-bottom:14px;
+            transition: all 0.3s ease;
         }
         .dash-head .left h3{margin:0;font-size:14px;font-weight:900;color:var(--dash-text)}
         .dash-head .left p{margin:6px 0 0 0;font-size:12px;font-weight:800;color:var(--dash-muted);line-height:1.55}
@@ -96,12 +143,11 @@
             padding:16px 16px;
             box-shadow: var(--dash-shadow2);
             backdrop-filter: blur(10px);
-            transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+            transition: all 0.3s ease;
         }
         .kpi-card:hover{
             transform: translateY(-1px);
-            border-color: rgba(255,255,255,.14);
-            box-shadow: 0 16px 34px rgba(0,0,0,.28);
+            box-shadow: var(--dash-shadow);
         }
 
         .kpi-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
@@ -110,7 +156,7 @@
             font-size:12px;
             letter-spacing:.2px;
             font-weight:900;
-            color:rgba(255,255,255,.68)
+            color:var(--dash-muted)
         }
         .kpi-value{
             margin-top:10px;
@@ -123,10 +169,11 @@
 
         .kpi-icon{
             width:38px;height:38px;border-radius:14px;
-            border:1px solid rgba(255,255,255,.12);
-            background: rgba(255,255,255,.05);
+            border:1px solid var(--kpi-icon-border);
+            background: var(--kpi-icon-bg);
             display:flex;align-items:center;justify-content:center;
-            color:rgba(255,255,255,.88);
+            color:var(--dash-text);
+            transition: all 0.3s ease;
         }
         .kpi-icon svg{width:18px;height:18px;opacity:.95}
 
@@ -141,6 +188,7 @@
             padding:14px;
             box-shadow: var(--dash-shadow2);
             backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
         }
         .panel-head{
             display:flex;align-items:flex-start;justify-content:space-between;gap:10px;flex-wrap:wrap;
@@ -149,50 +197,50 @@
         .panel-title{margin:0;font-size:14px;font-weight:900;color:var(--dash-text)}
         .panel-sub{font-size:12px;font-weight:800;color:var(--dash-muted);margin-top:4px}
 
-        /* Dark table */
+        /* Tables with theme support */
         .dash-table{width:100%;border-collapse:collapse;border-radius:14px;overflow:hidden}
         .dash-table thead th{
             text-align:left;
             font-size:12px;
             font-weight:900;
-            color:rgba(255,255,255,.62);
+            color:var(--dash-muted);
             padding:12px;
-            background: rgba(255,255,255,.04);
-            border-bottom:1px solid rgba(255,255,255,.08);
+            background: var(--table-head-bg);
+            border-bottom:1px solid var(--table-border);
         }
         .dash-table td{
             padding:12px;
-            color:rgba(255,255,255,.84);
+            color:var(--dash-text);
             font-weight:800;
-            border-bottom:1px solid rgba(255,255,255,.06);
-            background: rgba(0,0,0,.06);
+            border-bottom:1px solid var(--table-border);
+            background: var(--table-row-bg);
             vertical-align:top;
         }
-        .dash-table tbody tr:hover td{background: rgba(255,255,255,.03)}
+        .dash-table tbody tr:hover td{background: var(--table-row-hover)}
         .empty{
             padding:14px;
             border-radius:14px;
-            border:1px dashed rgba(255,255,255,.14);
-            background: rgba(0,0,0,.14);
-            color:rgba(255,255,255,.65);
+            border:1px dashed var(--empty-border);
+            background: var(--empty-bg);
+            color:var(--dash-muted);
             font-weight:800;
             line-height:1.55;
         }
 
-        /* Small pills */
+        /* Pills with theme support */
         .pill{
             display:inline-flex;align-items:center;gap:8px;
             padding:7px 10px;border-radius:999px;
-            border:1px solid rgba(255,255,255,.12);
-            background: rgba(255,255,255,.05);
-            color: rgba(255,255,255,.78);
+            border:1px solid var(--pill-border);
+            background: var(--pill-bg);
+            color: var(--pill-text);
             font-size:12px;font-weight:900;
         }
-        .pill .dot{width:8px;height:8px;border-radius:999px;background: rgba(255,255,255,.22)}
-        .pill.y .dot{background: rgba(255,223,65,.35)}
-        .pill.g .dot{background: rgba(140,198,63,.30)}
+        .pill .dot{width:8px;height:8px;border-radius:999px;background: var(--dash-muted)}
+        .pill.y .dot{background: rgba(255,223,65,.55)}
+        .pill.g .dot{background: rgba(140,198,63,.50)}
 
-        /* Make buttons match theme (uses website colors without changing crm.css globally) */
+        /* Buttons */
         .crm-btn.crm-btn-primary{
             background: linear-gradient(135deg, var(--brand-yellow) 0%, var(--brand-orange) 100%) !important;
             color:#0b122a !important;
@@ -201,12 +249,15 @@
             font-weight:900;
         }
         .crm-btn.crm-btn-ghost{
-            background: rgba(255,255,255,.04) !important;
-            border:1px solid rgba(255,255,255,.14) !important;
-            color: rgba(255,255,255,.86) !important;
+            background: var(--pill-bg) !important;
+            border:1px solid var(--pill-border) !important;
+            color: var(--dash-text) !important;
             font-weight:900;
+            transition: all 0.3s ease;
         }
-        .crm-btn.crm-btn-ghost:hover{background: rgba(255,255,255,.07) !important}
+        .crm-btn.crm-btn-ghost:hover{
+            background: var(--table-row-hover) !important;
+        }
     </style>
 
     <div class="dash-wrap">

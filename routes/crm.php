@@ -39,6 +39,16 @@ Route::middleware(['web', 'crm.auth', 'crm.access', 'crm.role'])->group(function
             'index'
     ])->name('crm.sales.leads.index');
 
+    Route::get('/crm/sales/leads/create', [
+            App\Http\Controllers\Crm\Sales\LeadController::class,
+            'create'
+    ])->name('crm.sales.leads.create');
+
+    Route::post('/crm/sales/leads', [
+            App\Http\Controllers\Crm\Sales\LeadController::class,
+            'store'
+    ])->name('crm.sales.leads.store');
+
     Route::get('/crm/sales/leads/{lead}', [
             App\Http\Controllers\Crm\Sales\LeadController::class,
             'show'

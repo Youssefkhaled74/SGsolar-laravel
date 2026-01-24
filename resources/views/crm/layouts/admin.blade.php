@@ -1,5 +1,13 @@
 <!doctype html>
-<html lang="en" x-data="{ sidebarOpen:false }">
+<html lang="en" x-data="{ 
+    sidebarOpen:false,
+    darkMode: localStorage.getItem('theme') === 'dark' || !localStorage.getItem('theme'),
+    toggleTheme() {
+        this.darkMode = !this.darkMode;
+        localStorage.setItem('theme', this.darkMode ? 'dark' : 'light');
+        document.documentElement.classList.toggle('dark', this.darkMode);
+    }
+}" x-init="document.documentElement.classList.toggle('dark', darkMode)">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -21,18 +29,46 @@
             --brand-dark: {{ config('website.dark_green', '#0C2D1C') }};
             --brand-forest: {{ config('website.forest_green', '#115F45') }};
             --brand-light: {{ config('website.light_green', '#8CC63F') }};
+        }
 
+        /* Dark Mode Variables */
+        .dark {
             --bg-0:#070B12;
             --bg-1:#0A1220;
-
             --dash-border:rgba(255,255,255,.10);
             --dash-text:rgba(255,255,255,.92);
             --dash-muted:rgba(255,255,255,.62);
-
             --glass: rgba(0,0,0,.18);
             --glass2: rgba(0,0,0,.14);
             --shadow: 0 22px 60px rgba(0,0,0,.35);
             --shadow2: 0 12px 26px rgba(0,0,0,.22);
+            --sidebar-bg: rgba(0,0,0,.24);
+            --topbar-bg: rgba(0,0,0,.18);
+            --btn-ghost-bg: rgba(255,255,255,.04);
+            --btn-ghost-border: rgba(255,255,255,.14);
+            --btn-ghost-color: rgba(255,255,255,.86);
+            --nav-hover-bg: rgba(255,255,255,.05);
+            --nav-hover-border: rgba(255,255,255,.06);
+        }
+
+        /* Light Mode Variables */
+        html:not(.dark) {
+            --bg-0:#FFFFFF;
+            --bg-1:#F8F9FA;
+            --dash-border:rgba(0,0,0,.10);
+            --dash-text:rgba(0,0,0,.92);
+            --dash-muted:rgba(0,0,0,.62);
+            --glass: rgba(255,255,255,.95);
+            --glass2: rgba(255,255,255,.98);
+            --shadow: 0 4px 12px rgba(0,0,0,.08);
+            --shadow2: 0 2px 8px rgba(0,0,0,.06);
+            --sidebar-bg: #FFFFFF;
+            --topbar-bg: rgba(255,255,255,.95);
+            --btn-ghost-bg: rgba(0,0,0,.04);
+            --btn-ghost-border: rgba(0,0,0,.14);
+            --btn-ghost-color: rgba(0,0,0,.86);
+            --nav-hover-bg: rgba(0,0,0,.05);
+            --nav-hover-border: rgba(0,0,0,.08);
         }
 
         *{box-sizing:border-box}
@@ -40,17 +76,30 @@
             margin:0;
             font-family: var(--crm-font), system-ui, -apple-system, "Segoe UI", Roboto, Arial;
             color: var(--dash-text);
+            -webkit-font-smoothing:antialiased;
+            overflow-x:hidden;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        /* Dark mode background */
+        .dark body {
             background:
                 radial-gradient(1100px 650px at 18% 10%, rgba(140,198,63,.10), transparent 55%),
                 radial-gradient(1000px 600px at 86% 12%, rgba(255,223,65,.10), transparent 55%),
                 linear-gradient(180deg, var(--bg-0), var(--bg-1));
-            -webkit-font-smoothing:antialiased;
-            overflow-x:hidden;
         }
 
-        /* Subtle animated background */
-        .app-bg{position:fixed; inset:0; z-index:-2; overflow:hidden}
-        .app-bg::before{
+        /* Light mode background */
+        html:not(.dark) body {
+            background:
+                radial-gradient(1100px 650px at 18% 10%, rgba(140,198,63,.04), transparent 55%),
+                radial-gradient(1000px 600px at 86% 12%, rgba(255,223,65,.04), transparent 55%),
+                linear-gradient(180deg, #FFFFFF, #F8F9FA);
+        }
+
+        /* Subtle animated background - dark mode only */
+        .dark .app-bg{position:fixed; inset:0; z-index:-2; overflow:hidden}
+        .dark .app-bg::before{
             content:"";
             position:absolute; inset:-40%;
             background:
@@ -61,7 +110,7 @@
             filter: blur(18px);
             animation: appDrift 18s ease-in-out infinite alternate;
         }
-        .app-bg::after{
+        .dark .app-bg::after{
             content:"";
             position:absolute; inset:0;
             background-image:
@@ -72,6 +121,12 @@
             mask-image: radial-gradient(closest-side at 50% 35%, black 0%, transparent 72%);
             pointer-events:none;
         }
+        
+        /* Light mode - no animated background */
+        html:not(.dark) .app-bg {
+            display: none;
+        }
+        
         @keyframes appDrift{
             0%   { transform: translate3d(-1.5%, -1%, 0) scale(1.02) rotate(-.5deg); }
             50%  { transform: translate3d( 1.5%,  1.5%, 0) scale(1.06) rotate( .5deg); }
@@ -84,10 +139,11 @@
 
         /* Sidebar (dark glass) */
         .crm-sidebar{
-            background: rgba(0,0,0,.24) !important;
+            background: var(--sidebar-bg) !important;
             border-right:1px solid var(--dash-border);
             box-shadow: var(--shadow2);
             backdrop-filter: blur(10px);
+            transition: background 0.3s ease, border-color 0.3s ease;
         }
         .crm-brand{
             display:flex;align-items:center;gap:10px;
@@ -106,26 +162,28 @@
         .crm-nav-item{
             border:1px solid transparent !important;
             background: transparent !important;
-            color: rgba(255,255,255,.84) !important;
+            color: var(--dash-text) !important;
             font-weight:800;
+            transition: background 0.3s ease, border-color 0.3s ease;
         }
         .crm-nav-item:hover{
-            background: rgba(255,255,255,.05) !important;
-            border-color: rgba(255,255,255,.06) !important;
+            background: var(--nav-hover-bg) !important;
+            border-color: var(--nav-hover-border) !important;
         }
         .crm-nav-item.active{
             background: linear-gradient(135deg, rgba(255,223,65,.16), rgba(227,160,0,.10)) !important;
             border-color: rgba(255,223,65,.22) !important;
-            color: rgba(255,255,255,.92) !important;
+            color: var(--dash-text) !important;
         }
 
         /* Topbar (glass) */
         .crm-topbar{
-            background: rgba(0,0,0,.18) !important;
+            background: var(--topbar-bg) !important;
             border-bottom:1px solid var(--dash-border) !important;
             backdrop-filter: blur(10px);
+            transition: background 0.3s ease, border-color 0.3s ease;
         }
-        .crm-topbar .page-title{color: rgba(255,255,255,.92) !important; font-weight:900}
+        .crm-topbar .page-title{color: var(--dash-text) !important; font-weight:900}
         .crm-topbar .subtitle{color: var(--dash-muted) !important; font-weight:800}
 
         /* Main content container */
@@ -141,48 +199,73 @@
         }
         .crm-btn.crm-btn-primary:hover{filter:brightness(.98)}
         .crm-btn.crm-btn-ghost{
-            background: rgba(255,255,255,.04) !important;
-            border:1px solid rgba(255,255,255,.14) !important;
-            color: rgba(255,255,255,.86) !important;
+            background: var(--btn-ghost-bg) !important;
+            border:1px solid var(--btn-ghost-border) !important;
+            color: var(--btn-ghost-color) !important;
+            transition: background 0.3s ease, border-color 0.3s ease;
         }
-        .crm-btn.crm-btn-ghost:hover{background: rgba(255,255,255,.07) !important}
+        .crm-btn.crm-btn-ghost:hover{background: var(--nav-hover-bg) !important}
 
         /* Logout button already has crm-logout; make it match */
         .crm-logout{
-            background: rgba(255,255,255,.04) !important;
-            border:1px solid rgba(255,255,255,.14) !important;
-            color: rgba(255,255,255,.86) !important;
+            background: var(--btn-ghost-bg) !important;
+            border:1px solid var(--btn-ghost-border) !important;
+            color: var(--btn-ghost-color) !important;
             border-radius:14px !important;
             font-weight:900 !important;
+            transition: background 0.3s ease, border-color 0.3s ease;
         }
 
         /* Avatar */
         .crm-avatar{
-            background: rgba(255,255,255,.06) !important;
-            border:1px solid rgba(255,255,255,.12);
-            color: rgba(255,255,255,.92) !important;
+            background: var(--glass) !important;
+            border:1px solid var(--dash-border);
+            color: var(--dash-text) !important;
             border-radius:14px !important;
+            transition: background 0.3s ease, border-color 0.3s ease;
         }
 
         /* Offcanvas */
         .crm-overlay{background: rgba(0,0,0,0.55) !important}
         .crm-offcanvas{
-            background: rgba(0,0,0,.28) !important;
+            background: var(--sidebar-bg) !important;
             border-right:1px solid var(--dash-border);
             backdrop-filter: blur(10px);
+            transition: background 0.3s ease, border-color 0.3s ease;
         }
         [x-cloak]{display:none!important}
 
         /* Icon button */
         .icon-btn{
             width:40px;height:40px;border-radius:14px;
-            border:1px solid rgba(255,255,255,.12);
-            background: rgba(255,255,255,.04);
-            color: rgba(255,255,255,.90);
+            border:1px solid var(--dash-border);
+            background: var(--btn-ghost-bg);
+            color: var(--dash-text);
             cursor:pointer;
+            transition: background 0.3s ease, border-color 0.3s ease;
         }
-        .icon-btn:hover{background: rgba(255,255,255,.07)}
+        .icon-btn:hover{background: var(--nav-hover-bg)}
         .muted{color:var(--dash-muted)!important}
+
+        /* Theme toggle button */
+        .theme-toggle {
+            width: 40px;
+            height: 40px;
+            border-radius: 14px;
+            border: 1px solid var(--dash-border);
+            background: var(--btn-ghost-bg);
+            color: var(--dash-text);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: all 0.3s ease;
+        }
+        .theme-toggle:hover {
+            background: var(--nav-hover-bg);
+            transform: rotate(20deg);
+        }
     </style>
 </head>
 
@@ -265,8 +348,14 @@
                 </div>
 
                 <div class="crm-user">
+                    <!-- Theme Toggle Button -->
+                    <button @click="toggleTheme()" class="theme-toggle" aria-label="Toggle theme" title="Toggle dark/light mode">
+                        <span x-show="darkMode">🌙</span>
+                        <span x-show="!darkMode" x-cloak>☀️</span>
+                    </button>
+
                     <div style="text-align:right">
-                        <div class="name" style="color:rgba(255,255,255,.92);font-weight:900">
+                        <div class="name" style="color:var(--dash-text);font-weight:900">
                             {{ optional(Auth::user())->name ?? 'Guest' }}
                         </div>
                         <div class="text-sm muted">
