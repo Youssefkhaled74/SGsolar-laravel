@@ -323,6 +323,14 @@
         closeDelete(){ this.deleteId = null; this.showDelete = false; },
         confirmDelete(){ if(this.deleteId){ document.getElementById('delete-form-'+this.deleteId).submit(); } },
 
+        // toggle active modal
+        showToggle:false,
+        toggleId:null,
+        toggleAction:'Deactivate',
+        openToggle(id, action){ this.toggleId = id; this.toggleAction = action; this.showToggle = true; },
+        closeToggle(){ this.toggleId = null; this.toggleAction = 'Deactivate'; this.showToggle = false; },
+        confirmToggle(){ if(this.toggleId){ document.getElementById('toggle-form-'+this.toggleId).submit(); } },
+
         // edit modal
         showEdit:false,
         editUser: { id: null, name: '', email: '', phone: '' },
@@ -330,7 +338,7 @@
         openEdit(u){ this.editUser = u; this.showEdit = true; },
         closeEdit(){ this.editUser = { id:null, name:'', email:'', phone:'' }; this.showEdit = false; }
     }"
-    x-on:keydown.escape.window="close(); closeDelete(); closeEdit();"
+    x-on:keydown.escape.window="close(); closeDelete(); closeToggle(); closeEdit();"
 >
     {{-- Toasts --}}
     @if(session('success'))
@@ -412,12 +420,16 @@
                                         {{-- Toggle active --}}
                                         <form method="POST"
                                               action="{{ route('crm.admin.users.toggle', $u->id) }}"
+                                              id="toggle-form-{{ $u->id }}"
                                               style="display:inline"
-                                              onsubmit="return confirm('Toggle this user active state?')"
                                         >
                                             @csrf
                                             @method('PATCH')
-                                            <button class="crm-btn crm-btn-ghost btn-mini" type="submit">
+                                            <button
+                                                class="crm-btn crm-btn-ghost btn-mini"
+                                                type="button"
+                                                @click="openToggle({{ $u->id }}, '{{ $u->is_active ? 'Deactivate' : 'Activate' }}')"
+                                            >
                                                 {{ $u->is_active ? 'Deactivate' : 'Activate' }}
                                             </button>
                                         </form>
@@ -533,6 +545,30 @@
                 <div class="modal-actions">
                     <button type="button" class="crm-btn crm-btn-ghost" @click="closeDelete()">Cancel</button>
                     <button type="button" class="crm-btn btn-danger" @click="confirmDelete()">Delete user</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- Toggle Confirmation Modal --}}
+    <div class="modal-overlay" x-show="showToggle" x-cloak x-transition.opacity @click.self="closeToggle()">
+        <div class="modal" x-transition>
+            <div class="modal-head">
+                <div>
+                    <h3>User status action</h3>
+                    <div class="sub">Confirm status change for this sales account.</div>
+                </div>
+                <button class="modal-close" type="button" @click="closeToggle()">âœ•</button>
+            </div>
+            <div class="modal-body">
+                <div class="alert">
+                    <strong x-text="toggleAction"></strong> this user active state?
+                </div>
+                <div class="tip">You can change it again later from this page.</div>
+
+                <div class="modal-actions">
+                    <button type="button" class="crm-btn crm-btn-ghost" @click="closeToggle()">Cancel</button>
+                    <button type="button" class="crm-btn btn-warning" @click="confirmToggle()" x-text="toggleAction"></button>
                 </div>
             </div>
         </div>
