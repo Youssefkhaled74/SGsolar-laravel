@@ -11,7 +11,17 @@ class AdminUserSeeder extends Seeder
 {
     public function run()
     {
-        $role = Role::firstWhere('name', 'admin');
+        // Normalize admin role to avoid access issues caused by case/spacing differences.
+        $role = Role::query()
+            ->whereRaw('LOWER(TRIM(name)) = ?', ['admin'])
+            ->first();
+
+        if (! $role) {
+            $role = Role::create(['name' => 'admin']);
+        } elseif ($role->name !== 'admin') {
+            $role->name = 'admin';
+            $role->save();
+        }
 
         $adminData = [
             'name' => 'Admin',
