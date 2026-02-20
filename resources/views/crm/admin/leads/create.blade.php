@@ -318,7 +318,7 @@
                 </div>
 
                 <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
-                    <div style="font-size:12px;font-weight:900;color:rgba(255,255,255,.62)">
+                    <div style="font-size:12px;font-weight:900;color:var(--create-muted)">
                         Tip: Phone helps faster follow-ups.
                     </div>
                 </div>
@@ -604,3 +604,4 @@
     </div>
 </div>
 @endsection
+

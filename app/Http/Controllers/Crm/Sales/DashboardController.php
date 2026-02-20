@@ -44,8 +44,14 @@ class DashboardController extends Controller
                 ->get();
         }
         
-        // Recent leads assigned to me
-        $recentLeads = Lead::with(['status', 'source'])
+        // Recent leads assigned to me (with timeline context)
+        $recentLeads = Lead::with([
+                'status',
+                'source',
+                'lastAction.type',
+                'nextAction.type',
+                'lastComment',
+            ])
             ->where('assigned_to', $userId)
             ->orderBy('created_at', 'desc')
             ->take(8)

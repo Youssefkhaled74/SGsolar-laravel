@@ -29,7 +29,14 @@ class LeadController extends Controller
 {
     public function index()
     {
-        $q = Lead::with(['source','status','assignedTo']);
+        $q = Lead::with([
+            'source',
+            'status',
+            'assignedTo',
+            'lastAction.type',
+            'nextAction.type',
+            'lastComment.author',
+        ]);
 
         // Filters
         if ($search = request('q')) {

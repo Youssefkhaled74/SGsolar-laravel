@@ -8,7 +8,7 @@
         <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto" width="96" height="96" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="M12 8v4" /><path d="M12 16h.01" /></svg>
     </div>
     <h1 class="text-3xl font-semibold mb-3">Access denied</h1>
-    <p class="text-gray-600 mb-6">Your account role is not configured for CRM access. Please contact your administrator.</p>
+    <p class="muted mb-6">Your account role is not configured for CRM access. Please contact your administrator.</p>
 
     <div class="space-x-3">
         <a href="{{ route('crm.login') }}" class="btn btn-primary">Go to CRM Login</a>

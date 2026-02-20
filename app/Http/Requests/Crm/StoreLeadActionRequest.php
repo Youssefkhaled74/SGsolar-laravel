@@ -16,7 +16,7 @@ class StoreLeadActionRequest extends FormRequest
         return [
             'action_type_id' => ['required','integer','exists:action_types,id'],
             'notes' => ['nullable','string','max:2000'],
-            'scheduled_at' => ['nullable','date'],
+            'scheduled_at' => ['required','date'],
         ];
     }
 }

@@ -7,13 +7,77 @@
 <style>
     [x-cloak]{display:none!important}
 
+    .dark{
+        --lead-border: rgba(255,255,255,.10);
+        --lead-bg: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+        --lead-shadow: 0 22px 60px rgba(0,0,0,.35);
+        --lead-card-bg: rgba(0,0,0,.14);
+        --lead-card-border: rgba(255,255,255,.10);
+        --lead-card-shadow: 0 12px 26px rgba(0,0,0,.22);
+        --lead-text: rgba(255,255,255,.92);
+        --lead-muted: rgba(255,255,255,.62);
+        --lead-input-bg: rgba(255,255,255,.04);
+        --lead-input-border: rgba(255,255,255,.14);
+        --lead-input-color: rgba(255,255,255,.90);
+        --lead-input-placeholder: rgba(255,255,255,.55);
+        --lead-tab-bg: rgba(255,255,255,.04);
+        --lead-tab-border: rgba(255,255,255,.12);
+        --lead-tab-text: rgba(255,255,255,.86);
+        --lead-item-bg: rgba(0,0,0,.10);
+        --lead-item-border: rgba(255,255,255,.10);
+        --lead-pill-bg: rgba(255,255,255,.05);
+        --lead-pill-border: rgba(255,255,255,.14);
+        --lead-pill-text: rgba(255,255,255,.82);
+        --lead-toast-bg: rgba(0,0,0,.35);
+        --lead-toast-border: rgba(255,255,255,.12);
+        --lead-toast-text: rgba(255,255,255,.88);
+        --lead-crumb: rgba(255,255,255,.62);
+        --lead-select-bg: rgba(7,11,18,.94);
+        --lead-select-head: rgba(255,255,255,.03);
+        --lead-select-pill-bg: rgba(0,0,0,.14);
+        --lead-select-pill-border: rgba(255,255,255,.14);
+        --lead-select-pill-text: rgba(255,255,255,.72);
+    }
+
+    html:not(.dark){
+        --lead-border: rgba(0,0,0,.12);
+        --lead-bg: #FFFFFF;
+        --lead-shadow: 0 4px 12px rgba(0,0,0,.08);
+        --lead-card-bg: #FFFFFF;
+        --lead-card-border: rgba(0,0,0,.12);
+        --lead-card-shadow: 0 2px 8px rgba(0,0,0,.06);
+        --lead-text: rgba(0,0,0,.92);
+        --lead-muted: rgba(0,0,0,.60);
+        --lead-input-bg: rgba(0,0,0,.03);
+        --lead-input-border: rgba(0,0,0,.18);
+        --lead-input-color: rgba(0,0,0,.95);
+        --lead-input-placeholder: rgba(0,0,0,.50);
+        --lead-tab-bg: rgba(0,0,0,.05);
+        --lead-tab-border: rgba(0,0,0,.15);
+        --lead-tab-text: rgba(0,0,0,.85);
+        --lead-item-bg: rgba(0,0,0,.03);
+        --lead-item-border: rgba(0,0,0,.10);
+        --lead-pill-bg: rgba(0,0,0,.05);
+        --lead-pill-border: rgba(0,0,0,.15);
+        --lead-pill-text: rgba(0,0,0,.85);
+        --lead-toast-bg: #FFFFFF;
+        --lead-toast-border: rgba(0,0,0,.12);
+        --lead-toast-text: rgba(0,0,0,.88);
+        --lead-crumb: rgba(0,0,0,.60);
+        --lead-select-bg: #FFFFFF;
+        --lead-select-head: rgba(0,0,0,.03);
+        --lead-select-pill-bg: rgba(0,0,0,.05);
+        --lead-select-pill-border: rgba(0,0,0,.15);
+        --lead-select-pill-text: rgba(0,0,0,.70);
+    }
+
     .lead-shell{
         position:relative;
         border-radius:20px;
         overflow: visible;
-        border:1px solid rgba(255,255,255,.10);
-        background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
-        box-shadow: 0 22px 60px rgba(0,0,0,.35);
+        border:1px solid var(--lead-border);
+        background: var(--lead-bg);
+        box-shadow: var(--lead-shadow);
     }
     .lead-bg{
         position:absolute; inset:0; z-index:0; pointer-events:none;
@@ -25,6 +89,7 @@
         opacity:.7;
         border-radius:20px;
     }
+    html:not(.dark) .lead-bg{display:none}
     .lead-wrap{position:relative; z-index:1; padding:16px}
 
     .lead-grid{display:grid;grid-template-columns:380px 1fr;gap:14px;align-items:start}
@@ -34,39 +99,39 @@
         position:relative;
         z-index:1;
         border-radius:16px;
-        border:1px solid rgba(255,255,255,.10);
-        background: rgba(0,0,0,.14);
-        box-shadow: 0 12px 26px rgba(0,0,0,.22);
+        border:1px solid var(--lead-card-border);
+        background: var(--lead-card-bg);
+        box-shadow: var(--lead-card-shadow);
         backdrop-filter: blur(10px);
         padding:14px;
     }
     .card + .card{margin-top:12px}
 
     .head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
-    .name{margin:0;font-size:18px;font-weight:900;color:rgba(255,255,255,.92)}
-    .meta{margin-top:6px;font-size:12px;font-weight:800;color:rgba(255,255,255,.62)}
-    .divider{border:none;border-top:1px solid rgba(255,255,255,.10);margin:12px 0}
+    .name{margin:0;font-size:18px;font-weight:900;color:var(--lead-text)}
+    .meta{margin-top:6px;font-size:12px;font-weight:800;color:var(--lead-muted)}
+    .divider{border:none;border-top:1px solid var(--lead-border);margin:12px 0}
 
     .kv{display:grid;grid-template-columns:92px 1fr;gap:10px;row-gap:10px;font-size:13px}
-    .kv .k{color:rgba(255,255,255,.62);font-weight:900}
-    .kv .v{font-weight:800;color:rgba(255,255,255,.88)}
+    .kv .k{color:var(--lead-muted);font-weight:900}
+    .kv .v{font-weight:800;color:var(--lead-text)}
 
-    .mini{font-size:12px;font-weight:800;color:rgba(255,255,255,.62)}
+    .mini{font-size:12px;font-weight:800;color:var(--lead-muted)}
     .panel-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
-    .panel-title h3{margin:0;font-size:14px;font-weight:900;color:rgba(255,255,255,.90)}
+    .panel-title h3{margin:0;font-size:14px;font-weight:900;color:var(--lead-text)}
 
     .dark-input, .dark-textarea{
         width:100%;
         padding:10px 12px;
         border-radius:14px;
-        border:1px solid rgba(255,255,255,.14);
-        background: rgba(255,255,255,.04);
-        color: rgba(255,255,255,.90);
+        border:1px solid var(--lead-input-border);
+        background: var(--lead-input-bg);
+        color: var(--lead-input-color);
         font-weight:800;
         outline:none;
     }
     .dark-textarea{min-height:110px;resize:vertical}
-    .dark-input::placeholder{color: rgba(255,255,255,.55)}
+    .dark-input::placeholder{color: var(--lead-input-placeholder)}
     .dark-input:focus, .dark-textarea:focus{
         border-color: rgba(255,223,65,.28);
         box-shadow: 0 0 0 4px rgba(255,223,65,.10);
@@ -78,12 +143,12 @@
     .tabs-row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
     .tabs{display:flex;gap:8px;flex-wrap:wrap}
     .tab{
-        background: rgba(255,255,255,.04);
-        border:1px solid rgba(255,255,255,.12);
-        color: rgba(255,255,255,.86);
+        background: var(--lead-tab-bg);
+        border:1px solid var(--lead-tab-border);
+        color: var(--lead-tab-text);
         padding:9px 12px;border-radius:12px;font-weight:900;cursor:pointer;
     }
-    .tab:hover{background: rgba(255,255,255,.07)}
+    .tab:hover{background: var(--lead-input-bg)}
     .tab.active{
         border-color: rgba(255,223,65,.26);
         box-shadow: 0 0 0 4px rgba(255,223,65,.10);
@@ -92,21 +157,21 @@
     .list{display:flex;flex-direction:column;gap:10px}
     .item{
         border-radius:14px;
-        border:1px solid rgba(255,255,255,.10);
-        background: rgba(0,0,0,.10);
+        border:1px solid var(--lead-item-border);
+        background: var(--lead-item-bg);
         padding:12px;
     }
     .item-head{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
-    .item-title{font-weight:900;color:rgba(255,255,255,.90)}
-    .item-sub{font-size:12px;font-weight:800;color:rgba(255,255,255,.62)}
-    .item-body{margin-top:8px;font-weight:800;color:rgba(255,255,255,.86);line-height:1.55}
+    .item-title{font-weight:900;color:var(--lead-text)}
+    .item-sub{font-size:12px;font-weight:800;color:var(--lead-muted)}
+    .item-body{margin-top:8px;font-weight:800;color:var(--lead-text);line-height:1.55}
 
     .pill{
         display:inline-flex;align-items:center;gap:8px;
         padding:6px 10px;border-radius:999px;
-        border:1px solid rgba(255,255,255,.14);
-        background: rgba(255,255,255,.05);
-        font-size:12px;font-weight:900;color: rgba(255,255,255,.82);
+        border:1px solid var(--lead-pill-border);
+        background: var(--lead-pill-bg);
+        font-size:12px;font-weight:900;color: var(--lead-pill-text);
         white-space:nowrap;
     }
     .pill.ok{border-color:#a7f3d0;background:rgba(16,185,129,.14);color:#c7f9e9}
@@ -115,20 +180,20 @@
 
     .toast{position:fixed;right:18px;bottom:18px;z-index:9999;max-width:420px}
     .toast-card{
-        background: rgba(0,0,0,.35);
-        border:1px solid rgba(255,255,255,.12);
+        background: var(--lead-toast-bg);
+        border:1px solid var(--lead-toast-border);
         border-radius:14px;
         padding:12px 14px;
         box-shadow: 0 18px 40px rgba(0,0,0,.35);
         backdrop-filter: blur(10px);
         display:flex;justify-content:space-between;gap:12px;
-        color: rgba(255,255,255,.88);
+        color: var(--lead-toast-text);
     }
-    .toast .close{background:transparent;border:none;cursor:pointer;font-weight:900;opacity:.8;color:rgba(255,255,255,.9)}
+    .toast .close{background:transparent;border:none;cursor:pointer;font-weight:900;opacity:.8;color:var(--lead-text)}
     .toast .close:hover{opacity:1}
 
-    .crumb{display:flex;gap:8px;align-items:center;font-size:12px;font-weight:900;color:rgba(255,255,255,.62);margin-bottom:10px}
-    .crumb a{color:rgba(255,255,255,.86);text-decoration:none}
+    .crumb{display:flex;gap:8px;align-items:center;font-size:12px;font-weight:900;color:var(--lead-crumb);margin-bottom:10px}
+    .crumb a{color:var(--lead-text);text-decoration:none}
     .crumb a:hover{text-decoration:underline}
 
     /* ===== Custom Select (Dark) ===== */
@@ -139,14 +204,14 @@
         display:flex;align-items:center;justify-content:space-between;gap:10px;
         padding:10px 12px;
         border-radius:14px;
-        border:1px solid rgba(255,255,255,.14);
-        background: rgba(255,255,255,.04);
-        color: rgba(255,255,255,.90);
+        border:1px solid var(--lead-input-border);
+        background: var(--lead-input-bg);
+        color: var(--lead-input-color);
         font-weight:900;
         cursor:pointer;
         outline:none;
     }
-    .cselect-btn:hover{background: rgba(255,255,255,.06)}
+    .cselect-btn:hover{background: var(--lead-input-bg)}
     .cselect-btn:focus{
         border-color: rgba(255,223,65,.28);
         box-shadow: 0 0 0 4px rgba(255,223,65,.10);
@@ -155,17 +220,17 @@
     .cselect-pill{
         font-size:11px;font-weight:900;
         padding:5px 8px;border-radius:999px;
-        border:1px solid rgba(255,255,255,.14);
-        background: rgba(0,0,0,.14);
-        color: rgba(255,255,255,.72);
+        border:1px solid var(--lead-select-pill-border);
+        background: var(--lead-select-pill-bg);
+        color: var(--lead-select-pill-text);
         white-space:nowrap;
     }
     .cselect-text{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
     .cselect-menu{
         position:absolute;left:0;right:0;top:calc(100% + 8px);
         border-radius:14px;
-        border:1px solid rgba(255,255,255,.12);
-        background: rgba(7,11,18,.94);
+        border:1px solid var(--lead-border);
+        background: var(--lead-select-bg);
         box-shadow: 0 22px 60px rgba(0,0,0,.55);
         backdrop-filter: blur(10px);
         overflow:hidden;
@@ -173,19 +238,19 @@
     }
     .cselect-search{
         padding:10px;
-        border-bottom:1px solid rgba(255,255,255,.08);
-        background: rgba(255,255,255,.03);
+        border-bottom:1px solid var(--lead-border);
+        background: var(--lead-select-head);
     }
     .cselect-item{
         padding:10px 12px;
         display:flex;align-items:center;justify-content:space-between;gap:10px;
-        color: rgba(255,255,255,.86);
+        color: var(--lead-text);
         font-weight:900;
         cursor:pointer;
     }
-    .cselect-item:hover{background: rgba(255,255,255,.06)}
+    .cselect-item:hover{background: var(--lead-input-bg)}
     .cselect-item.active{background: rgba(255,223,65,.10)}
-    .cselect-muted{font-weight:800;color: rgba(255,255,255,.62);font-size:12px}
+    .cselect-muted{font-weight:800;color: var(--lead-muted);font-size:12px}
 </style>
 
 <script>
@@ -436,7 +501,7 @@
                                 </div>
                             </div>
 
-                            <input name="scheduled_at" type="datetime-local" class="dark-input" style="min-width:210px" />
+                            <input name="scheduled_at" type="datetime-local" required class="dark-input" style="min-width:210px" />
                             <button class="crm-btn crm-btn-ghost">Log Action</button>
                         </form>
                     </div>
@@ -628,3 +693,4 @@
     </div>
 </div>
 @endsection
+

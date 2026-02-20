@@ -36,6 +36,7 @@
         --s-table-border: rgba(255,255,255,.06);
         --s-empty-bg: rgba(0,0,0,.14);
         --s-empty-border: rgba(255,255,255,.14);
+        --s-danger: #ffd0d0;
     }
 
     /* Light Mode Variables */
@@ -62,6 +63,7 @@
         --s-table-border: rgba(0,0,0,.10);
         --s-empty-bg: rgba(0,0,0,.03);
         --s-empty-border: rgba(0,0,0,.18);
+        --s-danger: #b91c1c;
     }
 
     /* Shell */
@@ -217,7 +219,11 @@
         text-align:center;
     }
 
-    /* Buttons */
+    
+    .lead-meta{font-size:12px;font-weight:800;color: var(--s-muted);margin-top:4px}
+    .lead-clip{max-width:220px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .s-table th,.s-table td{vertical-align:top}
+/* Buttons */
     .crm-btn.crm-btn-primary{
         background: linear-gradient(135deg, var(--brand-yellow) 0%, var(--brand-orange) 100%) !important;
         color:#0b122a !important;
@@ -271,6 +277,7 @@
                 </div>
             </div>
             <div class="s-actions">
+                <a href="{{ route('crm.sales.leads.create') }}" class="crm-btn crm-btn-ghost">Add Lead</a>
                 <a href="{{ route('crm.sales.leads.index') }}" class="crm-btn crm-btn-primary">My Leads</a>
                 <a href="{{ route('crm.sales.followups.index') }}" class="crm-btn crm-btn-ghost">Followups</a>
             </div>
@@ -292,7 +299,7 @@
 
             <div class="s-kpi">
                 <div class="t">Overdue Followups</div>
-                <div class="v" style="{{ $overdueFollowupsCount > 0 ? 'color:#ffd0d0' : '' }}">{{ number_format($overdueFollowupsCount) }}</div>
+                <div class="v" style="{{ $overdueFollowupsCount > 0 ? 'color:var(--s-danger)' : '' }}">{{ number_format($overdueFollowupsCount) }}</div>
                 <div class="m">Need action</div>
             </div>
         </div>
@@ -349,8 +356,8 @@
             <section class="s-card">
                 <div class="s-card-head">
                     <div>
-                        <h3 class="s-card-title">My Recent Leads</h3>
-                        <div class="s-card-sub">Latest leads assigned to you.</div>
+                        <h3 class="s-card-title">My Leads (Detailed)</h3>
+                        <div class="s-card-sub">Latest leads with last/next action and last comment.</div>
                     </div>
                     <a href="{{ route('crm.sales.leads.index') }}" class="crm-btn crm-btn-ghost">Open leads</a>
                 </div>
@@ -361,23 +368,63 @@
                             <tr>
                                 <th>Name</th>
                                 <th>Phone</th>
+                                <th>Source</th>
                                 <th>Status</th>
+                                <th>Last Action</th>
+                                <th>Next Action</th>
+                                <th>Last Comment</th>
                                 <th style="width:120px">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                         @forelse($recentLeads->take(8) as $l)
+                            @php
+                                $lastAction = $l->lastAction;
+                                $nextAction = $l->nextAction;
+                                $lastComment = $l->lastComment;
+                            @endphp
                             <tr>
                                 <td class="s-strong">{{ $l->name }}</td>
-                                <td>{{ $l->phone ?? 'â€”' }}</td>
-                                <td class="s-muted">{{ optional($l->status)->name ?? 'â€”' }}</td>
+                                <td>{{ $l->phone ?? '—' }}</td>
+                                <td class="s-muted">{{ optional($l->source)->name ?? '—' }}</td>
+                                <td class="s-muted">{{ optional($l->status)->name ?? '—' }}</td>
+                                <td class="s-muted">
+                                    @if($lastAction)
+                                        <div class="s-strong">{{ optional($lastAction->type)->name ?? 'Action' }}</div>
+                                        <div class="lead-meta">
+                                            {{ $lastAction->scheduled_at ? \Carbon\Carbon::parse($lastAction->scheduled_at)->format('Y-m-d H:i') : '—' }}
+                                        </div>
+                                    @else
+                                        —
+                                    @endif
+                                </td>
+                                <td class="s-muted">
+                                    @if($nextAction)
+                                        <div class="s-strong">{{ optional($nextAction->type)->name ?? 'Action' }}</div>
+                                        <div class="lead-meta">
+                                            {{ $nextAction->scheduled_at ? \Carbon\Carbon::parse($nextAction->scheduled_at)->format('Y-m-d H:i') : '—' }}
+                                        </div>
+                                    @else
+                                        —
+                                    @endif
+                                </td>
+                                <td class="s-muted">
+                                    @if($lastComment)
+                                        <div class="lead-clip">{{ $lastComment->comment }}</div>
+                                        <div class="lead-meta">
+                                            {{ $lastComment->created_at ? $lastComment->created_at->format('Y-m-d H:i') : '—' }}
+                                        </div>
+                                    @else
+                                        —
+                                    @endif
+                                </td>
                                 <td>
                                     <a href="{{ route('crm.sales.leads.show', $l->id) }}" class="crm-btn crm-btn-ghost">Open</a>
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="4"><div class="s-empty" style="margin:12px">No leads assigned yet.</div></td>
+                                <td colspan="8"><div class="s-empty" style="margin:12px">No leads assigned yet.</div></td>
                             </tr>
                         @endforelse
                         </tbody>
@@ -388,3 +435,7 @@
     </div>
 </div>
 @endsection
+
+
+
+

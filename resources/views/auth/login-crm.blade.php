@@ -1,5 +1,12 @@
 <!doctype html>
-<html lang="en" dir="ltr">
+<html lang="en" dir="ltr" x-data="{
+    darkMode: localStorage.getItem('theme') === 'dark' || !localStorage.getItem('theme'),
+    toggleTheme() {
+        this.darkMode = !this.darkMode;
+        localStorage.setItem('theme', this.darkMode ? 'dark' : 'light');
+        document.documentElement.classList.toggle('dark', this.darkMode);
+    }
+}" x-init="document.documentElement.classList.toggle('dark', darkMode)">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -7,12 +14,15 @@
 
     <link rel="stylesheet" href="{{ asset('crm/crm.css') }}">
 
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
     <!-- Professional font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
 
     <style>
+        [x-cloak]{display:none!important}
         :root{
             --crm-font: "Manrope";
             --brand-yellow: {{ config('website.primary_color', '#FFDF41') }};
@@ -20,7 +30,9 @@
             --brand-dark: {{ config('website.dark_green', '#0C2D1C') }};
             --brand-forest: {{ config('website.forest_green', '#115F45') }};
             --brand-light: {{ config('website.light_green', '#8CC63F') }};
+        }
 
+        .dark{
             --bg-0: #070B12;
             --bg-1: #0A1220;
             --card: rgba(16, 24, 40, .78);
@@ -29,6 +41,39 @@
             --text: rgba(255,255,255,.92);
             --muted: rgba(255,255,255,.65);
             --shadow: 0 30px 80px rgba(0,0,0,.55);
+            --panel-bg: rgba(0,0,0,.14);
+            --chip-bg: rgba(255,255,255,.05);
+            --chip-text: rgba(255,255,255,.78);
+            --input-bg: rgba(0,0,0,.18);
+            --input-border: rgba(255,255,255,.14);
+            --input-color: rgba(255,255,255,.92);
+            --input-placeholder: rgba(255,255,255,.45);
+            --foot-border: rgba(255,255,255,.12);
+            --ghost-bg: rgba(255,255,255,.04);
+            --ghost-border: rgba(255,255,255,.14);
+            --ghost-text: rgba(255,255,255,.86);
+        }
+
+        html:not(.dark){
+            --bg-0: #FFFFFF;
+            --bg-1: #F8F9FA;
+            --card: #FFFFFF;
+            --card-2: #FFFFFF;
+            --border: rgba(0,0,0,.12);
+            --text: rgba(0,0,0,.92);
+            --muted: rgba(0,0,0,.60);
+            --shadow: 0 10px 30px rgba(0,0,0,.10);
+            --panel-bg: rgba(0,0,0,.03);
+            --chip-bg: rgba(0,0,0,.05);
+            --chip-text: rgba(0,0,0,.80);
+            --input-bg: rgba(0,0,0,.03);
+            --input-border: rgba(0,0,0,.18);
+            --input-color: rgba(0,0,0,.92);
+            --input-placeholder: rgba(0,0,0,.45);
+            --foot-border: rgba(0,0,0,.12);
+            --ghost-bg: rgba(0,0,0,.05);
+            --ghost-border: rgba(0,0,0,.16);
+            --ghost-text: rgba(0,0,0,.85);
         }
 
         *{box-sizing:border-box}
@@ -37,11 +82,15 @@
             min-height:100vh;
             font-family: var(--crm-font), system-ui, -apple-system, "Segoe UI", Roboto, Arial;
             color: var(--text);
+            background: linear-gradient(180deg, var(--bg-0), var(--bg-1));
+            -webkit-font-smoothing:antialiased;
+            overflow-x:hidden;
+        }
+
+        .dark body{
             background: radial-gradient(1200px 700px at 18% 8%, rgba(140,198,63,.10), transparent 55%),
                         radial-gradient(1100px 650px at 88% 12%, rgba(255,223,65,.10), transparent 55%),
                         linear-gradient(180deg, var(--bg-0), var(--bg-1));
-            -webkit-font-smoothing:antialiased;
-            overflow-x:hidden;
         }
 
         /* Animated background (always running, subtle, professional) */
@@ -80,6 +129,8 @@
         .particles{
             position:fixed; inset:0; z-index:-1; pointer-events:none; opacity:.55;
         }
+        html:not(.dark) .bg,
+        html:not(.dark) .particles{display:none}
         .dot{
             position:absolute;
             width:6px; height:6px; border-radius:999px;
@@ -112,7 +163,7 @@
             grid-template-columns: 420px 1fr;
             border-radius:24px;
             overflow:hidden;
-            background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.03));
+            background: var(--card);
             border:1px solid var(--border);
             box-shadow: var(--shadow);
             backdrop-filter: blur(10px);
@@ -127,7 +178,7 @@
             background:
                 radial-gradient(700px 420px at 30% 20%, rgba(255,223,65,.12), transparent 50%),
                 radial-gradient(700px 420px at 80% 60%, rgba(140,198,63,.10), transparent 52%),
-                linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+                linear-gradient(180deg, var(--card-2), var(--card));
             border-right:1px solid var(--border);
         }
         @media(max-width:980px){
@@ -137,7 +188,7 @@
         .brand{display:flex;align-items:center;gap:12px}
         .logo{
             width:54px;height:54px;border-radius:16px;
-            background: rgba(255,255,255,.06);
+            background: var(--chip-bg);
             border:1px solid var(--border);
             display:flex;align-items:center;justify-content:center;
             overflow:hidden;
@@ -151,7 +202,7 @@
             padding:14px 14px;
             border-radius:16px;
             border:1px solid var(--border);
-            background: rgba(0,0,0,.14);
+            background: var(--panel-bg);
         }
         .hero h3{margin:0;font-size:14px;font-weight:900}
         .hero p{margin:6px 0 0 0;font-size:13px;color:var(--muted);line-height:1.55;font-weight:700}
@@ -161,11 +212,11 @@
             display:inline-flex;align-items:center;gap:8px;
             padding:8px 10px;border-radius:999px;
             border:1px solid var(--border);
-            background: rgba(255,255,255,.05);
-            font-size:12px;font-weight:900;color: rgba(255,255,255,.78);
+            background: var(--chip-bg);
+            font-size:12px;font-weight:900;color: var(--chip-text);
         }
-        .chip b{color: rgba(255,255,255,.92)}
-        .chip .k{width:8px;height:8px;border-radius:999px;background: rgba(255,255,255,.25)}
+        .chip b{color: var(--text)}
+        .chip .k{width:8px;height:8px;border-radius:999px;background: var(--muted)}
         .chip .k.y{background: rgba(255,223,65,.35)}
         .chip .k.g{background: rgba(140,198,63,.30)}
 
@@ -178,7 +229,7 @@
             margin-top:14px;
             background: rgba(127,29,29,.22);
             border:1px solid rgba(254,202,202,.45);
-            color: rgba(255,255,255,.90);
+            color: var(--text);
             border-radius:16px;
             padding:12px 14px;
             font-weight:800;
@@ -195,18 +246,18 @@
             width:100%;
             padding:12px 12px;
             border-radius:14px;
-            border:1px solid rgba(255,255,255,.14);
-            background: rgba(0,0,0,.18);
-            color: rgba(255,255,255,.92);
+            border:1px solid var(--input-border);
+            background: var(--input-bg);
+            color: var(--input-color);
             outline:none;
             transition: box-shadow .15s ease, border-color .15s ease, background .15s ease;
             font-weight:800;
         }
-        .input::placeholder{color: rgba(255,255,255,.45); font-weight:700}
+        .input::placeholder{color: var(--input-placeholder); font-weight:700}
         .input:focus{
             border-color: rgba(255,223,65,.55);
             box-shadow: 0 0 0 3px rgba(255,223,65,0.18);
-            background: rgba(0,0,0,.24);
+            background: var(--input-bg);
         }
 
         .row{
@@ -219,7 +270,7 @@
         }
         .remember{
             display:flex;align-items:center;gap:10px;
-            font-size:13px;color: rgba(255,255,255,.78);
+            font-size:13px;color: var(--muted);
             font-weight:800;
         }
         .remember input{width:18px;height:18px;accent-color: var(--brand-yellow)}
@@ -250,40 +301,64 @@
             box-shadow: 0 22px 44px rgba(227,160,0,0.26);
         }
         .btn-ghost{
-            background: rgba(255,255,255,.04);
-            border-color: rgba(255,255,255,.14);
-            color: rgba(255,255,255,.86);
+            background: var(--ghost-bg);
+            border-color: var(--ghost-border);
+            color: var(--ghost-text);
         }
-        .btn-ghost:hover{background: rgba(255,255,255,.07)}
+        .btn-ghost:hover{background: var(--ghost-bg)}
         .btn[disabled]{opacity:0.65;cursor:not-allowed;transform:none}
 
         .foot{
             margin-top:18px;
             padding-top:14px;
-            border-top:1px solid rgba(255,255,255,.12);
+            border-top:1px solid var(--foot-border);
             font-size:12px;
-            color: rgba(255,255,255,.65);
+            color: var(--muted);
             font-weight:800;
             display:flex;
             justify-content:space-between;
             gap:12px;
             flex-wrap:wrap;
         }
-        .foot a{color: rgba(255,255,255,.78); text-decoration:none; font-weight:900}
+        .foot a{color: var(--text); text-decoration:none; font-weight:900}
         .foot a:hover{text-decoration:underline}
 
         /* Small inline icon style */
         .lock{
             width:34px;height:34px;border-radius:14px;
             display:flex;align-items:center;justify-content:center;
-            background: rgba(255,255,255,.05);
-            border:1px solid rgba(255,255,255,.10);
+            background: var(--chip-bg);
+            border:1px solid var(--border);
             margin-bottom:12px;
         }
         .lock svg{width:18px;height:18px;opacity:.9}
+
+        .theme-toggle{
+            position:fixed;
+            top:16px;
+            right:16px;
+            width:40px;
+            height:40px;
+            border-radius:14px;
+            border:1px solid var(--border);
+            background: var(--ghost-bg);
+            color: var(--text);
+            cursor:pointer;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:18px;
+            transition: all 0.3s ease;
+            z-index:5;
+        }
+        .theme-toggle:hover{transform: rotate(20deg)}
     </style>
 </head>
 <body>
+    <button @click="toggleTheme()" class="theme-toggle" aria-label="Toggle theme" title="Toggle dark/light mode">
+        <span x-show="darkMode">ðŸŒ™</span>
+        <span x-show="!darkMode" x-cloak>â˜€ï¸</span>
+    </button>
     <div class="bg" aria-hidden="true"></div>
 
     <!-- Subtle animated particles -->
@@ -390,3 +465,4 @@
     </div>
 </body>
 </html>
+

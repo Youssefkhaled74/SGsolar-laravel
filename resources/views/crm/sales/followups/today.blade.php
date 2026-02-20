@@ -69,7 +69,7 @@
                     <div style="display:flex;flex-direction:column;gap:10px">
                         @foreach($todayFollowups as $f)
                             @php $when = $f->scheduled_at ? \Carbon\Carbon::parse($f->scheduled_at) : null; @endphp
-                            <div style="border-radius:14px;border:1px solid rgba(255,255,255,.10);background:rgba(0,0,0,.10);padding:12px">
+                            <div class="s-panel">
                                 <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center">
                                     <div>
                                         <div class="s-strong">{{ optional($f->lead)->name ?? 'Lead' }}</div>
@@ -80,7 +80,7 @@
                                     <span class="s-pill y"><span class="dot"></span>Today</span>
                                 </div>
 
-                                <div style="margin-top:8px;color:rgba(255,255,255,.86);font-weight:800;line-height:1.55">
+                                <div class="s-panel-body">
                                     {{ $f->note ?? '—' }}
                                 </div>
 
@@ -109,7 +109,7 @@
                     <div style="display:flex;flex-direction:column;gap:10px">
                         @foreach($overdueFollowups as $f)
                             @php $when = $f->scheduled_at ? \Carbon\Carbon::parse($f->scheduled_at) : null; @endphp
-                            <div style="border-radius:14px;border:1px solid rgba(255,255,255,.10);background:rgba(0,0,0,.10);padding:12px">
+                            <div class="s-panel">
                                 <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center">
                                     <div>
                                         <div class="s-strong">{{ optional($f->lead)->name ?? 'Lead' }}</div>
@@ -120,7 +120,7 @@
                                     <span class="s-pill r"><span class="dot"></span>Overdue</span>
                                 </div>
 
-                                <div style="margin-top:8px;color:rgba(255,255,255,.86);font-weight:800;line-height:1.55">
+                                <div class="s-panel-body">
                                     {{ $f->note ?? '—' }}
                                 </div>
 
@@ -146,3 +146,4 @@
     </div>
 </div>
 @endsection
+

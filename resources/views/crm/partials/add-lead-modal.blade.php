@@ -13,7 +13,7 @@
     </template>
 
     <div x-show="open" x-cloak style="position:fixed;right:0;top:8%;width:520px;z-index:70">
-        <div style="background:rgba(11,17,34,.96);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:18px;box-shadow:0 22px 60px rgba(0,0,0,.6)">
+        <div style="background:var(--glass);border:1px solid var(--dash-border);border-radius:12px;padding:18px;box-shadow:var(--shadow);color:var(--dash-text)">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
                 <div style="font-weight:900;font-size:16px">Add New Lead</div>
                 <button @click="open=false" class="icon-btn">✕</button>
@@ -85,3 +85,4 @@
         </div>
     </div>
 </div>
+

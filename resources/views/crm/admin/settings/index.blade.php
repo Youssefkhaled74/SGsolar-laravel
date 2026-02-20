@@ -7,14 +7,84 @@
 <style>
     [x-cloak]{display:none!important}
 
+    .dark{
+        --set-border: rgba(255,255,255,.10);
+        --set-bg: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+        --set-shadow: 0 22px 60px rgba(0,0,0,.35);
+        --set-text: rgba(255,255,255,.92);
+        --set-muted: rgba(255,255,255,.62);
+        --set-card-bg: rgba(0,0,0,.14);
+        --set-card-border: rgba(255,255,255,.10);
+        --set-card-shadow: 0 12px 26px rgba(0,0,0,.22);
+        --set-tab-bg: rgba(0,0,0,.16);
+        --set-tab-border: rgba(255,255,255,.10);
+        --set-tab-text: rgba(255,255,255,.72);
+        --set-tab-active: rgba(255,255,255,.92);
+        --set-tab-item-bg: rgba(255,255,255,.03);
+        --set-input-bg: rgba(255,255,255,.04);
+        --set-input-border: rgba(255,255,255,.14);
+        --set-input-color: rgba(255,255,255,.90);
+        --set-input-placeholder: rgba(255,255,255,.55);
+        --set-table-head-bg: rgba(255,255,255,.04);
+        --set-table-row-bg: rgba(0,0,0,.06);
+        --set-table-border: rgba(255,255,255,.06);
+        --set-table-hover: rgba(255,255,255,.03);
+        --set-pill-bg: rgba(255,255,255,.05);
+        --set-pill-border: rgba(255,255,255,.14);
+        --set-pill-text: rgba(255,255,255,.85);
+        --set-toast-bg: rgba(0,0,0,.35);
+        --set-toast-border: rgba(255,255,255,.12);
+        --set-toast-text: rgba(255,255,255,.88);
+        --set-alert-bg: rgba(0,0,0,.18);
+        --set-alert-border: rgba(255,255,255,.12);
+        --set-empty-bg: rgba(0,0,0,.14);
+        --set-empty-border: rgba(255,255,255,.14);
+        --set-danger-text: #ffd0d0;
+    }
+
+    html:not(.dark){
+        --set-border: rgba(0,0,0,.12);
+        --set-bg: #FFFFFF;
+        --set-shadow: 0 4px 12px rgba(0,0,0,.08);
+        --set-text: rgba(0,0,0,.92);
+        --set-muted: rgba(0,0,0,.60);
+        --set-card-bg: #FFFFFF;
+        --set-card-border: rgba(0,0,0,.12);
+        --set-card-shadow: 0 2px 8px rgba(0,0,0,.06);
+        --set-tab-bg: rgba(0,0,0,.05);
+        --set-tab-border: rgba(0,0,0,.12);
+        --set-tab-text: rgba(0,0,0,.70);
+        --set-tab-active: rgba(0,0,0,.90);
+        --set-tab-item-bg: rgba(0,0,0,.03);
+        --set-input-bg: rgba(0,0,0,.03);
+        --set-input-border: rgba(0,0,0,.18);
+        --set-input-color: rgba(0,0,0,.95);
+        --set-input-placeholder: rgba(0,0,0,.50);
+        --set-table-head-bg: rgba(0,0,0,.05);
+        --set-table-row-bg: #FFFFFF;
+        --set-table-border: rgba(0,0,0,.10);
+        --set-table-hover: rgba(0,0,0,.03);
+        --set-pill-bg: rgba(0,0,0,.05);
+        --set-pill-border: rgba(0,0,0,.15);
+        --set-pill-text: rgba(0,0,0,.85);
+        --set-toast-bg: #FFFFFF;
+        --set-toast-border: rgba(0,0,0,.12);
+        --set-toast-text: rgba(0,0,0,.88);
+        --set-alert-bg: rgba(0,0,0,.03);
+        --set-alert-border: rgba(0,0,0,.12);
+        --set-empty-bg: rgba(0,0,0,.03);
+        --set-empty-border: rgba(0,0,0,.18);
+        --set-danger-text: #b91c1c;
+    }
+
     /* ===== Shell (same theme) ===== */
     .settings-shell{
         position:relative;
         border-radius:20px;
         overflow:hidden;
-        border:1px solid rgba(255,255,255,.10);
-        background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
-        box-shadow: 0 22px 60px rgba(0,0,0,.35);
+        border:1px solid var(--set-border);
+        background: var(--set-bg);
+        box-shadow: var(--set-shadow);
     }
     .settings-bg{
         position:absolute; inset:0; z-index:0; pointer-events:none;
@@ -26,15 +96,16 @@
         filter: blur(14px);
         opacity:.75;
     }
+    html:not(.dark) .settings-bg{display:none}
     .settings-wrap{
         position:relative; z-index:1; padding:16px;
         display:flex;flex-direction:column;gap:14px;
     }
 
     /* ===== Text helpers ===== */
-    .title{margin:0;font-size:18px;font-weight:900;color:rgba(255,255,255,.92)}
-    .hint{font-size:13px;font-weight:800;color:rgba(255,255,255,.62)}
-    .muted{color:rgba(255,255,255,.62)!important}
+    .title{margin:0;font-size:18px;font-weight:900;color:var(--set-text)}
+    .hint{font-size:13px;font-weight:800;color:var(--set-muted)}
+    .muted{color:var(--set-muted)!important}
 
     .topline{
         display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
@@ -43,30 +114,30 @@
     .count-pill{
         display:inline-flex;align-items:center;gap:8px;
         padding:7px 10px;border-radius:999px;
-        border:1px solid rgba(255,255,255,.12);
-        background: rgba(255,255,255,.04);
+        border:1px solid var(--set-pill-border);
+        background: var(--set-pill-bg);
         font-weight:900;font-size:12px;
-        color: rgba(255,255,255,.78);
+        color: var(--set-pill-text);
     }
 
     /* ===== Alerts / Toast ===== */
     .crm-alert{
         border-radius:14px;
         padding:12px 14px;
-        border:1px solid rgba(255,255,255,.12);
-        background: rgba(0,0,0,.18);
-        box-shadow: 0 12px 26px rgba(0,0,0,.22);
+        border:1px solid var(--set-alert-border);
+        background: var(--set-alert-bg);
+        box-shadow: var(--set-card-shadow);
         backdrop-filter: blur(10px);
         display:flex;
         align-items:flex-start;
         justify-content:space-between;
         gap:12px;
-        color:rgba(255,255,255,.88);
+        color:var(--set-text);
     }
-    .crm-alert-error{border-color:rgba(239,68,68,.25);background:rgba(239,68,68,.10);color:#ffd0d0}
+    .crm-alert-error{border-color:rgba(239,68,68,.25);background:rgba(239,68,68,.10);color:var(--set-danger-text)}
     .crm-alert .close{
         background:transparent;border:none;cursor:pointer;font-weight:900;
-        opacity:.85;color:rgba(255,255,255,.9)
+        opacity:.85;color:var(--set-text)
     }
     .crm-alert .close:hover{opacity:1}
 
@@ -78,18 +149,18 @@
         max-width:420px;
     }
     .toast-card{
-        background: rgba(0,0,0,.35);
-        border:1px solid rgba(255,255,255,.12);
+        background: var(--set-toast-bg);
+        border:1px solid var(--set-toast-border);
         border-radius:14px;
         padding:12px 14px;
         box-shadow: 0 18px 40px rgba(0,0,0,.35);
         backdrop-filter: blur(10px);
         display:flex;justify-content:space-between;gap:12px;
-        color: rgba(255,255,255,.88);
+        color: var(--set-toast-text);
     }
     .toast .close{
         background:transparent;border:none;cursor:pointer;font-weight:900;
-        opacity:.85;color:rgba(255,255,255,.9)
+        opacity:.85;color:var(--set-text)
     }
     .toast .close:hover{opacity:1}
 
@@ -100,27 +171,27 @@
         flex-wrap:wrap;
         padding:8px;
         border-radius:16px;
-        border:1px solid rgba(255,255,255,.10);
-        background: rgba(0,0,0,.16);
+        border:1px solid var(--set-tab-border);
+        background: var(--set-tab-bg);
         backdrop-filter: blur(10px);
         box-shadow: 0 10px 26px rgba(0,0,0,.22);
     }
     .settings-tab{
-        border:1px solid rgba(255,255,255,.12);
-        background: rgba(255,255,255,.03);
+        border:1px solid var(--set-tab-border);
+        background: var(--set-tab-item-bg);
         padding:10px 12px;
         border-radius:14px;
         font-weight:900;
         cursor:pointer;
-        color: rgba(255,255,255,.72);
+        color: var(--set-tab-text);
         transition: background .15s ease, border-color .15s ease, box-shadow .15s ease;
         display:inline-flex;align-items:center;gap:8px;
     }
-    .settings-tab:hover{background: rgba(255,255,255,.06); color: rgba(255,255,255,.86)}
+    .settings-tab:hover{background: var(--set-input-bg); color: var(--set-tab-active)}
     .settings-tab.active{
         border-color: rgba(255,223,65,.26);
         box-shadow: 0 0 0 4px rgba(255,223,65,.10);
-        color: rgba(255,255,255,.92);
+        color: var(--set-tab-active);
     }
     .tab-dot{
         width:8px;height:8px;border-radius:999px;background:rgba(255,223,65,.35);
@@ -129,9 +200,9 @@
     /* ===== Panels ===== */
     .settings-panel{
         border-radius:16px;
-        border:1px solid rgba(255,255,255,.10);
-        background: rgba(0,0,0,.14);
-        box-shadow: 0 12px 26px rgba(0,0,0,.22);
+        border:1px solid var(--set-card-border);
+        background: var(--set-card-bg);
+        box-shadow: var(--set-card-shadow);
         backdrop-filter: blur(10px);
         padding:14px;
     }
@@ -143,8 +214,8 @@
         flex-wrap:wrap;
         margin-bottom:10px;
     }
-    .panel-title h3{margin:0;font-size:14px;font-weight:900;color:rgba(255,255,255,.92)}
-    .panel-title .meta{font-size:12px;font-weight:800;color:rgba(255,255,255,.62)}
+    .panel-title h3{margin:0;font-size:14px;font-weight:900;color:var(--set-text)}
+    .panel-title .meta{font-size:12px;font-weight:800;color:var(--set-muted)}
 
     /* ===== Add row ===== */
     .add-row{
@@ -155,10 +226,10 @@
         margin-bottom:12px;
         padding:12px;
         border-radius:14px;
-        border:1px solid rgba(255,255,255,.10);
-        background: rgba(255,255,255,.03);
+        border:1px solid var(--set-border);
+        background: var(--set-tab-item-bg);
     }
-    .helper{font-size:12px;font-weight:800;color:rgba(255,255,255,.62)}
+    .helper{font-size:12px;font-weight:800;color:var(--set-muted)}
     .btn-sm{padding:8px 12px;border-radius:12px;font-weight:900}
 
     /* ===== Inputs (dark) ===== */
@@ -167,13 +238,13 @@
         max-width:420px;
         padding:10px 12px;
         border-radius:14px;
-        border:1px solid rgba(255,255,255,.14);
-        background: rgba(255,255,255,.04);
-        color: rgba(255,255,255,.90);
+        border:1px solid var(--set-input-border);
+        background: var(--set-input-bg);
+        color: var(--set-input-color);
         font-weight:800;
         outline:none;
     }
-    .dark-input::placeholder{color: rgba(255,255,255,.55)}
+    .dark-input::placeholder{color: var(--set-input-placeholder)}
     .dark-input:focus{
         border-color: rgba(255,223,65,.28);
         box-shadow: 0 0 0 4px rgba(255,223,65,.10);
@@ -182,8 +253,8 @@
     /* ===== Table ===== */
     .table-card{
         border-radius:14px;
-        border:1px solid rgba(255,255,255,.10);
-        background: rgba(0,0,0,.10);
+        border:1px solid var(--set-card-border);
+        background: var(--set-card-bg);
         overflow:hidden;
     }
     .table-wrap{overflow-x:auto}
@@ -192,23 +263,23 @@
         text-align:left;
         font-size:12px;
         font-weight:900;
-        color: rgba(255,255,255,.62);
+        color: var(--set-muted);
         padding:12px 14px;
-        background: rgba(255,255,255,.04);
-        border-bottom:1px solid rgba(255,255,255,.08);
+        background: var(--set-table-head-bg);
+        border-bottom:1px solid var(--set-table-border);
         white-space:nowrap;
     }
     .dark-table td{
         padding:12px 14px;
-        color: rgba(255,255,255,.86);
+        color: var(--set-text);
         font-weight:800;
-        border-bottom:1px solid rgba(255,255,255,.06);
-        background: rgba(0,0,0,.06);
+        border-bottom:1px solid var(--set-table-border);
+        background: var(--set-table-row-bg);
         vertical-align:middle;
         white-space:nowrap;
     }
     .dark-table td:first-child{white-space:normal;min-width:240px}
-    .dark-table tbody tr:hover td{background: rgba(255,255,255,.03)}
+    .dark-table tbody tr:hover td{background: var(--set-table-hover)}
 
     .actions-inline{display:flex;gap:8px;flex-wrap:wrap}
 
@@ -219,9 +290,9 @@
         font-size:12px;
         padding:6px 10px;
         border-radius:999px;
-        border:1px solid rgba(255,255,255,.14);
-        background: rgba(255,255,255,.05);
-        color: rgba(255,255,255,.85);
+        border:1px solid var(--set-pill-border);
+        background: var(--set-pill-bg);
+        color: var(--set-pill-text);
     }
     .dot{
         width:8px;height:8px;border-radius:999px;
@@ -246,9 +317,9 @@
     .empty{
         padding:14px;
         border-radius:14px;
-        border:1px dashed rgba(255,255,255,.14);
-        background: rgba(0,0,0,.14);
-        color:rgba(255,255,255,.65);
+        border:1px dashed var(--set-empty-border);
+        background: var(--set-empty-bg);
+        color:var(--set-muted);
         font-weight:800;
         margin:14px;
         text-align:center;

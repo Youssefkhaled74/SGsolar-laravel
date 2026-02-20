@@ -141,6 +141,7 @@
         .crm-sidebar{
             background: var(--sidebar-bg) !important;
             border-right:1px solid var(--dash-border);
+            color: var(--dash-text) !important;
             box-shadow: var(--shadow2);
             backdrop-filter: blur(10px);
             transition: background 0.3s ease, border-color 0.3s ease;
@@ -230,6 +231,7 @@
         .crm-offcanvas{
             background: var(--sidebar-bg) !important;
             border-right:1px solid var(--dash-border);
+            color: var(--dash-text) !important;
             backdrop-filter: blur(10px);
             transition: background 0.3s ease, border-color 0.3s ease;
         }
@@ -321,7 +323,7 @@
                     <div class="brand-logo">
                         <img src="{{ asset('png/SG-013.png') }}" alt="SgSolar CRM Logo">
                     </div>
-                    <div style="font-weight:900;color:rgba(255,255,255,.92)">SgSolar CRM</div>
+                    <div style="font-weight:900;color:var(--dash-text)">SgSolar CRM</div>
                 </div>
 
                 <button @click="sidebarOpen = false" aria-label="Close sidebar" class="icon-btn">✕</button>

@@ -1,4 +1,4 @@
-@extends('crm.layouts.admin')
+@extends('crm.layouts.admin-standalone')
 
 @section('title', 'Leads')
 @section('subtitle', 'Manage and review leads')
@@ -280,7 +280,7 @@
     .badge.source .dot{background: rgba(140,198,63,.50)}
 
     .pagination{margin-top:12px}
-    .pagination *{color: rgba(255,255,255,.85)!important}
+    .pagination *{color: var(--leads-text)!important}
 </style>
 
 <div
@@ -293,7 +293,7 @@
         <div class="topline">
             <div class="count-pill">
                 <span style="width:8px;height:8px;border-radius:999px;background:rgba(255,223,65,.35)"></span>
-                Showing <strong style="color:rgba(255,255,255,.92)">{{ $leads->total() }}</strong> leads
+                Showing <strong style="color:var(--leads-text)">{{ $leads->total() }}</strong> leads
             </div>
 
             <div class="muted" style="font-weight:800;font-size:12px">
@@ -433,15 +433,22 @@
                     <tr>
                         <th>Name</th>
                         <th>Phone</th>
-                        <th>Source</th>
+                        <th>Source <span class="muted" style="font-size:11px">(from)</span></th>
                         <th>Status</th>
                         <th>Assigned</th>
-                        <th>Created</th>
+                        <th>Last Action</th>
+                        <th>Next Action</th>
+                        <th>Last Comment</th>
                         <th style="width:130px">Action</th>
                     </tr>
                     </thead>
                     <tbody>
                     @forelse($leads as $lead)
+                        @php
+                            $lastAction = $lead->lastAction;
+                            $nextAction = $lead->nextAction;
+                            $lastComment = $lead->lastComment;
+                        @endphp
                         <tr>
                             <td class="row-title">{{ $lead->name }}</td>
                             <td>{{ $lead->phone ?? '—' }}</td>
@@ -461,7 +468,38 @@
                             </td>
 
                             <td>{{ optional($lead->assignedTo)->name ?? 'Unassigned' }}</td>
-                            <td class="muted">{{ $lead->created_at ? $lead->created_at->format('Y-m-d') : '—' }}</td>
+                            <td class="muted">
+                                @if($lastAction)
+                                    <div>{{ optional($lastAction->type)->name ?? 'Action' }}</div>
+                                    <div class="muted" style="font-size:12px;font-weight:800">
+                                        {{ $lastAction->scheduled_at ? \Carbon\Carbon::parse($lastAction->scheduled_at)->format('Y-m-d H:i') : '—' }}
+                                    </div>
+                                @else
+                                    —
+                                @endif
+                            </td>
+                            <td class="muted">
+                                @if($nextAction)
+                                    <div>{{ optional($nextAction->type)->name ?? 'Action' }}</div>
+                                    <div class="muted" style="font-size:12px;font-weight:800">
+                                        {{ $nextAction->scheduled_at ? \Carbon\Carbon::parse($nextAction->scheduled_at)->format('Y-m-d H:i') : '—' }}
+                                    </div>
+                                @else
+                                    —
+                                @endif
+                            </td>
+                            <td class="muted">
+                                @if($lastComment)
+                                    <div style="max-width:220px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">
+                                        {{ $lastComment->comment }}
+                                    </div>
+                                    <div class="muted" style="font-size:12px;font-weight:800">
+                                        {{ $lastComment->created_at ? $lastComment->created_at->format('Y-m-d H:i') : '—' }}
+                                    </div>
+                                @else
+                                    —
+                                @endif
+                            </td>
 
                             <td>
                                 <a href="{{ route('crm.admin.leads.show', ['lead' => $lead->id]) }}" class="crm-btn crm-btn-ghost">
@@ -471,7 +509,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="7">
+                            <td colspan="9">
                                 <div style="padding:16px" class="muted">
                                     No leads found. Try changing filters or search.
                                 </div>
@@ -489,3 +527,9 @@
     </div>
 </div>
 @endsection
+
+
+
+
+
+

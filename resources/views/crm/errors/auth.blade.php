@@ -1,5 +1,12 @@
 <!doctype html>
-<html lang="en" dir="ltr">
+<html lang="en" dir="ltr" x-data="{
+    darkMode: localStorage.getItem('theme') === 'dark' || !localStorage.getItem('theme'),
+    toggleTheme() {
+        this.darkMode = !this.darkMode;
+        localStorage.setItem('theme', this.darkMode ? 'dark' : 'light');
+        document.documentElement.classList.toggle('dark', this.darkMode);
+    }
+}" x-init="document.documentElement.classList.toggle('dark', darkMode)">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -8,36 +15,65 @@
     <!-- CRM stylesheet (optional but keeps buttons consistent if exists) -->
     <link rel="stylesheet" href="{{ asset('crm/crm.css') }}">
 
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
     <!-- Professional font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
 
     <style>
+        [x-cloak]{display:none!important}
         :root{
             --brand-yellow: {{ config('website.primary_color', '#FFDF41') }};
             --brand-orange: {{ config('website.secondary_color', '#E3A000') }};
             --brand-dark: {{ config('website.dark_green', '#0C2D1C') }};
             --brand-forest: {{ config('website.forest_green', '#115F45') }};
+            --font: "Manrope";
+        }
+
+        .dark{
             --bg-0: #070B12;
             --bg-1: #0A1220;
             --border: rgba(255,255,255,.12);
             --text: rgba(255,255,255,.92);
             --muted: rgba(255,255,255,.68);
             --shadow: 0 30px 80px rgba(0,0,0,.55);
-            --font: "Manrope";
+            --card-bg: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+            --ghost-bg: rgba(255,255,255,.04);
+            --ghost-border: rgba(255,255,255,.14);
+            --ghost-text: rgba(255,255,255,.86);
+            --foot-border: rgba(255,255,255,.12);
+        }
+
+        html:not(.dark){
+            --bg-0: #FFFFFF;
+            --bg-1: #F8F9FA;
+            --border: rgba(0,0,0,.12);
+            --text: rgba(0,0,0,.92);
+            --muted: rgba(0,0,0,.62);
+            --shadow: 0 10px 30px rgba(0,0,0,.10);
+            --card-bg: #FFFFFF;
+            --ghost-bg: rgba(0,0,0,.05);
+            --ghost-border: rgba(0,0,0,.16);
+            --ghost-text: rgba(0,0,0,.85);
+            --foot-border: rgba(0,0,0,.12);
         }
         *{box-sizing:border-box}
         body{
             margin:0; min-height:100vh;
             font-family: var(--font), system-ui, -apple-system, "Segoe UI", Roboto, Arial;
             color: var(--text);
+            background: linear-gradient(180deg, var(--bg-0), var(--bg-1));
+            -webkit-font-smoothing:antialiased;
+            overflow-x:hidden;
+        }
+
+        .dark body{
             background:
                 radial-gradient(1100px 650px at 18% 10%, rgba(140,198,63,.10), transparent 55%),
                 radial-gradient(1000px 600px at 86% 12%, rgba(255,223,65,.10), transparent 55%),
                 linear-gradient(180deg, var(--bg-0), var(--bg-1));
-            -webkit-font-smoothing:antialiased;
-            overflow-x:hidden;
         }
 
         /* Animated background */
@@ -72,6 +108,8 @@
 
         /* Floating particles */
         .particles{position:fixed; inset:0; z-index:-1; pointer-events:none; opacity:.55}
+        html:not(.dark) .bg,
+        html:not(.dark) .particles{display:none}
         .dot{
             position:absolute; width:6px; height:6px; border-radius:999px;
             background: rgba(255,255,255,.18);
@@ -89,7 +127,7 @@
             width:100%; max-width:560px;
             border-radius:24px;
             border:1px solid var(--border);
-            background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+            background: var(--card-bg);
             box-shadow: var(--shadow);
             backdrop-filter: blur(10px);
             overflow:hidden;
@@ -138,23 +176,47 @@
         }
         .btn-primary:hover{filter:brightness(.98); box-shadow: 0 22px 44px rgba(227,160,0,0.26)}
         .btn-ghost{
-            background: rgba(255,255,255,.04);
-            border-color: rgba(255,255,255,.14);
-            color: rgba(255,255,255,.86);
+            background: var(--ghost-bg);
+            border-color: var(--ghost-border);
+            color: var(--ghost-text);
         }
-        .btn-ghost:hover{background: rgba(255,255,255,.07)}
+        .btn-ghost:hover{background: var(--ghost-bg)}
 
         .foot{
             padding:14px 18px;
-            border-top:1px solid rgba(255,255,255,.12);
+            border-top:1px solid var(--foot-border);
             display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;
-            font-size:12px; color: rgba(255,255,255,.62); font-weight:800;
+            font-size:12px; color: var(--muted); font-weight:800;
         }
-        .foot a{color: rgba(255,255,255,.78); text-decoration:none; font-weight:900}
+        .foot a{color: var(--text); text-decoration:none; font-weight:900}
         .foot a:hover{text-decoration:underline}
+
+        .theme-toggle{
+            position:fixed;
+            top:16px;
+            right:16px;
+            width:40px;
+            height:40px;
+            border-radius:14px;
+            border:1px solid var(--border);
+            background: var(--ghost-bg);
+            color: var(--text);
+            cursor:pointer;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:18px;
+            transition: all 0.3s ease;
+            z-index:5;
+        }
+        .theme-toggle:hover{transform: rotate(20deg)}
     </style>
 </head>
 <body>
+    <button @click="toggleTheme()" class="theme-toggle" aria-label="Toggle theme" title="Toggle dark/light mode">
+        <span x-show="darkMode">ðŸŒ™</span>
+        <span x-show="!darkMode" x-cloak>â˜€ï¸</span>
+    </button>
     <div class="bg" aria-hidden="true"></div>
 
     <div class="particles" aria-hidden="true">
@@ -207,3 +269,4 @@
     </div>
 </body>
 </html>
+

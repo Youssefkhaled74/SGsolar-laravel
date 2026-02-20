@@ -11,6 +11,9 @@
     .s-bg{border-radius:20px}
     .s-card{position:relative; overflow:visible}
     .s-right-top{position:relative; z-index:10}
+    .s-breadcrumb{font-size:12px;font-weight:900;margin-bottom:12px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+    .s-link{color:var(--s-text);text-decoration:none}
+    .s-link:hover{text-decoration:underline}
 </style>
 
 @php
@@ -25,8 +28,8 @@
 
     <div class="s-wrap">
         {{-- Breadcrumb --}}
-        <div class="s-muted" style="font-size:12px;font-weight:900;margin-bottom:12px;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-            <a href="{{ route('crm.sales.leads.index') }}" style="color:rgba(255,255,255,.86);text-decoration:none">My Leads</a>
+        <div class="s-muted s-breadcrumb">
+            <a href="{{ route('crm.sales.leads.index') }}" class="s-link">My Leads</a>
             <span>›</span>
             <span class="s-strong">{{ $leadName }}</span>
         </div>
@@ -50,10 +53,10 @@
 
                     <div style="display:grid;grid-template-columns:120px 1fr;gap:10px;row-gap:10px;font-size:13px">
                         <div class="s-muted" style="font-weight:900">Phone</div>
-                        <div style="font-weight:900;color:rgba(255,255,255,.90)">{{ $lead->phone ?? '—' }}</div>
+                        <div class="s-strong">{{ $lead->phone ?? '—' }}</div>
 
                         <div class="s-muted" style="font-weight:900">Email</div>
-                        <div style="font-weight:900;color:rgba(255,255,255,.90)">{{ $lead->email ?? '—' }}</div>
+                        <div class="s-strong">{{ $lead->email ?? '—' }}</div>
 
                         <div class="s-muted" style="font-weight:900">Source</div>
                         <div class="s-muted" style="font-weight:900">{{ optional($lead->source)->name ?? '—' }}</div>
@@ -94,7 +97,7 @@
                             @endforeach
                         </select>
 
-                        <input type="datetime-local" name="scheduled_at" class="s-input" style="min-width:220px" />
+                        <input type="datetime-local" name="scheduled_at" class="s-input" required style="min-width:220px" />
                         <button class="crm-btn crm-btn-ghost">Log Action</button>
                     </form>
                 </div>
@@ -122,14 +125,14 @@
                     @if($comments->count())
                         <div style="display:flex;flex-direction:column;gap:10px">
                             @foreach($comments as $c)
-                                <div style="border-radius:14px;border:1px solid rgba(255,255,255,.10);background:rgba(0,0,0,.10);padding:12px">
+                                <div class="s-panel">
                                     <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center">
                                         <div class="s-strong">{{ optional($c->author)->name ?? 'You' }}</div>
                                         <span class="s-muted" style="font-size:12px;font-weight:800">
                                             {{ $c->created_at ? \Carbon\Carbon::parse($c->created_at)->diffForHumans() : '' }}
                                         </span>
                                     </div>
-                                    <div style="margin-top:8px;color:rgba(255,255,255,.86);font-weight:800;line-height:1.55">
+                                    <div class="s-panel-body">
                                         {{ $c->comment }}
                                     </div>
                                 </div>
@@ -152,7 +155,7 @@
                     @if($actions->count())
                         <div style="display:flex;flex-direction:column;gap:10px">
                             @foreach($actions as $a)
-                                <div style="border-radius:14px;border:1px solid rgba(255,255,255,.10);background:rgba(0,0,0,.10);padding:12px">
+                                <div class="s-panel">
                                     <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center">
                                         <div class="s-strong">{{ optional($a->type)->name ?? 'Action' }}</div>
                                         <span class="s-pill y">
@@ -160,7 +163,7 @@
                                             {{ $a->scheduled_at ? \Carbon\Carbon::parse($a->scheduled_at)->toDayDateTimeString() : '—' }}
                                         </span>
                                     </div>
-                                    <div class="s-muted" style="margin-top:8px;font-size:12px;font-weight:800;line-height:1.55">
+                                    <div class="s-panel-muted" style="margin-top:8px;line-height:1.55">
                                         {{ $a->notes ?? '—' }}
                                     </div>
                                 </div>
@@ -188,7 +191,7 @@
                         <div style="display:grid;grid-template-columns:1fr;gap:10px">
                             <div>
                                 <div class="s-muted" style="font-size:12px;font-weight:900;margin-bottom:6px">When</div>
-                                <input type="datetime-local" name="scheduled_at" class="s-input" />
+                                <input type="datetime-local" name="scheduled_at" class="s-input" required />
                             </div>
 
                             <div>
@@ -213,7 +216,7 @@
                                     $isToday = $when && !$isDone && $when->isToday();
                                 @endphp
 
-                                <div style="border-radius:14px;border:1px solid rgba(255,255,255,.10);background:rgba(0,0,0,.10);padding:12px">
+                                <div class="s-panel">
                                     <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center">
                                         <div class="s-strong">Followup</div>
 
@@ -232,7 +235,7 @@
                                         {{ $when ? $when->toDayDateTimeString() : '—' }}
                                     </div>
 
-                                    <div style="margin-top:8px;color:rgba(255,255,255,.86);font-weight:800;line-height:1.55">
+                                    <div class="s-panel-body">
                                         {{ $f->note ?? '—' }}
                                     </div>
 
@@ -262,3 +265,6 @@
     </div>
 </div>
 @endsection
+
+
+

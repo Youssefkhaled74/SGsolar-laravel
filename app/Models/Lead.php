@@ -42,6 +42,27 @@ class Lead extends Model
         return $this->belongsTo(User::class, 'created_by');
     }
 
+    public function lastAction()
+    {
+        return $this->hasOne(LeadAction::class)
+            ->whereNotNull('scheduled_at')
+            ->orderBy('scheduled_at', 'desc');
+    }
+
+    public function nextAction()
+    {
+        return $this->hasOne(LeadAction::class)
+            ->whereNotNull('scheduled_at')
+            ->where('scheduled_at', '>=', now())
+            ->orderBy('scheduled_at', 'asc');
+    }
+
+    public function lastComment()
+    {
+        return $this->hasOne(LeadComment::class)
+            ->orderBy('created_at', 'desc');
+    }
+
     /**
      * Scope to limit visible leads for a given user.
      * Admins see all; sales see only assigned leads.
