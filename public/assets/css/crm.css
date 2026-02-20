@@ -230,6 +230,14 @@ a:hover{opacity:.92}
   color:var(--crm-text);
 }
 .crm-btn-ghost:hover{background:#f8fafc}
+html.dark .crm-btn-ghost{
+  background: rgba(255,255,255,0.04);
+  border-color: rgba(255,255,255,0.14);
+  color: var(--crm-text);
+}
+html.dark .crm-btn-ghost:hover{
+  background: rgba(255,255,255,0.08);
+}
 .crm-btn[disabled]{opacity:.6;cursor:not-allowed;transform:none}
 
 /* Badges (single source of truth) */
