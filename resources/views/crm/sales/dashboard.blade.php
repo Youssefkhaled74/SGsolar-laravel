@@ -12,7 +12,6 @@
         --brand-light: {{ config('website.light_green', '#8CC63F') }};
     }
 
-    /* Dark Mode Variables */
     .dark {
         --s-border:rgba(255,255,255,.10);
         --s-text:rgba(255,255,255,.92);
@@ -26,10 +25,6 @@
         --s-pill-bg: rgba(255,255,255,.05);
         --s-pill-border: rgba(255,255,255,.12);
         --s-pill-text: rgba(255,255,255,.78);
-        --s-input-bg: rgba(255,255,255,.04);
-        --s-input-border: rgba(255,255,255,.14);
-        --s-input-color: rgba(255,255,255,.90);
-        --s-input-placeholder: rgba(255,255,255,.55);
         --s-table-head-bg: rgba(255,255,255,.04);
         --s-table-row-bg: rgba(0,0,0,.06);
         --s-table-row-hover: rgba(255,255,255,.03);
@@ -39,7 +34,6 @@
         --s-danger: #ffd0d0;
     }
 
-    /* Light Mode Variables */
     html:not(.dark) {
         --s-border:rgba(0,0,0,.12);
         --s-text:rgba(0,0,0,.95);
@@ -53,10 +47,6 @@
         --s-pill-bg: rgba(0,0,0,.05);
         --s-pill-border: rgba(0,0,0,.15);
         --s-pill-text: rgba(0,0,0,.85);
-        --s-input-bg: rgba(0,0,0,.03);
-        --s-input-border: rgba(0,0,0,.18);
-        --s-input-color: rgba(0,0,0,.95);
-        --s-input-placeholder: rgba(0,0,0,.50);
         --s-table-head-bg: rgba(0,0,0,.05);
         --s-table-row-bg: #FFFFFF;
         --s-table-row-hover: rgba(0,0,0,.03);
@@ -66,197 +56,66 @@
         --s-danger: #b91c1c;
     }
 
-    /* Shell */
-    .s-shell{
-        position:relative;
-        border-radius:20px;
-        overflow:hidden;
-        border:1px solid var(--s-border);
-        background: var(--s-shell-bg);
-        box-shadow: var(--s-shadow);
-        transition: all 0.3s ease;
-    }
-    
-    /* Dark mode background */
-    .dark .s-bg{
-        position:absolute; inset:0; z-index:0; pointer-events:none;
-        background:
-            radial-gradient(900px 520px at 16% 10%, rgba(140,198,63,.14), transparent 55%),
-            radial-gradient(900px 520px at 86% 18%, rgba(255,223,65,.14), transparent 55%),
-            radial-gradient(800px 520px at 72% 90%, rgba(227,160,0,.10), transparent 55%),
-            linear-gradient(180deg, rgba(7,11,18,.45), rgba(10,18,32,.25));
-        filter: blur(14px);
-        opacity:.78;
-    }
-    
-    /* Light mode - no background */
-    html:not(.dark) .s-bg {
-        display: none;
-    }
-    
-    .s-wrap{position:relative; z-index:1; padding:16px}
+    .s-shell{position:relative;border-radius:20px;overflow:hidden;border:1px solid var(--s-border);background:var(--s-shell-bg);box-shadow:var(--s-shadow)}
+    .dark .s-bg{position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(900px 520px at 16% 10%, rgba(140,198,63,.14), transparent 55%),radial-gradient(900px 520px at 86% 18%, rgba(255,223,65,.14), transparent 55%),radial-gradient(800px 520px at 72% 90%, rgba(227,160,0,.10), transparent 55%);filter: blur(14px);opacity:.78}
+    html:not(.dark) .s-bg{display:none}
+    .s-wrap{position:relative;z-index:1;padding:16px}
 
-    /* Head */
-    .s-head{
-        display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;
-        padding:14px;
-        border-radius:16px;
-        border:1px solid var(--s-border);
-        background: var(--s-head-bg);
-        box-shadow: var(--s-shadow2);
-        backdrop-filter: blur(10px);
-        margin-bottom:14px;
-        transition: all 0.3s ease;
-    }
+    .s-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:14px;border-radius:16px;border:1px solid var(--s-border);background:var(--s-head-bg);box-shadow:var(--s-shadow2);backdrop-filter: blur(10px);margin-bottom:14px}
     .s-head h3{margin:0;font-size:16px;font-weight:900;color:var(--s-text)}
     .s-head p{margin:6px 0 0;font-size:12px;font-weight:800;color:var(--s-muted);line-height:1.55}
     .s-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 
-    /* Pills */
-    .s-pill{
-        display:inline-flex;align-items:center;gap:8px;
-        padding:7px 10px;border-radius:999px;
-        border:1px solid var(--s-pill-border);
-        background: var(--s-pill-bg);
-        color: var(--s-pill-text);
-        font-size:12px;font-weight:900;
-        white-space:nowrap;
-        transition: all 0.3s ease;
-    }
-    .s-pill .dot{width:8px;height:8px;border-radius:999px;background: var(--s-muted)}
+    .s-pill{display:inline-flex;align-items:center;gap:8px;padding:7px 10px;border-radius:999px;border:1px solid var(--s-pill-border);background:var(--s-pill-bg);color:var(--s-pill-text);font-size:12px;font-weight:900;white-space:nowrap}
+    .s-pill .dot{width:8px;height:8px;border-radius:999px;background:var(--s-muted)}
     .s-pill.y .dot{background: rgba(255,223,65,.55)}
     .s-pill.g .dot{background: rgba(140,198,63,.50)}
     .s-pill.r .dot{background: rgba(239,68,68,.55)}
 
-    /* Cards */
-    .s-card{
-        border-radius:16px;
-        border:1px solid var(--s-border);
-        background: var(--s-card);
-        box-shadow: var(--s-shadow2);
-        backdrop-filter: blur(10px);
-        padding:14px;
-        transition: all 0.3s ease;
-    }
+    .s-card{border-radius:16px;border:1px solid var(--s-border);background:var(--s-card);box-shadow:var(--s-shadow2);backdrop-filter: blur(10px);padding:14px}
     .s-card-title{margin:0;font-size:14px;font-weight:900;color:var(--s-text)}
     .s-card-sub{margin-top:4px;font-size:12px;font-weight:800;color:var(--s-muted)}
     .s-card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:10px}
 
-    /* KPI */
     .s-kpi-grid{display:grid;grid-template-columns:1fr;gap:14px}
     @media(min-width:640px){ .s-kpi-grid{grid-template-columns:repeat(2,1fr)} }
     @media(min-width:1024px){ .s-kpi-grid{grid-template-columns:repeat(3,1fr)} }
-
-    .s-kpi{
-        border-radius:16px;
-        border:1px solid var(--s-border);
-        background: var(--s-card);
-        padding:16px;
-        box-shadow: var(--s-shadow2);
-        backdrop-filter: blur(10px);
-        transition:all .3s ease;
-    }
-    .s-kpi:hover{transform: translateY(-1px); box-shadow: var(--s-shadow)}
+    .s-kpi{border-radius:16px;border:1px solid var(--s-border);background:var(--s-card);padding:16px;box-shadow:var(--s-shadow2)}
     .s-kpi .t{font-size:12px;font-weight:900;color:var(--s-muted)}
     .s-kpi .v{margin-top:10px;font-size:30px;font-weight:900;color:var(--s-text);letter-spacing:-.2px}
     .s-kpi .m{margin-top:8px;font-size:12px;font-weight:800;color:var(--s-muted)}
 
-    /* Inputs */
-    .s-input{
-        width:100%;
-        padding:10px 12px;
-        border-radius:14px;
-        border:1px solid var(--s-input-border);
-        background: var(--s-input-bg);
-        color: var(--s-input-color);
-        font-weight:800;
-        outline:none;
-        transition: all 0.3s ease;
-    }
-    .s-input::placeholder{color: var(--s-input-placeholder)}
-    .s-input:focus{
-        border-color: rgba(255,223,65,.38);
-        box-shadow: 0 0 0 4px rgba(255,223,65,.10);
-    }
-
-    /* Tabs */
-    .s-tabs{display:flex;gap:8px;flex-wrap:wrap}
-    .s-tab{
-        background: var(--s-pill-bg);
-        border:1px solid var(--s-pill-border);
-        color: var(--s-pill-text);
-        padding:9px 12px;border-radius:12px;font-weight:900;cursor:pointer;
-        transition: all 0.3s ease;
-    }
-    .s-tab:hover{background: var(--s-table-row-hover)}
-    .s-tab.active{border-color: rgba(255,223,65,.36); box-shadow: 0 0 0 4px rgba(255,223,65,.10)}
-
-    /* Table */
-    .s-table-card{
-        border-radius:14px; overflow:hidden;
-        border:1px solid var(--s-border);
-        background: var(--s-card2);
-        transition: all 0.3s ease;
-    }
+    .s-table-card{border-radius:14px;overflow:hidden;border:1px solid var(--s-border);background:var(--s-card2)}
     .s-table{width:100%;border-collapse:collapse}
-    .s-table thead th{
-        text-align:left;font-size:12px;font-weight:900;color:var(--s-muted);
-        padding:12px;background: var(--s-table-head-bg);border-bottom:1px solid var(--s-table-border);
-        white-space:nowrap;
-    }
-    .s-table td{
-        padding:12px;color:var(--s-text);font-weight:800;
-        border-bottom:1px solid var(--s-table-border);background: var(--s-table-row-bg);
-        vertical-align:middle;
-    }
-    .s-table tbody tr:hover td{background: var(--s-table-row-hover)}
+    .s-table thead th{text-align:left;font-size:12px;font-weight:900;color:var(--s-muted);padding:12px;background:var(--s-table-head-bg);border-bottom:1px solid var(--s-table-border);white-space:nowrap}
+    .s-table td{padding:12px;color:var(--s-text);font-weight:800;border-bottom:1px solid var(--s-table-border);background:var(--s-table-row-bg);vertical-align:top}
+    .s-table tbody tr:hover td{background:var(--s-table-row-hover)}
+
+    .s-empty{padding:14px;border-radius:14px;border:1px dashed var(--s-empty-border);background:var(--s-empty-bg);color:var(--s-muted);font-weight:800;line-height:1.55;text-align:center}
     .s-muted{color: var(--s-muted)!important}
     .s-strong{font-weight:900;color:var(--s-text)}
-
-    .s-empty{
-        padding:14px;border-radius:14px;border:1px dashed var(--s-empty-border);
-        background: var(--s-empty-bg);color:var(--s-muted);font-weight:800;line-height:1.55;
-        text-align:center;
-    }
-
-    
-    .lead-meta{font-size:12px;font-weight:800;color: var(--s-muted);margin-top:4px}
+    .lead-meta{font-size:12px;font-weight:800;color:var(--s-muted);margin-top:4px}
     .lead-clip{max-width:220px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .s-table th,.s-table td{vertical-align:top}
-/* Buttons */
-    .crm-btn.crm-btn-primary{
-        background: linear-gradient(135deg, var(--brand-yellow) 0%, var(--brand-orange) 100%) !important;
-        color:#0b122a !important;
-        border: 1px solid rgba(255,255,255,.08) !important;
-        box-shadow: 0 18px 34px rgba(227,160,0,0.18);
-        font-weight:900;
-    }
-    .crm-btn.crm-btn-ghost{
-        background: var(--s-pill-bg) !important;
-        border:1px solid var(--s-pill-border) !important;
-        color: var(--s-text) !important;
-        font-weight:900;
-        transition: all 0.3s ease;
-    }
-    .crm-btn.crm-btn-ghost:hover{background: var(--s-table-row-hover) !important}
-    
-    /* Inner card styling */
-    .s-inner-card {
-        border-radius:14px;
-        border:1px solid var(--s-border);
-        background:var(--s-card2);
-        padding:12px;
-        transition: all 0.3s ease;
-    }
+    .s-inner-card{border-radius:14px;border:1px solid var(--s-border);background:var(--s-card2);padding:12px}
+
+    .crm-btn.crm-btn-primary{background: linear-gradient(135deg, var(--brand-yellow) 0%, var(--brand-orange) 100%) !important;color:#0b122a !important;border: 1px solid rgba(255,255,255,.08) !important;box-shadow: 0 18px 34px rgba(227,160,0,0.18);font-weight:900}
+    .crm-btn.crm-btn-ghost{background: var(--s-pill-bg) !important;border:1px solid var(--s-pill-border) !important;color: var(--s-text) !important;font-weight:900}
 </style>
 
 @php
-    // Expect these from controller; safe defaults:
     $myLeadsCount = $myLeadsCount ?? 0;
     $followupsTodayCount = $followupsTodayCount ?? 0;
     $overdueFollowupsCount = $overdueFollowupsCount ?? 0;
+    $upcomingWeekFollowupsCount = $upcomingWeekFollowupsCount ?? 0;
+    $completedTodayCount = $completedTodayCount ?? 0;
+    $newLeadsThisWeekCount = $newLeadsThisWeekCount ?? 0;
+    $leadsWithoutNextActionCount = $leadsWithoutNextActionCount ?? 0;
+    $staleLeadsCount = $staleLeadsCount ?? 0;
 
     $todayFollowups = $todayFollowups ?? collect();
+    $priorityFollowups = $priorityFollowups ?? collect();
+    $statusBreakdown = $statusBreakdown ?? collect();
+    $attentionLeads = $attentionLeads ?? collect();
     $recentLeads = $recentLeads ?? collect();
 @endphp
 
@@ -267,12 +126,12 @@
         <div class="s-head">
             <div>
                 <h3>Welcome back</h3>
-                <p>Quick overview of your leads and followups for today.</p>
+                <p>Quick operational view: today workload, risk items, and pipeline health.</p>
                 <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap">
                     <span class="s-pill g"><span class="dot"></span>Sales area</span>
                     <span class="s-pill y"><span class="dot"></span>Live overview</span>
                     @if($overdueFollowupsCount > 0)
-                        <span class="s-pill r"><span class="dot"></span>Overdue attention</span>
+                        <span class="s-pill r"><span class="dot"></span>{{ $overdueFollowupsCount }} overdue followups</span>
                     @endif
                 </div>
             </div>
@@ -283,56 +142,111 @@
             </div>
         </div>
 
-        {{-- KPIs --}}
         <div class="s-kpi-grid">
-            <div class="s-kpi">
-                <div class="t">My Leads</div>
-                <div class="v">{{ number_format($myLeadsCount) }}</div>
-                <div class="m">Assigned to you</div>
-            </div>
-
-            <div class="s-kpi">
-                <div class="t">Followups Today</div>
-                <div class="v">{{ number_format($followupsTodayCount) }}</div>
-                <div class="m">Scheduled for today</div>
-            </div>
-
-            <div class="s-kpi">
-                <div class="t">Overdue Followups</div>
-                <div class="v" style="{{ $overdueFollowupsCount > 0 ? 'color:var(--s-danger)' : '' }}">{{ number_format($overdueFollowupsCount) }}</div>
-                <div class="m">Need action</div>
-            </div>
+            <div class="s-kpi"><div class="t">My Leads</div><div class="v">{{ number_format($myLeadsCount) }}</div><div class="m">Assigned to you</div></div>
+            <div class="s-kpi"><div class="t">Followups Today</div><div class="v">{{ number_format($followupsTodayCount) }}</div><div class="m">Due today</div></div>
+            <div class="s-kpi"><div class="t">Overdue Followups</div><div class="v" style="{{ $overdueFollowupsCount > 0 ? 'color:var(--s-danger)' : '' }}">{{ number_format($overdueFollowupsCount) }}</div><div class="m">Need action now</div></div>
+            <div class="s-kpi"><div class="t">Upcoming (7 Days)</div><div class="v">{{ number_format($upcomingWeekFollowupsCount) }}</div><div class="m">Planned tasks</div></div>
+            <div class="s-kpi"><div class="t">Completed Today</div><div class="v">{{ number_format($completedTodayCount) }}</div><div class="m">Closed followups</div></div>
+            <div class="s-kpi"><div class="t">New This Week</div><div class="v">{{ number_format($newLeadsThisWeekCount) }}</div><div class="m">Recently assigned</div></div>
         </div>
 
         <div style="display:grid;grid-template-columns:1fr;gap:14px;margin-top:14px">
-            {{-- Today Followups --}}
             <section class="s-card">
                 <div class="s-card-head">
-                    <div>
-                        <h3 class="s-card-title">Today Followups</h3>
-                        <div class="s-card-sub">Your scheduled tasks for today.</div>
+                    <div><h3 class="s-card-title">Priority Queue</h3><div class="s-card-sub">Overdue first, then today's followups.</div></div>
+                    <a href="{{ route('crm.sales.followups.index') }}" class="crm-btn crm-btn-ghost">Open followups</a>
+                </div>
+
+                @if($priorityFollowups->count())
+                    <div style="display:grid;grid-template-columns:1fr;gap:10px">
+                        @foreach($priorityFollowups as $f)
+                            @php
+                                $when = $f->scheduled_at ? \Carbon\Carbon::parse($f->scheduled_at) : null;
+                                $isOverdue = $when && $when->lt(now()->startOfDay()) && !$f->completed;
+                            @endphp
+                            <div class="s-inner-card" style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center">
+                                <div>
+                                    <div class="s-strong">{{ optional($f->lead)->name ?? 'Lead' }}</div>
+                                    <div class="lead-meta">{{ $f->note ?: 'No note' }}</div>
+                                </div>
+                                <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+                                    <span class="s-pill {{ $isOverdue ? 'r' : 'y' }}"><span class="dot"></span>{{ $isOverdue ? 'Overdue' : 'Today' }}</span>
+                                    <span class="s-pill g"><span class="dot"></span>{{ $when ? $when->format('Y-m-d H:i') : '-' }}</span>
+                                    @if(optional($f->lead)->id)
+                                        <a href="{{ route('crm.sales.leads.show', optional($f->lead)->id) }}" class="crm-btn crm-btn-ghost">Open</a>
+                                    @endif
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
+                @else
+                    <div class="s-empty">No urgent or today followups right now.</div>
+                @endif
+            </section>
+
+            <section class="s-card">
+                <div class="s-card-head">
+                    <div><h3 class="s-card-title">Pipeline Snapshot</h3><div class="s-card-sub">Status mix and leads needing next-step planning.</div></div>
+                </div>
+
+                <div style="display:grid;grid-template-columns:1fr;gap:10px">
+                    <div class="s-inner-card">
+                        <div class="s-card-sub" style="margin-bottom:8px">Status Mix</div>
+                        @if($statusBreakdown->count())
+                            <div style="display:flex;flex-wrap:wrap;gap:8px">
+                                @foreach($statusBreakdown as $row)
+                                    <span class="s-pill y"><span class="dot"></span>{{ $row->status_name }}: {{ number_format($row->total) }}</span>
+                                @endforeach
+                            </div>
+                        @else
+                            <div class="s-empty">No status data yet.</div>
+                        @endif
+                    </div>
+
+                    <div class="s-inner-card">
+                        <div class="s-card-sub" style="margin-bottom:8px">Risk Metrics</div>
+                        <div style="display:flex;gap:8px;flex-wrap:wrap">
+                            <span class="s-pill r"><span class="dot"></span>No next action: {{ number_format($leadsWithoutNextActionCount) }}</span>
+                            <span class="s-pill r"><span class="dot"></span>Stale 7+ days: {{ number_format($staleLeadsCount) }}</span>
+                        </div>
+                    </div>
+
+                    @if($attentionLeads->count())
+                        <div class="s-inner-card">
+                            <div class="s-card-sub" style="margin-bottom:8px">Leads Missing Next Action</div>
+                            <div style="display:grid;grid-template-columns:1fr;gap:8px">
+                                @foreach($attentionLeads as $lead)
+                                    <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center">
+                                        <div>
+                                            <div class="s-strong">{{ $lead->name }}</div>
+                                            <div class="lead-meta">{{ optional($lead->status)->name ?? 'Unspecified' }} | {{ optional($lead->source)->name ?? 'Unknown source' }}</div>
+                                        </div>
+                                        <a href="{{ route('crm.sales.leads.show', $lead->id) }}" class="crm-btn crm-btn-ghost">Plan next step</a>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
+                </div>
+            </section>
+
+            <section class="s-card">
+                <div class="s-card-head">
+                    <div><h3 class="s-card-title">Today Followups</h3><div class="s-card-sub">Today's scheduled tasks only.</div></div>
                     <a href="{{ route('crm.sales.followups.index') }}" class="crm-btn crm-btn-ghost">View all</a>
                 </div>
 
                 @if($todayFollowups->count())
                     <div style="display:flex;flex-direction:column;gap:10px">
                         @foreach($todayFollowups->take(6) as $f)
-                            @php
-                                $when = $f->scheduled_at ? \Carbon\Carbon::parse($f->scheduled_at) : null;
-                                $isOverdue = $when && $when->isPast() && !$f->completed;
-                            @endphp
+                            @php $when = $f->scheduled_at ? \Carbon\Carbon::parse($f->scheduled_at) : null; @endphp
                             <div class="s-inner-card">
                                 <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center">
                                     <div class="s-strong">{{ optional($f->lead)->name ?? 'Lead' }}</div>
-                                    <span class="s-pill {{ $isOverdue ? 'r' : 'y' }}">
-                                        <span class="dot"></span>
-                                        {{ $when ? $when->format('H:i') : 'â€”' }}
-                                    </span>
+                                    <span class="s-pill y"><span class="dot"></span>{{ $when ? $when->format('H:i') : '-' }}</span>
                                 </div>
-                                <div class="s-muted" style="margin-top:6px;font-size:12px;font-weight:800;line-height:1.45">
-                                    {{ $f->note ?? 'â€”' }}
-                                </div>
+                                <div class="s-muted" style="margin-top:6px;font-size:12px;font-weight:800;line-height:1.45">{{ $f->note ?? '-' }}</div>
                                 <div style="margin-top:10px;display:flex;justify-content:flex-end">
                                     @if(!$f->completed)
                                         <form method="POST" action="{{ route('crm.sales.followups.done', $f->id) }}">
@@ -340,8 +254,6 @@
                                             @method('PATCH')
                                             <button class="crm-btn crm-btn-ghost">Mark Done</button>
                                         </form>
-                                    @else
-                                        <span class="s-muted" style="font-size:12px;font-weight:800">Done</span>
                                     @endif
                                 </div>
                             </div>
@@ -352,13 +264,9 @@
                 @endif
             </section>
 
-            {{-- Recent Leads --}}
             <section class="s-card">
                 <div class="s-card-head">
-                    <div>
-                        <h3 class="s-card-title">My Leads (Detailed)</h3>
-                        <div class="s-card-sub">Latest leads with last/next action and last comment.</div>
-                    </div>
+                    <div><h3 class="s-card-title">My Leads (Detailed)</h3><div class="s-card-sub">Latest leads with last/next action and last comment.</div></div>
                     <a href="{{ route('crm.sales.leads.index') }}" class="crm-btn crm-btn-ghost">Open leads</a>
                 </div>
 
@@ -385,47 +293,37 @@
                             @endphp
                             <tr>
                                 <td class="s-strong">{{ $l->name }}</td>
-                                <td>{{ $l->phone ?? '—' }}</td>
-                                <td class="s-muted">{{ optional($l->source)->name ?? '—' }}</td>
-                                <td class="s-muted">{{ optional($l->status)->name ?? '—' }}</td>
+                                <td>{{ $l->phone ?? '-' }}</td>
+                                <td class="s-muted">{{ optional($l->source)->name ?? '-' }}</td>
+                                <td class="s-muted">{{ optional($l->status)->name ?? '-' }}</td>
                                 <td class="s-muted">
                                     @if($lastAction)
                                         <div class="s-strong">{{ optional($lastAction->type)->name ?? 'Action' }}</div>
-                                        <div class="lead-meta">
-                                            {{ $lastAction->scheduled_at ? \Carbon\Carbon::parse($lastAction->scheduled_at)->format('Y-m-d H:i') : '—' }}
-                                        </div>
+                                        <div class="lead-meta">{{ $lastAction->scheduled_at ? \Carbon\Carbon::parse($lastAction->scheduled_at)->format('Y-m-d H:i') : '-' }}</div>
                                     @else
-                                        —
+                                        -
                                     @endif
                                 </td>
                                 <td class="s-muted">
                                     @if($nextAction)
                                         <div class="s-strong">{{ optional($nextAction->type)->name ?? 'Action' }}</div>
-                                        <div class="lead-meta">
-                                            {{ $nextAction->scheduled_at ? \Carbon\Carbon::parse($nextAction->scheduled_at)->format('Y-m-d H:i') : '—' }}
-                                        </div>
+                                        <div class="lead-meta">{{ $nextAction->scheduled_at ? \Carbon\Carbon::parse($nextAction->scheduled_at)->format('Y-m-d H:i') : '-' }}</div>
                                     @else
-                                        —
+                                        -
                                     @endif
                                 </td>
                                 <td class="s-muted">
                                     @if($lastComment)
                                         <div class="lead-clip">{{ $lastComment->comment }}</div>
-                                        <div class="lead-meta">
-                                            {{ $lastComment->created_at ? $lastComment->created_at->format('Y-m-d H:i') : '—' }}
-                                        </div>
+                                        <div class="lead-meta">{{ $lastComment->created_at ? $lastComment->created_at->format('Y-m-d H:i') : '-' }}</div>
                                     @else
-                                        —
+                                        -
                                     @endif
                                 </td>
-                                <td>
-                                    <a href="{{ route('crm.sales.leads.show', $l->id) }}" class="crm-btn crm-btn-ghost">Open</a>
-                                </td>
+                                <td><a href="{{ route('crm.sales.leads.show', $l->id) }}" class="crm-btn crm-btn-ghost">Open</a></td>
                             </tr>
                         @empty
-                            <tr>
-                                <td colspan="8"><div class="s-empty" style="margin:12px">No leads assigned yet.</div></td>
-                            </tr>
+                            <tr><td colspan="8"><div class="s-empty" style="margin:12px">No leads assigned yet.</div></td></tr>
                         @endforelse
                         </tbody>
                     </table>
@@ -435,7 +333,3 @@
     </div>
 </div>
 @endsection
-
-
-
-

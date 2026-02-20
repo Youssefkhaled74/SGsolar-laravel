@@ -356,8 +356,8 @@
 </head>
 <body>
     <button @click="toggleTheme()" class="theme-toggle" aria-label="Toggle theme" title="Toggle dark/light mode">
-        <span x-show="darkMode">ðŸŒ™</span>
-        <span x-show="!darkMode" x-cloak>â˜€ï¸</span>
+        <span x-show="darkMode">&#9790;</span>
+        <span x-show="!darkMode" x-cloak>&#9728;</span>
     </button>
     <div class="bg" aria-hidden="true"></div>
 
@@ -465,4 +465,6 @@
     </div>
 </body>
 </html>
+
+
 
