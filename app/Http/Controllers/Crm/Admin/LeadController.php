@@ -24,11 +24,29 @@ use App\Http\Requests\Crm\MarkFollowupDoneRequest;
 use App\Http\Requests\Crm\StoreLeadRequest;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\UploadedFile;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class LeadController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $filters = $request->validate([
+            'q' => ['nullable', 'string', 'max:255'],
+            'status_id' => ['nullable', 'integer', 'exists:lead_statuses,id'],
+            'source_id' => ['nullable', 'integer', 'exists:lead_sources,id'],
+            'assigned_to' => ['nullable', 'integer', 'exists:users,id'],
+            'assignment' => ['nullable', 'in:assigned,unassigned'],
+            'has_email' => ['nullable', 'in:yes,no'],
+            'has_message' => ['nullable', 'in:yes,no'],
+            'has_product' => ['nullable', 'in:yes,no'],
+            'created_from' => ['nullable', 'date'],
+            'created_to' => ['nullable', 'date'],
+            'next_action' => ['nullable', 'in:any,none,overdue,today,week'],
+            'sort_by' => ['nullable', 'in:newest,oldest,name_asc,name_desc,updated_desc,updated_asc'],
+            'per_page' => ['nullable', 'integer', 'in:15,25,50,100'],
+        ]);
+
         $q = Lead::with([
             'source',
             'status',
@@ -39,27 +57,128 @@ class LeadController extends Controller
         ]);
 
         // Filters
-        if ($search = request('q')) {
+        if ($search = trim((string)($filters['q'] ?? ''))) {
             $q->where(function($w) use ($search) {
                 $w->where('name', 'like', "%{$search}%")
                   ->orWhere('phone', 'like', "%{$search}%")
-                  ->orWhere('email', 'like', "%{$search}%");
+                  ->orWhere('email', 'like', "%{$search}%")
+                  ->orWhere('product_text', 'like', "%{$search}%");
             });
         }
 
-        if ($status = request('status_id')) {
+        if ($status = ($filters['status_id'] ?? null)) {
             $q->where('status_id', $status);
         }
 
-        if ($source = request('source_id')) {
+        if ($source = ($filters['source_id'] ?? null)) {
             $q->where('source_id', $source);
         }
 
-        if ($assigned = request('assigned_to')) {
+        if ($assigned = ($filters['assigned_to'] ?? null)) {
             $q->where('assigned_to', $assigned);
         }
 
-        $leads = $q->orderBy('created_at','desc')->paginate(15)->withQueryString();
+        if (($filters['assignment'] ?? null) === 'assigned') {
+            $q->whereNotNull('assigned_to');
+        }
+        if (($filters['assignment'] ?? null) === 'unassigned') {
+            $q->whereNull('assigned_to');
+        }
+
+        if (($filters['has_email'] ?? null) === 'yes') {
+            $q->whereNotNull('email')->where('email', '!=', '');
+        }
+        if (($filters['has_email'] ?? null) === 'no') {
+            $q->where(function ($w) {
+                $w->whereNull('email')->orWhere('email', '');
+            });
+        }
+
+        if (($filters['has_message'] ?? null) === 'yes') {
+            $q->whereNotNull('message')->where('message', '!=', '');
+        }
+        if (($filters['has_message'] ?? null) === 'no') {
+            $q->where(function ($w) {
+                $w->whereNull('message')->orWhere('message', '');
+            });
+        }
+
+        if (($filters['has_product'] ?? null) === 'yes') {
+            $q->whereNotNull('product_text')->where('product_text', '!=', '');
+        }
+        if (($filters['has_product'] ?? null) === 'no') {
+            $q->where(function ($w) {
+                $w->whereNull('product_text')->orWhere('product_text', '');
+            });
+        }
+
+        if (! empty($filters['created_from'])) {
+            $q->whereDate('created_at', '>=', Carbon::parse($filters['created_from'])->toDateString());
+        }
+        if (! empty($filters['created_to'])) {
+            $q->whereDate('created_at', '<=', Carbon::parse($filters['created_to'])->toDateString());
+        }
+
+        $today = now()->startOfDay();
+        $weekEnd = now()->addDays(7)->endOfDay();
+        $nextAction = $filters['next_action'] ?? null;
+        if ($nextAction === 'any') {
+            $q->whereExists(function ($sub) {
+                $sub->select(DB::raw(1))
+                    ->from('lead_actions')
+                    ->whereColumn('lead_actions.lead_id', 'leads.id')
+                    ->whereNotNull('lead_actions.scheduled_at');
+            });
+        } elseif ($nextAction === 'none') {
+            $q->whereNotExists(function ($sub) {
+                $sub->select(DB::raw(1))
+                    ->from('lead_actions')
+                    ->whereColumn('lead_actions.lead_id', 'leads.id')
+                    ->whereNotNull('lead_actions.scheduled_at');
+            });
+        } elseif ($nextAction === 'overdue') {
+            $q->whereExists(function ($sub) {
+                $sub->select(DB::raw(1))
+                    ->from('lead_actions')
+                    ->whereColumn('lead_actions.lead_id', 'leads.id')
+                    ->whereNotNull('lead_actions.scheduled_at')
+                    ->where('lead_actions.scheduled_at', '<', now());
+            });
+        } elseif ($nextAction === 'today') {
+            $q->whereExists(function ($sub) use ($today) {
+                $sub->select(DB::raw(1))
+                    ->from('lead_actions')
+                    ->whereColumn('lead_actions.lead_id', 'leads.id')
+                    ->whereNotNull('lead_actions.scheduled_at')
+                    ->whereBetween('lead_actions.scheduled_at', [$today, now()->endOfDay()]);
+            });
+        } elseif ($nextAction === 'week') {
+            $q->whereExists(function ($sub) use ($today, $weekEnd) {
+                $sub->select(DB::raw(1))
+                    ->from('lead_actions')
+                    ->whereColumn('lead_actions.lead_id', 'leads.id')
+                    ->whereNotNull('lead_actions.scheduled_at')
+                    ->whereBetween('lead_actions.scheduled_at', [$today, $weekEnd]);
+            });
+        }
+
+        $sortBy = $filters['sort_by'] ?? 'newest';
+        if ($sortBy === 'oldest') {
+            $q->orderBy('created_at', 'asc');
+        } elseif ($sortBy === 'name_asc') {
+            $q->orderBy('name', 'asc');
+        } elseif ($sortBy === 'name_desc') {
+            $q->orderBy('name', 'desc');
+        } elseif ($sortBy === 'updated_asc') {
+            $q->orderBy('updated_at', 'asc');
+        } elseif ($sortBy === 'updated_desc') {
+            $q->orderBy('updated_at', 'desc');
+        } else {
+            $q->orderBy('created_at', 'desc');
+        }
+
+        $perPage = (int)($filters['per_page'] ?? 15);
+        $leads = $q->paginate($perPage)->withQueryString();
 
         $statuses = LeadStatus::orderBy('sort_order')->get();
         $sources = LeadSource::orderBy('name')->get();

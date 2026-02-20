@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             \Database\Seeders\LeadStatusesSeeder::class,
             \Database\Seeders\ActionTypesSeeder::class,
             \Database\Seeders\CrmDemoSeeder::class,
+            \Database\Seeders\SingleSalesUserSeeder::class,
         ]);
     }
 }

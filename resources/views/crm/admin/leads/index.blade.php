@@ -285,7 +285,7 @@
 
 <div
     class="leads-shell"
-    x-data="{ openFilters:false }"
+    x-data="{ openFilters: {{ request()->hasAny(['q','status_id','source_id','assigned_to','assignment','has_email','has_message','has_product','created_from','created_to','next_action','sort_by','per_page']) ? 'true' : 'false' }} }"
 >
     <div class="leads-bg" aria-hidden="true"></div>
 
@@ -297,11 +297,21 @@
             </div>
 
             <div class="muted" style="font-weight:800;font-size:12px">
-                Tip: Use filters then click “Apply”.
+                Tip: use filters, then click Apply.
             </div>
         </div>
 
         {{-- Toolbar --}}
+        @php
+            $activeFilterKeys = ['q','status_id','source_id','assigned_to','assignment','has_email','has_message','has_product','created_from','created_to','next_action','sort_by','per_page'];
+            $activeFilterCount = 0;
+            foreach ($activeFilterKeys as $k) {
+                $val = request($k);
+                if ($val !== null && $val !== '') {
+                    $activeFilterCount++;
+                }
+            }
+        @endphp
         <div class="toolbar">
             {{-- Search (keeps filters by sending them as hidden inputs) --}}
             <div class="left">
@@ -309,12 +319,21 @@
                     <input type="hidden" name="status_id" value="{{ request('status_id') }}">
                     <input type="hidden" name="source_id" value="{{ request('source_id') }}">
                     <input type="hidden" name="assigned_to" value="{{ request('assigned_to') }}">
+                    <input type="hidden" name="assignment" value="{{ request('assignment') }}">
+                    <input type="hidden" name="has_email" value="{{ request('has_email') }}">
+                    <input type="hidden" name="has_message" value="{{ request('has_message') }}">
+                    <input type="hidden" name="has_product" value="{{ request('has_product') }}">
+                    <input type="hidden" name="created_from" value="{{ request('created_from') }}">
+                    <input type="hidden" name="created_to" value="{{ request('created_to') }}">
+                    <input type="hidden" name="next_action" value="{{ request('next_action') }}">
+                    <input type="hidden" name="sort_by" value="{{ request('sort_by') }}">
+                    <input type="hidden" name="per_page" value="{{ request('per_page', 15) }}">
 
                     <input
                         name="q"
                         value="{{ request('q') }}"
                         class="dark-input"
-                        placeholder="Search by name, phone, or email…"
+                        placeholder="Search by name, phone, email, or product"
                     />
                 </form>
             </div>
@@ -326,19 +345,22 @@
                         <path d="M4 6h16M7 12h10M10 18h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                     </svg>
                     Filters
+                    @if($activeFilterCount > 0)
+                        <span class="badge" style="padding:2px 8px; font-size:11px">{{ $activeFilterCount }}</span>
+                    @endif
                     <span style="opacity:.75;font-weight:900" x-text="openFilters ? '▲' : '▼'"></span>
                 </button>
 
-                @if(request()->hasAny(['q','status_id','source_id','assigned_to']))
+                @if(request()->hasAny($activeFilterKeys))
                     <a href="{{ route('crm.admin.leads.index') }}" class="crm-btn crm-btn-ghost">Reset</a>
                 @endif
             </div>
 
             {{-- Active filter chips --}}
-            @if(request()->hasAny(['q','status_id','source_id','assigned_to']))
+            @if(request()->hasAny($activeFilterKeys))
                 <div class="chips" style="flex-basis:100%">
                     @if(request('q'))
-                        <span class="chip"><span class="dot"></span> Search: “{{ request('q') }}”</span>
+                        <span class="chip"><span class="dot"></span> Search: "{{ request('q') }}"</span>
                     @endif
                     @if(request('status_id'))
                         <span class="chip">
@@ -361,6 +383,45 @@
                             {{ optional($sales->firstWhere('id', (int)request('assigned_to')))->name }}
                         </span>
                     @endif
+                    @if(request('assignment') === 'assigned')
+                        <span class="chip"><span class="dot"></span> Only assigned leads</span>
+                    @endif
+                    @if(request('assignment') === 'unassigned')
+                        <span class="chip"><span class="dot"></span> Only unassigned leads</span>
+                    @endif
+                    @if(request('has_email') === 'yes')
+                        <span class="chip"><span class="dot"></span> Has email</span>
+                    @endif
+                    @if(request('has_email') === 'no')
+                        <span class="chip"><span class="dot"></span> No email</span>
+                    @endif
+                    @if(request('has_message') === 'yes')
+                        <span class="chip"><span class="dot"></span> Has message</span>
+                    @endif
+                    @if(request('has_message') === 'no')
+                        <span class="chip"><span class="dot"></span> No message</span>
+                    @endif
+                    @if(request('has_product') === 'yes')
+                        <span class="chip"><span class="dot"></span> Has product text</span>
+                    @endif
+                    @if(request('has_product') === 'no')
+                        <span class="chip"><span class="dot"></span> No product text</span>
+                    @endif
+                    @if(request('created_from'))
+                        <span class="chip"><span class="dot"></span> From: {{ request('created_from') }}</span>
+                    @endif
+                    @if(request('created_to'))
+                        <span class="chip"><span class="dot"></span> To: {{ request('created_to') }}</span>
+                    @endif
+                    @if(request('next_action'))
+                        <span class="chip"><span class="dot"></span> Next action: {{ ucfirst(request('next_action')) }}</span>
+                    @endif
+                    @if(request('sort_by'))
+                        <span class="chip"><span class="dot"></span> Sort: {{ str_replace('_', ' ', request('sort_by')) }}</span>
+                    @endif
+                    @if(request('per_page'))
+                        <span class="chip"><span class="dot"></span> Per page: {{ request('per_page') }}</span>
+                    @endif
                 </div>
             @endif
         </div>
@@ -370,7 +431,7 @@
             <div class="panel-head">
                 <div>
                     <div class="panel-title">Refine Leads</div>
-                    <div class="panel-sub">Choose filters then click Apply.</div>
+                    <div class="panel-sub">Choose what you need, then click Apply.</div>
                 </div>
                 <button type="button" class="crm-btn crm-btn-ghost" @click="openFilters=false">Close</button>
             </div>
@@ -413,6 +474,86 @@
                                         {{ $s->name }}
                                     </option>
                                 @endforeach
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label>Assignment state</label>
+                            <select name="assignment" class="dark-select">
+                                <option value="">All</option>
+                                <option value="assigned" {{ request('assignment') === 'assigned' ? 'selected' : '' }}>Assigned only</option>
+                                <option value="unassigned" {{ request('assignment') === 'unassigned' ? 'selected' : '' }}>Unassigned only</option>
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label>Email</label>
+                            <select name="has_email" class="dark-select">
+                                <option value="">Any</option>
+                                <option value="yes" {{ request('has_email') === 'yes' ? 'selected' : '' }}>Has email</option>
+                                <option value="no" {{ request('has_email') === 'no' ? 'selected' : '' }}>No email</option>
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label>Message</label>
+                            <select name="has_message" class="dark-select">
+                                <option value="">Any</option>
+                                <option value="yes" {{ request('has_message') === 'yes' ? 'selected' : '' }}>Has message</option>
+                                <option value="no" {{ request('has_message') === 'no' ? 'selected' : '' }}>No message</option>
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label>Product text</label>
+                            <select name="has_product" class="dark-select">
+                                <option value="">Any</option>
+                                <option value="yes" {{ request('has_product') === 'yes' ? 'selected' : '' }}>Has product text</option>
+                                <option value="no" {{ request('has_product') === 'no' ? 'selected' : '' }}>No product text</option>
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label>Created from</label>
+                            <input type="date" name="created_from" value="{{ request('created_from') }}" class="dark-input">
+                        </div>
+
+                        <div class="field">
+                            <label>Created to</label>
+                            <input type="date" name="created_to" value="{{ request('created_to') }}" class="dark-input">
+                        </div>
+
+                        <div class="field">
+                            <label>Next action</label>
+                            <select name="next_action" class="dark-select">
+                                <option value="">Any</option>
+                                <option value="any" {{ request('next_action') === 'any' ? 'selected' : '' }}>Has scheduled action</option>
+                                <option value="none" {{ request('next_action') === 'none' ? 'selected' : '' }}>No scheduled action</option>
+                                <option value="overdue" {{ request('next_action') === 'overdue' ? 'selected' : '' }}>Overdue</option>
+                                <option value="today" {{ request('next_action') === 'today' ? 'selected' : '' }}>Today</option>
+                                <option value="week" {{ request('next_action') === 'week' ? 'selected' : '' }}>Next 7 days</option>
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label>Sort by</label>
+                            <select name="sort_by" class="dark-select">
+                                <option value="newest" {{ request('sort_by', 'newest') === 'newest' ? 'selected' : '' }}>Newest first</option>
+                                <option value="oldest" {{ request('sort_by') === 'oldest' ? 'selected' : '' }}>Oldest first</option>
+                                <option value="name_asc" {{ request('sort_by') === 'name_asc' ? 'selected' : '' }}>Name A-Z</option>
+                                <option value="name_desc" {{ request('sort_by') === 'name_desc' ? 'selected' : '' }}>Name Z-A</option>
+                                <option value="updated_desc" {{ request('sort_by') === 'updated_desc' ? 'selected' : '' }}>Recently updated</option>
+                                <option value="updated_asc" {{ request('sort_by') === 'updated_asc' ? 'selected' : '' }}>Least recently updated</option>
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label>Rows per page</label>
+                            <select name="per_page" class="dark-select">
+                                <option value="15" {{ (int)request('per_page', 15) === 15 ? 'selected' : '' }}>15</option>
+                                <option value="25" {{ (int)request('per_page') === 25 ? 'selected' : '' }}>25</option>
+                                <option value="50" {{ (int)request('per_page') === 50 ? 'selected' : '' }}>50</option>
+                                <option value="100" {{ (int)request('per_page') === 100 ? 'selected' : '' }}>100</option>
                             </select>
                         </div>
                     </div>
