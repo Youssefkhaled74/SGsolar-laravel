@@ -4,10 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Schema;
 
 class LeadFollowUp extends Model
 {
     use HasFactory;
+
+    protected static ?string $resolvedTable = null;
 
     protected $fillable = [
         'lead_id',
@@ -19,6 +22,29 @@ class LeadFollowUp extends Model
         'completed',
         'completed_at',
     ];
+
+    protected static function resolveTableName(): string
+    {
+        if (static::$resolvedTable) {
+            return static::$resolvedTable;
+        }
+
+        if (Schema::hasTable('lead_follow_ups')) {
+            static::$resolvedTable = 'lead_follow_ups';
+        } elseif (Schema::hasTable('lead_followups')) {
+            static::$resolvedTable = 'lead_followups';
+        } else {
+            // Fallback keeps default Laravel naming if neither exists yet.
+            static::$resolvedTable = 'lead_follow_ups';
+        }
+
+        return static::$resolvedTable;
+    }
+
+    public function getTable()
+    {
+        return static::resolveTableName();
+    }
 
     public function lead()
     {

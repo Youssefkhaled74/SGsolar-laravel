@@ -49,7 +49,7 @@
                     name="q"
                     value="{{ $q }}"
                     class="s-input"
-                    placeholder="Search leads…"
+                    placeholder="Search leads..."
                     style="flex:1;min-width:240px"
                 />
                 <button class="crm-btn crm-btn-primary">Search</button>
@@ -85,10 +85,10 @@
                         @forelse($leads as $lead)
                             <tr>
                                 <td class="s-strong">{{ $lead->name }}</td>
-                                <td>{{ $lead->phone ?? '—' }}</td>
-                                <td class="s-muted">{{ optional($lead->source)->name ?? '—' }}</td>
-                                <td class="s-muted">{{ optional($lead->status)->name ?? '—' }}</td>
-                                <td class="s-muted">{{ $lead->created_at ? $lead->created_at->format('Y-m-d') : '—' }}</td>
+                                <td>{{ $lead->phone ?? '-' }}</td>
+                                <td class="s-muted">{{ optional($lead->source)->name ?? '-' }}</td>
+                                <td class="s-muted">{{ optional($lead->status)->name ?? '-' }}</td>
+                                <td class="s-muted">{{ $lead->created_at ? $lead->created_at->format('Y-m-d') : '-' }}</td>
                                 <td>
                                     <a href="{{ route('crm.sales.leads.show',$lead->id) }}" class="crm-btn crm-btn-ghost">Open</a>
                                 </td>
@@ -113,3 +113,4 @@
     </div>
 </div>
 @endsection
+

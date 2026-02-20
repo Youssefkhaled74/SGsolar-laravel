@@ -589,7 +589,7 @@
                         @csrf
                         <input type="file" name="file" accept=".csv" class="dark-input" style="padding:8px;flex:1;min-width:260px" />
                         <div style="display:flex;gap:8px;flex-wrap:wrap">
-                            <a href="{{ asset('crm/templates/lead_import_template.csv') }}" class="crm-btn crm-btn-ghost" download>Download template</a>
+                            <a href="{{ asset('templates/lead_import_template.csv') }}" class="crm-btn crm-btn-ghost" download>Download template</a>
                             <button class="crm-btn crm-btn-primary">Import CSV</button>
                         </div>
                     </form>

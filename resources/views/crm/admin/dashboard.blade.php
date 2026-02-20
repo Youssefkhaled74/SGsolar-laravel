@@ -1,7 +1,7 @@
 @extends('crm.layouts.admin')
 
-@section('title', 'Admin Dashboard')
-@section('subtitle', 'Overview and quick actions')
+@section('title', __('crm_admin.dashboard.title'))
+@section('subtitle', __('crm_admin.dashboard.subtitle'))
 
 @section('content')
     <style>
@@ -267,16 +267,16 @@
             {{-- Page header inside dashboard --}}
             <div class="dash-head">
                 <div class="left">
-                    <h3>Welcome back</h3>
-                    <p>Quick overview of leads, assignments, and today’s followups.</p>
+                    <h3>{{ __('crm_admin.dashboard.welcome') }}</h3>
+                    <p>{{ __('crm_admin.dashboard.welcome_sub') }}</p>
                     <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap">
-                        <span class="pill y"><span class="dot"></span>Live overview</span>
-                        <span class="pill g"><span class="dot"></span>Admin area</span>
+                        <span class="pill y"><span class="dot"></span>{{ __('crm_admin.dashboard.pill_live') }}</span>
+                        <span class="pill g"><span class="dot"></span>{{ __('crm_admin.dashboard.pill_admin') }}</span>
                     </div>
                 </div>
                 <div class="actions">
-                    <a href="{{ route('crm.admin.leads.index') }}" class="crm-btn crm-btn-primary">Manage Leads</a>
-                    <a href="{{ route('crm.admin.users.index') }}" class="crm-btn crm-btn-ghost">Manage Users</a>
+                    <a href="{{ route('crm.admin.leads.index') }}" class="crm-btn crm-btn-primary">{{ __('crm_admin.dashboard.manage_leads') }}</a>
+                    <a href="{{ route('crm.admin.users.index') }}" class="crm-btn crm-btn-ghost">{{ __('crm_admin.dashboard.manage_users') }}</a>
                 </div>
             </div>
 
@@ -284,7 +284,7 @@
             <div class="kpi-grid">
                 <div class="kpi-card">
                     <div class="kpi-top">
-                        <h3 class="kpi-title">Total Leads</h3>
+                        <h3 class="kpi-title">{{ __('crm_admin.dashboard.kpi_total') }}</h3>
                         <div class="kpi-icon" aria-hidden="true">
                             <svg viewBox="0 0 24 24" fill="none">
                                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
@@ -293,12 +293,12 @@
                         </div>
                     </div>
                     <div class="kpi-value">{{ number_format($totalLeads ?? 0) }}</div>
-                    <div class="kpi-meta">Trend: —</div>
+                    <div class="kpi-meta">{{ __('crm_admin.dashboard.kpi_total_meta') }}</div>
                 </div>
 
                 <div class="kpi-card">
                     <div class="kpi-top">
-                        <h3 class="kpi-title">New Leads</h3>
+                        <h3 class="kpi-title">{{ __('crm_admin.dashboard.kpi_new') }}</h3>
                         <div class="kpi-icon" aria-hidden="true">
                             <svg viewBox="0 0 24 24" fill="none">
                                 <path d="M12 5v14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
@@ -307,12 +307,12 @@
                         </div>
                     </div>
                     <div class="kpi-value">{{ number_format($newLeads ?? 0) }}</div>
-                    <div class="kpi-meta">(last 7 days)</div>
+                    <div class="kpi-meta">{{ __('crm_admin.dashboard.kpi_new_meta') }}</div>
                 </div>
 
                 <div class="kpi-card">
                     <div class="kpi-top">
-                        <h3 class="kpi-title">Unassigned Leads</h3>
+                        <h3 class="kpi-title">{{ __('crm_admin.dashboard.kpi_unassigned') }}</h3>
                         <div class="kpi-icon" aria-hidden="true">
                             <svg viewBox="0 0 24 24" fill="none">
                                 <path d="M16 16l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
@@ -323,12 +323,12 @@
                         </div>
                     </div>
                     <div class="kpi-value">{{ number_format($unassigned ?? 0) }}</div>
-                    <div class="kpi-meta">Need assignment</div>
+                    <div class="kpi-meta">{{ __('crm_admin.dashboard.kpi_unassigned_meta') }}</div>
                 </div>
 
                 <div class="kpi-card">
                     <div class="kpi-top">
-                        <h3 class="kpi-title">Followups Today</h3>
+                        <h3 class="kpi-title">{{ __('crm_admin.dashboard.kpi_followups') }}</h3>
                         <div class="kpi-icon" aria-hidden="true">
                             <svg viewBox="0 0 24 24" fill="none">
                                 <path d="M8 2v3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
@@ -340,7 +340,7 @@
                         </div>
                     </div>
                     <div class="kpi-value">{{ number_format($followupsToday ?? 0) }}</div>
-                    <div class="kpi-meta">Due by end of day</div>
+                    <div class="kpi-meta">{{ __('crm_admin.dashboard.kpi_followups_meta') }}</div>
                 </div>
             </div>
 
@@ -349,27 +349,24 @@
                 <section class="panel">
                     <div class="panel-head">
                         <div>
-                            <h3 class="panel-title">Quick Links</h3>
-                            <div class="panel-sub">Jump to the most used CRM sections.</div>
+                            <h3 class="panel-title">{{ __('crm_admin.dashboard.quick_links') }}</h3>
+                            <div class="panel-sub">{{ __('crm_admin.dashboard.quick_links_sub') }}</div>
                         </div>
                     </div>
 
                     <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px">
-                        <a href="{{ route('crm.admin.leads.index') }}" class="crm-btn crm-btn-primary">Leads</a>
-                        <a href="{{ route('crm.admin.users.index') }}" class="crm-btn crm-btn-ghost">Users</a>
+                        <a href="{{ route('crm.admin.leads.index') }}" class="crm-btn crm-btn-primary">{{ __('crm_admin.layout.nav_leads') }}</a>
+                        <a href="{{ route('crm.admin.users.index') }}" class="crm-btn crm-btn-ghost">{{ __('crm_admin.layout.nav_users') }}</a>
                     </div>
 
-                    <div class="empty">
-                        Tip: Use <strong>Leads</strong> to assign users, update statuses, and manage followups.
-                        Use <strong>Users</strong> to create and manage the sales team accounts.
-                    </div>
+                    <div class="empty">{{ __('crm_admin.dashboard.tip_body') }}</div>
                 </section>
 
                 <section class="panel">
                     <div class="panel-head">
                         <div>
-                            <h3 class="panel-title">Recent Activity</h3>
-                            <div class="panel-sub">Latest actions performed in the CRM.</div>
+                            <h3 class="panel-title">{{ __('crm_admin.dashboard.recent_activity') }}</h3>
+                            <div class="panel-sub">{{ __('crm_admin.dashboard.recent_activity_sub') }}</div>
                         </div>
                     </div>
 
@@ -377,22 +374,22 @@
                         <table class="dash-table">
                             <thead>
                             <tr>
-                                <th>Time</th>
-                                <th>Actor</th>
-                                <th>Action</th>
-                                <th>Target</th>
+                                <th>{{ __('crm_admin.dashboard.table_time') }}</th>
+                                <th>{{ __('crm_admin.dashboard.table_actor') }}</th>
+                                <th>{{ __('crm_admin.dashboard.table_action') }}</th>
+                                <th>{{ __('crm_admin.dashboard.table_target') }}</th>
                             </tr>
                             </thead>
                             <tbody>
                             @forelse($activities as $act)
                                 <tr>
-                                    <td>{{ optional($act->time)->format('Y-m-d H:i') ?? '—' }}</td>
-                                    <td>{{ $act->actor ?? '—' }}</td>
-                                    <td>{{ $act->action ?? '—' }}</td>
-                                    <td>{{ $act->target ?? '—' }}</td>
+                                    <td>{{ optional($act->time)->format('Y-m-d H:i') ?? __('crm_admin.dashboard.none') }}</td>
+                                    <td>{{ $act->actor ?? __('crm_admin.dashboard.none') }}</td>
+                                    <td>{{ $act->action ?? __('crm_admin.dashboard.none') }}</td>
+                                    <td>{{ $act->target ?? __('crm_admin.dashboard.none') }}</td>
                                 </tr>
                             @empty
-                                <tr><td colspan="4">No recent activity</td></tr>
+                                <tr><td colspan="4">{{ __('crm_admin.dashboard.no_activity') }}</td></tr>
                             @endforelse
                             </tbody>
                         </table>

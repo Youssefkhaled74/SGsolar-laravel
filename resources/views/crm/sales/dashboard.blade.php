@@ -1,6 +1,6 @@
 @extends('crm.layouts.sales')
 
-@section('title', 'Sales Dashboard')
+@section('title', __('crm_sales.dashboard.title'))
 
 @section('content')
 <style>
@@ -9,7 +9,6 @@
     :root{
         --brand-yellow: {{ config('website.primary_color', '#FFDF41') }};
         --brand-orange: {{ config('website.secondary_color', '#E3A000') }};
-        --brand-light: {{ config('website.light_green', '#8CC63F') }};
     }
 
     .dark {
@@ -90,6 +89,7 @@
     .s-table thead th{text-align:left;font-size:12px;font-weight:900;color:var(--s-muted);padding:12px;background:var(--s-table-head-bg);border-bottom:1px solid var(--s-table-border);white-space:nowrap}
     .s-table td{padding:12px;color:var(--s-text);font-weight:800;border-bottom:1px solid var(--s-table-border);background:var(--s-table-row-bg);vertical-align:top}
     .s-table tbody tr:hover td{background:var(--s-table-row-hover)}
+    [dir="rtl"] .s-table thead th{ text-align:right }
 
     .s-empty{padding:14px;border-radius:14px;border:1px dashed var(--s-empty-border);background:var(--s-empty-bg);color:var(--s-muted);font-weight:800;line-height:1.55;text-align:center}
     .s-muted{color: var(--s-muted)!important}
@@ -125,37 +125,37 @@
     <div class="s-wrap">
         <div class="s-head">
             <div>
-                <h3>Welcome back</h3>
-                <p>Quick operational view: today workload, risk items, and pipeline health.</p>
+                <h3>{{ __('crm_sales.dashboard.welcome') }}</h3>
+                <p>{{ __('crm_sales.dashboard.overview') }}</p>
                 <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap">
-                    <span class="s-pill g"><span class="dot"></span>Sales area</span>
-                    <span class="s-pill y"><span class="dot"></span>Live overview</span>
+                    <span class="s-pill g"><span class="dot"></span>{{ __('crm_sales.dashboard.pill_sales') }}</span>
+                    <span class="s-pill y"><span class="dot"></span>{{ __('crm_sales.dashboard.pill_live') }}</span>
                     @if($overdueFollowupsCount > 0)
-                        <span class="s-pill r"><span class="dot"></span>{{ $overdueFollowupsCount }} overdue followups</span>
+                        <span class="s-pill r"><span class="dot"></span>{{ __('crm_sales.dashboard.pill_overdue', ['count' => $overdueFollowupsCount]) }}</span>
                     @endif
                 </div>
             </div>
             <div class="s-actions">
-                <a href="{{ route('crm.sales.leads.create') }}" class="crm-btn crm-btn-ghost">Add Lead</a>
-                <a href="{{ route('crm.sales.leads.index') }}" class="crm-btn crm-btn-primary">My Leads</a>
-                <a href="{{ route('crm.sales.followups.index') }}" class="crm-btn crm-btn-ghost">Followups</a>
+                <a href="{{ route('crm.sales.leads.create') }}" class="crm-btn crm-btn-ghost">{{ __('crm_sales.dashboard.add_lead') }}</a>
+                <a href="{{ route('crm.sales.leads.index') }}" class="crm-btn crm-btn-primary">{{ __('crm_sales.dashboard.my_leads') }}</a>
+                <a href="{{ route('crm.sales.followups.index') }}" class="crm-btn crm-btn-ghost">{{ __('crm_sales.dashboard.followups') }}</a>
             </div>
         </div>
 
         <div class="s-kpi-grid">
-            <div class="s-kpi"><div class="t">My Leads</div><div class="v">{{ number_format($myLeadsCount) }}</div><div class="m">Assigned to you</div></div>
-            <div class="s-kpi"><div class="t">Followups Today</div><div class="v">{{ number_format($followupsTodayCount) }}</div><div class="m">Due today</div></div>
-            <div class="s-kpi"><div class="t">Overdue Followups</div><div class="v" style="{{ $overdueFollowupsCount > 0 ? 'color:var(--s-danger)' : '' }}">{{ number_format($overdueFollowupsCount) }}</div><div class="m">Need action now</div></div>
-            <div class="s-kpi"><div class="t">Upcoming (7 Days)</div><div class="v">{{ number_format($upcomingWeekFollowupsCount) }}</div><div class="m">Planned tasks</div></div>
-            <div class="s-kpi"><div class="t">Completed Today</div><div class="v">{{ number_format($completedTodayCount) }}</div><div class="m">Closed followups</div></div>
-            <div class="s-kpi"><div class="t">New This Week</div><div class="v">{{ number_format($newLeadsThisWeekCount) }}</div><div class="m">Recently assigned</div></div>
+            <div class="s-kpi"><div class="t">{{ __('crm_sales.dashboard.kpi_my_leads') }}</div><div class="v">{{ number_format($myLeadsCount) }}</div><div class="m">{{ __('crm_sales.dashboard.kpi_my_leads_hint') }}</div></div>
+            <div class="s-kpi"><div class="t">{{ __('crm_sales.dashboard.kpi_today') }}</div><div class="v">{{ number_format($followupsTodayCount) }}</div><div class="m">{{ __('crm_sales.dashboard.kpi_today_hint') }}</div></div>
+            <div class="s-kpi"><div class="t">{{ __('crm_sales.dashboard.kpi_overdue') }}</div><div class="v" style="{{ $overdueFollowupsCount > 0 ? 'color:var(--s-danger)' : '' }}">{{ number_format($overdueFollowupsCount) }}</div><div class="m">{{ __('crm_sales.dashboard.kpi_overdue_hint') }}</div></div>
+            <div class="s-kpi"><div class="t">{{ __('crm_sales.dashboard.kpi_week') }}</div><div class="v">{{ number_format($upcomingWeekFollowupsCount) }}</div><div class="m">{{ __('crm_sales.dashboard.kpi_week_hint') }}</div></div>
+            <div class="s-kpi"><div class="t">{{ __('crm_sales.dashboard.kpi_completed') }}</div><div class="v">{{ number_format($completedTodayCount) }}</div><div class="m">{{ __('crm_sales.dashboard.kpi_completed_hint') }}</div></div>
+            <div class="s-kpi"><div class="t">{{ __('crm_sales.dashboard.kpi_new_week') }}</div><div class="v">{{ number_format($newLeadsThisWeekCount) }}</div><div class="m">{{ __('crm_sales.dashboard.kpi_new_week_hint') }}</div></div>
         </div>
 
         <div style="display:grid;grid-template-columns:1fr;gap:14px;margin-top:14px">
             <section class="s-card">
                 <div class="s-card-head">
-                    <div><h3 class="s-card-title">Priority Queue</h3><div class="s-card-sub">Overdue first, then today's followups.</div></div>
-                    <a href="{{ route('crm.sales.followups.index') }}" class="crm-btn crm-btn-ghost">Open followups</a>
+                    <div><h3 class="s-card-title">{{ __('crm_sales.dashboard.priority_title') }}</h3><div class="s-card-sub">{{ __('crm_sales.dashboard.priority_subtitle') }}</div></div>
+                    <a href="{{ route('crm.sales.followups.index') }}" class="crm-btn crm-btn-ghost">{{ __('crm_sales.dashboard.open_followups') }}</a>
                 </div>
 
                 @if($priorityFollowups->count())
@@ -163,36 +163,36 @@
                         @foreach($priorityFollowups as $f)
                             @php
                                 $when = $f->scheduled_at ? \Carbon\Carbon::parse($f->scheduled_at) : null;
-                                $isOverdue = $when && $when->lt(now()->startOfDay()) && !$f->completed;
+                                $isOverdue = $when && $when->lt(now()->startOfDay()) && ! $f->completed;
                             @endphp
                             <div class="s-inner-card" style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center">
                                 <div>
-                                    <div class="s-strong">{{ optional($f->lead)->name ?? 'Lead' }}</div>
-                                    <div class="lead-meta">{{ $f->note ?: 'No note' }}</div>
+                                    <div class="s-strong">{{ optional($f->lead)->name ?? __('crm_sales.dashboard.unspecified') }}</div>
+                                    <div class="lead-meta">{{ $f->note ?: __('crm_sales.dashboard.no_note') }}</div>
                                 </div>
                                 <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-                                    <span class="s-pill {{ $isOverdue ? 'r' : 'y' }}"><span class="dot"></span>{{ $isOverdue ? 'Overdue' : 'Today' }}</span>
-                                    <span class="s-pill g"><span class="dot"></span>{{ $when ? $when->format('Y-m-d H:i') : '-' }}</span>
+                                    <span class="s-pill {{ $isOverdue ? 'r' : 'y' }}"><span class="dot"></span>{{ $isOverdue ? __('crm_sales.dashboard.priority_overdue') : __('crm_sales.dashboard.priority_today') }}</span>
+                                    <span class="s-pill g"><span class="dot"></span>{{ $when ? $when->translatedFormat('Y-m-d H:i') : __('crm_sales.dashboard.none') }}</span>
                                     @if(optional($f->lead)->id)
-                                        <a href="{{ route('crm.sales.leads.show', optional($f->lead)->id) }}" class="crm-btn crm-btn-ghost">Open</a>
+                                        <a href="{{ route('crm.sales.leads.show', optional($f->lead)->id) }}" class="crm-btn crm-btn-ghost">{{ __('crm_sales.dashboard.open') }}</a>
                                     @endif
                                 </div>
                             </div>
                         @endforeach
                     </div>
                 @else
-                    <div class="s-empty">No urgent or today followups right now.</div>
+                    <div class="s-empty">{{ __('crm_sales.dashboard.priority_empty') }}</div>
                 @endif
             </section>
 
             <section class="s-card">
                 <div class="s-card-head">
-                    <div><h3 class="s-card-title">Pipeline Snapshot</h3><div class="s-card-sub">Status mix and leads needing next-step planning.</div></div>
+                    <div><h3 class="s-card-title">{{ __('crm_sales.dashboard.pipeline_title') }}</h3><div class="s-card-sub">{{ __('crm_sales.dashboard.pipeline_subtitle') }}</div></div>
                 </div>
 
                 <div style="display:grid;grid-template-columns:1fr;gap:10px">
                     <div class="s-inner-card">
-                        <div class="s-card-sub" style="margin-bottom:8px">Status Mix</div>
+                        <div class="s-card-sub" style="margin-bottom:8px">{{ __('crm_sales.dashboard.status_mix') }}</div>
                         @if($statusBreakdown->count())
                             <div style="display:flex;flex-wrap:wrap;gap:8px">
                                 @foreach($statusBreakdown as $row)
@@ -200,29 +200,29 @@
                                 @endforeach
                             </div>
                         @else
-                            <div class="s-empty">No status data yet.</div>
+                            <div class="s-empty">{{ __('crm_sales.dashboard.no_status_data') }}</div>
                         @endif
                     </div>
 
                     <div class="s-inner-card">
-                        <div class="s-card-sub" style="margin-bottom:8px">Risk Metrics</div>
+                        <div class="s-card-sub" style="margin-bottom:8px">{{ __('crm_sales.dashboard.risk_metrics') }}</div>
                         <div style="display:flex;gap:8px;flex-wrap:wrap">
-                            <span class="s-pill r"><span class="dot"></span>No next action: {{ number_format($leadsWithoutNextActionCount) }}</span>
-                            <span class="s-pill r"><span class="dot"></span>Stale 7+ days: {{ number_format($staleLeadsCount) }}</span>
+                            <span class="s-pill r"><span class="dot"></span>{{ __('crm_sales.dashboard.risk_no_next', ['count' => number_format($leadsWithoutNextActionCount)]) }}</span>
+                            <span class="s-pill r"><span class="dot"></span>{{ __('crm_sales.dashboard.risk_stale', ['count' => number_format($staleLeadsCount)]) }}</span>
                         </div>
                     </div>
 
                     @if($attentionLeads->count())
                         <div class="s-inner-card">
-                            <div class="s-card-sub" style="margin-bottom:8px">Leads Missing Next Action</div>
+                            <div class="s-card-sub" style="margin-bottom:8px">{{ __('crm_sales.dashboard.missing_next_title') }}</div>
                             <div style="display:grid;grid-template-columns:1fr;gap:8px">
                                 @foreach($attentionLeads as $lead)
                                     <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center">
                                         <div>
                                             <div class="s-strong">{{ $lead->name }}</div>
-                                            <div class="lead-meta">{{ optional($lead->status)->name ?? 'Unspecified' }} | {{ optional($lead->source)->name ?? 'Unknown source' }}</div>
+                                            <div class="lead-meta">{{ optional($lead->status)->name ?? __('crm_sales.dashboard.unspecified') }} | {{ optional($lead->source)->name ?? __('crm_sales.dashboard.unknown_source') }}</div>
                                         </div>
-                                        <a href="{{ route('crm.sales.leads.show', $lead->id) }}" class="crm-btn crm-btn-ghost">Plan next step</a>
+                                        <a href="{{ route('crm.sales.leads.show', $lead->id) }}" class="crm-btn crm-btn-ghost">{{ __('crm_sales.dashboard.plan_next') }}</a>
                                     </div>
                                 @endforeach
                             </div>
@@ -233,8 +233,8 @@
 
             <section class="s-card">
                 <div class="s-card-head">
-                    <div><h3 class="s-card-title">Today Followups</h3><div class="s-card-sub">Today's scheduled tasks only.</div></div>
-                    <a href="{{ route('crm.sales.followups.index') }}" class="crm-btn crm-btn-ghost">View all</a>
+                    <div><h3 class="s-card-title">{{ __('crm_sales.dashboard.today_title') }}</h3><div class="s-card-sub">{{ __('crm_sales.dashboard.today_subtitle') }}</div></div>
+                    <a href="{{ route('crm.sales.followups.index') }}" class="crm-btn crm-btn-ghost">{{ __('crm_sales.dashboard.view_all') }}</a>
                 </div>
 
                 @if($todayFollowups->count())
@@ -243,16 +243,16 @@
                             @php $when = $f->scheduled_at ? \Carbon\Carbon::parse($f->scheduled_at) : null; @endphp
                             <div class="s-inner-card">
                                 <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center">
-                                    <div class="s-strong">{{ optional($f->lead)->name ?? 'Lead' }}</div>
-                                    <span class="s-pill y"><span class="dot"></span>{{ $when ? $when->format('H:i') : '-' }}</span>
+                                    <div class="s-strong">{{ optional($f->lead)->name ?? __('crm_sales.dashboard.unspecified') }}</div>
+                                    <span class="s-pill y"><span class="dot"></span>{{ $when ? $when->translatedFormat('H:i') : __('crm_sales.dashboard.none') }}</span>
                                 </div>
-                                <div class="s-muted" style="margin-top:6px;font-size:12px;font-weight:800;line-height:1.45">{{ $f->note ?? '-' }}</div>
+                                <div class="s-muted" style="margin-top:6px;font-size:12px;font-weight:800;line-height:1.45">{{ $f->note ?? __('crm_sales.dashboard.none') }}</div>
                                 <div style="margin-top:10px;display:flex;justify-content:flex-end">
                                     @if(!$f->completed)
                                         <form method="POST" action="{{ route('crm.sales.followups.done', $f->id) }}">
                                             @csrf
                                             @method('PATCH')
-                                            <button class="crm-btn crm-btn-ghost">Mark Done</button>
+                                            <button class="crm-btn crm-btn-ghost">{{ __('crm_sales.dashboard.mark_done') }}</button>
                                         </form>
                                     @endif
                                 </div>
@@ -260,28 +260,28 @@
                         @endforeach
                     </div>
                 @else
-                    <div class="s-empty">No followups scheduled for today.</div>
+                    <div class="s-empty">{{ __('crm_sales.dashboard.today_empty') }}</div>
                 @endif
             </section>
 
             <section class="s-card">
                 <div class="s-card-head">
-                    <div><h3 class="s-card-title">My Leads (Detailed)</h3><div class="s-card-sub">Latest leads with last/next action and last comment.</div></div>
-                    <a href="{{ route('crm.sales.leads.index') }}" class="crm-btn crm-btn-ghost">Open leads</a>
+                    <div><h3 class="s-card-title">{{ __('crm_sales.dashboard.recent_title') }}</h3><div class="s-card-sub">{{ __('crm_sales.dashboard.recent_subtitle') }}</div></div>
+                    <a href="{{ route('crm.sales.leads.index') }}" class="crm-btn crm-btn-ghost">{{ __('crm_sales.dashboard.open_leads') }}</a>
                 </div>
 
                 <div class="s-table-card" style="overflow-x:auto">
                     <table class="s-table">
                         <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Phone</th>
-                                <th>Source</th>
-                                <th>Status</th>
-                                <th>Last Action</th>
-                                <th>Next Action</th>
-                                <th>Last Comment</th>
-                                <th style="width:120px">Action</th>
+                                <th>{{ __('crm_sales.dashboard.table_name') }}</th>
+                                <th>{{ __('crm_sales.dashboard.table_phone') }}</th>
+                                <th>{{ __('crm_sales.dashboard.table_source') }}</th>
+                                <th>{{ __('crm_sales.dashboard.table_status') }}</th>
+                                <th>{{ __('crm_sales.dashboard.table_last_action') }}</th>
+                                <th>{{ __('crm_sales.dashboard.table_next_action') }}</th>
+                                <th>{{ __('crm_sales.dashboard.table_last_comment') }}</th>
+                                <th style="width:120px">{{ __('crm_sales.dashboard.table_action') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -293,37 +293,37 @@
                             @endphp
                             <tr>
                                 <td class="s-strong">{{ $l->name }}</td>
-                                <td>{{ $l->phone ?? '-' }}</td>
-                                <td class="s-muted">{{ optional($l->source)->name ?? '-' }}</td>
-                                <td class="s-muted">{{ optional($l->status)->name ?? '-' }}</td>
+                                <td>{{ $l->phone ?? __('crm_sales.dashboard.none') }}</td>
+                                <td class="s-muted">{{ optional($l->source)->name ?? __('crm_sales.dashboard.none') }}</td>
+                                <td class="s-muted">{{ optional($l->status)->name ?? __('crm_sales.dashboard.none') }}</td>
                                 <td class="s-muted">
                                     @if($lastAction)
-                                        <div class="s-strong">{{ optional($lastAction->type)->name ?? 'Action' }}</div>
-                                        <div class="lead-meta">{{ $lastAction->scheduled_at ? \Carbon\Carbon::parse($lastAction->scheduled_at)->format('Y-m-d H:i') : '-' }}</div>
+                                        <div class="s-strong">{{ optional($lastAction->type)->name ?? __('crm_sales.dashboard.action_generic') }}</div>
+                                        <div class="lead-meta">{{ $lastAction->scheduled_at ? \Carbon\Carbon::parse($lastAction->scheduled_at)->translatedFormat('Y-m-d H:i') : __('crm_sales.dashboard.none') }}</div>
                                     @else
-                                        -
+                                        {{ __('crm_sales.dashboard.none') }}
                                     @endif
                                 </td>
                                 <td class="s-muted">
                                     @if($nextAction)
-                                        <div class="s-strong">{{ optional($nextAction->type)->name ?? 'Action' }}</div>
-                                        <div class="lead-meta">{{ $nextAction->scheduled_at ? \Carbon\Carbon::parse($nextAction->scheduled_at)->format('Y-m-d H:i') : '-' }}</div>
+                                        <div class="s-strong">{{ optional($nextAction->type)->name ?? __('crm_sales.dashboard.action_generic') }}</div>
+                                        <div class="lead-meta">{{ $nextAction->scheduled_at ? \Carbon\Carbon::parse($nextAction->scheduled_at)->translatedFormat('Y-m-d H:i') : __('crm_sales.dashboard.none') }}</div>
                                     @else
-                                        -
+                                        {{ __('crm_sales.dashboard.none') }}
                                     @endif
                                 </td>
                                 <td class="s-muted">
                                     @if($lastComment)
                                         <div class="lead-clip">{{ $lastComment->comment }}</div>
-                                        <div class="lead-meta">{{ $lastComment->created_at ? $lastComment->created_at->format('Y-m-d H:i') : '-' }}</div>
+                                        <div class="lead-meta">{{ $lastComment->created_at ? $lastComment->created_at->translatedFormat('Y-m-d H:i') : __('crm_sales.dashboard.none') }}</div>
                                     @else
-                                        -
+                                        {{ __('crm_sales.dashboard.none') }}
                                     @endif
                                 </td>
-                                <td><a href="{{ route('crm.sales.leads.show', $l->id) }}" class="crm-btn crm-btn-ghost">Open</a></td>
+                                <td><a href="{{ route('crm.sales.leads.show', $l->id) }}" class="crm-btn crm-btn-ghost">{{ __('crm_sales.dashboard.open') }}</a></td>
                             </tr>
                         @empty
-                            <tr><td colspan="8"><div class="s-empty" style="margin:12px">No leads assigned yet.</div></td></tr>
+                            <tr><td colspan="8"><div class="s-empty" style="margin:12px">{{ __('crm_sales.dashboard.empty_leads') }}</div></td></tr>
                         @endforelse
                         </tbody>
                     </table>

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" x-data="{
+<html lang="{{ app()->getLocale() }}" dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}" x-data="{
     darkMode: localStorage.getItem('theme') === 'dark' || !localStorage.getItem('theme'),
     toggleTheme() {
         this.darkMode = !this.darkMode;
@@ -10,14 +10,14 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>SgSolar CRM - @yield('title', 'Leads')</title>
+    <title>{{ __('crm_admin.layout.app_title') }} - @yield('title', __('crm_admin.layout.nav_leads'))</title>
 
-    <link rel="stylesheet" href="{{ asset('crm/crm.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/crm.css') }}">
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
         :root{
@@ -65,6 +65,9 @@
             -webkit-font-smoothing:antialiased;
             overflow-x:hidden;
             transition: background 0.3s ease, color 0.3s ease;
+        }
+        html[dir="rtl"] body{
+            font-family: "Cairo", "Tahoma", system-ui, sans-serif;
         }
 
         .dark body {
@@ -115,14 +118,18 @@
             flex-wrap:wrap;
         }
         .title{
-            font-weight:900;
+            font-weight:800;
             font-size:20px;
         }
         .subtitle{
             font-size:12px;
-            font-weight:800;
+            font-weight:700;
             color: var(--dash-muted);
             margin-top:4px;
+        }
+        html[dir="rtl"] .title,
+        html[dir="rtl"] .subtitle{
+            letter-spacing:0;
         }
     </style>
     @stack('head')
@@ -132,12 +139,12 @@
         <div class="crm-container">
             <div class="topline">
                 <div>
-                    <div class="title">@yield('title', 'Leads')</div>
+                    <div class="title">@yield('title', __('crm_admin.layout.nav_leads'))</div>
                     <div class="subtitle">@yield('subtitle')</div>
                 </div>
-                <button @click="toggleTheme()" class="theme-toggle" aria-label="Toggle theme" title="Toggle dark/light mode">
-                    <span x-show="darkMode">🌙</span>
-                    <span x-show="!darkMode" x-cloak>☀️</span>
+                <button @click="toggleTheme()" class="theme-toggle" aria-label="{{ __('crm_admin.layout.toggle_theme') }}" title="{{ __('crm_admin.layout.toggle_theme') }}">
+                    <span x-show="darkMode">&#9790;</span>
+                    <span x-show="!darkMode" x-cloak>&#9728;</span>
                 </button>
             </div>
 

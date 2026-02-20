@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" x-data="{ 
+<html lang="{{ app()->getLocale() }}" dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}" x-data="{ 
     sidebarOpen:false,
     darkMode: localStorage.getItem('theme') === 'dark' || !localStorage.getItem('theme'),
     toggleTheme() {
@@ -11,15 +11,14 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>SgSolar CRM - @yield('title', 'Dashboard')</title>
+    <title>{{ __('crm_admin.layout.app_title') }} - @yield('title', __('crm_admin.layout.title_default'))</title>
 
-    <link rel="stylesheet" href="{{ asset('crm/crm.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/crm.css') }}">
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
-    <!-- Professional font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
         :root{
@@ -79,6 +78,9 @@
             -webkit-font-smoothing:antialiased;
             overflow-x:hidden;
             transition: background 0.3s ease, color 0.3s ease;
+        }
+        html[dir="rtl"] body{
+            font-family: "Cairo", "Tahoma", system-ui, sans-serif;
         }
 
         /* Dark mode background */
@@ -164,7 +166,7 @@
             border:1px solid transparent !important;
             background: transparent !important;
             color: var(--dash-text) !important;
-            font-weight:800;
+            font-weight:700;
             transition: background 0.3s ease, border-color 0.3s ease;
         }
         .crm-nav-item:hover{
@@ -185,7 +187,7 @@
             transition: background 0.3s ease, border-color 0.3s ease;
         }
         .crm-topbar .page-title{color: var(--dash-text) !important; font-weight:900}
-        .crm-topbar .subtitle{color: var(--dash-muted) !important; font-weight:800}
+        .crm-topbar .subtitle{color: var(--dash-muted) !important; font-weight:700}
 
         /* Main content container */
         .crm-content{padding:22px 18px !important}
@@ -268,6 +270,31 @@
             background: var(--nav-hover-bg);
             transform: rotate(20deg);
         }
+        .lang-switch{display:flex;gap:6px;align-items:center}
+        .lang-link{
+            padding:7px 10px;
+            border-radius:10px;
+            border:1px solid var(--btn-ghost-border);
+            background: var(--btn-ghost-bg);
+            color: var(--btn-ghost-color);
+            text-decoration:none !important;
+            font-weight:700;
+            font-size:12px;
+            line-height:1;
+        }
+        .lang-link.active{
+            border-color: rgba(255,223,65,.40);
+            box-shadow: 0 0 0 3px rgba(255,223,65,.12);
+        }
+        html[dir="rtl"] .crm-topbar .page-title,
+        html[dir="rtl"] .crm-brand,
+        html[dir="rtl"] .crm-nav-item,
+        html[dir="rtl"] .crm-btn,
+        html[dir="rtl"] .crm-logout,
+        html[dir="rtl"] .name{
+            font-weight:700 !important;
+            letter-spacing:0;
+        }
     </style>
 </head>
 
@@ -282,35 +309,35 @@
                     <img src="{{ asset('png/SG-013.png') }}" alt="SgSolar CRM Logo">
                 </div>
                 <div class="brand-meta">
-                    <div style="font-weight:900">SgSolar CRM</div>
-                    <small>Admin</small>
+                    <div style="font-weight:900">{{ __('crm_admin.layout.app_title') }}</div>
+                    <small>{{ __('crm_admin.layout.brand_role') }}</small>
                 </div>
             </div>
 
             <nav class="crm-nav" role="navigation" aria-label="Main">
                 <a href="{{ route('crm.admin.dashboard') }}" class="crm-nav-item {{ request()->routeIs('crm.admin.dashboard') ? 'active' : '' }}">
-                    Dashboard
+                    {{ __('crm_admin.layout.nav_dashboard') }}
                 </a>
 
                 <a href="{{ route('crm.admin.leads.index') }}" class="crm-nav-item {{ request()->routeIs('crm.admin.leads.*') ? 'active' : '' }}">
-                    Leads
+                    {{ __('crm_admin.layout.nav_leads') }}
                 </a>
 
                 <a href="{{ route('crm.leads.create') }}" class="crm-nav-item {{ request()->routeIs('crm.leads.create') ? 'active' : '' }}">
-                    Add New Lead
+                    {{ __('crm_admin.layout.nav_add_lead') }}
                 </a>
 
                 <a href="{{ route('crm.admin.users.index') }}" class="crm-nav-item {{ request()->routeIs('crm.admin.users.*') ? 'active' : '' }}">
-                    Users
+                    {{ __('crm_admin.layout.nav_users') }}
                 </a>
 
                 <a href="{{ route('crm.admin.settings.index') }}" class="crm-nav-item {{ request()->routeIs('crm.admin.settings.*') ? 'active' : '' }}">
-                    Settings
+                    {{ __('crm_admin.layout.nav_settings') }}
                 </a>
             </nav>
 
             <div class="crm-nav-footer">
-                <div class="text-sm muted">Version 1</div>
+                <div class="text-sm muted">{{ __('crm_admin.layout.version') }}</div>
             </div>
         </aside>
 
@@ -323,17 +350,18 @@
                     <div class="brand-logo">
                         <img src="{{ asset('png/SG-013.png') }}" alt="SgSolar CRM Logo">
                     </div>
-                    <div style="font-weight:900;color:var(--dash-text)">SgSolar CRM</div>
+                    <div style="font-weight:900;color:var(--dash-text)">{{ __('crm_admin.layout.app_title') }}</div>
                 </div>
 
-                <button @click="sidebarOpen = false" aria-label="Close sidebar" class="icon-btn">✕</button>
+                <button @click="sidebarOpen = false" aria-label="{{ __('crm_admin.layout.close_sidebar') }}" class="icon-btn">&#10005;</button>
             </div>
 
             <nav style="padding:0 12px;margin-top:12px;display:flex;flex-direction:column;gap:6px">
-                <a href="{{ route('crm.admin.dashboard') }}" @click="sidebarOpen = false" class="crm-nav-item {{ request()->routeIs('crm.admin.dashboard') ? 'active' : '' }}">Dashboard</a>
-                <a href="{{ route('crm.admin.leads.index') }}" @click="sidebarOpen = false" class="crm-nav-item {{ request()->routeIs('crm.admin.leads.*') ? 'active' : '' }}">Leads</a>
-                <a href="{{ route('crm.admin.users.index') }}" @click="sidebarOpen = false" class="crm-nav-item {{ request()->routeIs('crm.admin.users.*') ? 'active' : '' }}">Users</a>
-                <a href="{{ route('crm.admin.settings.index') }}" @click="sidebarOpen = false" class="crm-nav-item {{ request()->routeIs('crm.admin.settings.*') ? 'active' : '' }}">Settings</a>
+                <a href="{{ route('crm.admin.dashboard') }}" @click="sidebarOpen = false" class="crm-nav-item {{ request()->routeIs('crm.admin.dashboard') ? 'active' : '' }}">{{ __('crm_admin.layout.nav_dashboard') }}</a>
+                <a href="{{ route('crm.admin.leads.index') }}" @click="sidebarOpen = false" class="crm-nav-item {{ request()->routeIs('crm.admin.leads.*') ? 'active' : '' }}">{{ __('crm_admin.layout.nav_leads') }}</a>
+                <a href="{{ route('crm.leads.create') }}" @click="sidebarOpen = false" class="crm-nav-item {{ request()->routeIs('crm.leads.create') ? 'active' : '' }}">{{ __('crm_admin.layout.nav_add_lead') }}</a>
+                <a href="{{ route('crm.admin.users.index') }}" @click="sidebarOpen = false" class="crm-nav-item {{ request()->routeIs('crm.admin.users.*') ? 'active' : '' }}">{{ __('crm_admin.layout.nav_users') }}</a>
+                <a href="{{ route('crm.admin.settings.index') }}" @click="sidebarOpen = false" class="crm-nav-item {{ request()->routeIs('crm.admin.settings.*') ? 'active' : '' }}">{{ __('crm_admin.layout.nav_settings') }}</a>
             </nav>
         </aside>
 
@@ -341,24 +369,24 @@
         <div class="crm-main-column">
             <header class="crm-topbar">
                 <div class="left">
-                    <button @click="sidebarOpen = true" aria-label="Open sidebar" class="icon-btn">☰</button>
+                    <button @click="sidebarOpen = true" aria-label="{{ __('crm_admin.layout.open_sidebar') }}" class="icon-btn">&#9776;</button>
 
                     <div>
-                        <div class="page-title">@yield('title', 'Dashboard')</div>
+                        <div class="page-title">@yield('title', __('crm_admin.layout.title_default'))</div>
                         <div class="subtitle">@yield('subtitle')</div>
                     </div>
                 </div>
 
                 <div class="crm-user">
                     <!-- Theme Toggle Button -->
-                    <button @click="toggleTheme()" class="theme-toggle" aria-label="Toggle theme" title="Toggle dark/light mode">
-                        <span x-show="darkMode">🌙</span>
-                        <span x-show="!darkMode" x-cloak>☀️</span>
+                    <button @click="toggleTheme()" class="theme-toggle" aria-label="{{ __('crm_admin.layout.toggle_theme') }}" title="{{ __('crm_admin.layout.toggle_theme') }}">
+                        <span x-show="darkMode">&#9790;</span>
+                        <span x-show="!darkMode" x-cloak>&#9728;</span>
                     </button>
 
                     <div style="text-align:right">
                         <div class="name" style="color:var(--dash-text);font-weight:900">
-                            {{ optional(Auth::user())->name ?? 'Guest' }}
+                            {{ optional(Auth::user())->name ?? __('crm_admin.layout.guest') }}
                         </div>
                         <div class="text-sm muted">
                             {{ data_get(optional(Auth::user())->role, 'name', optional(Auth::user())->role ?? '') }}
@@ -366,10 +394,14 @@
                     </div>
 
                     <div class="crm-avatar">{{ strtoupper(substr(optional(Auth::user())->name ?? 'G',0,1)) }}</div>
+                    <div class="lang-switch">
+                        <a href="{{ route('locale.switch', ['locale' => 'en']) }}" class="lang-link {{ app()->getLocale() === 'en' ? 'active' : '' }}">EN</a>
+                        <a href="{{ route('locale.switch', ['locale' => 'ar']) }}" class="lang-link {{ app()->getLocale() === 'ar' ? 'active' : '' }}">AR</a>
+                    </div>
 
                     <form method="POST" action="{{ url('/logout') }}">
                         @csrf
-                        <button class="crm-btn crm-btn-ghost crm-logout" type="submit">Logout</button>
+                        <button class="crm-btn crm-btn-ghost crm-logout" type="submit">{{ __('crm_admin.layout.logout') }}</button>
                     </form>
                 </div>
             </header>

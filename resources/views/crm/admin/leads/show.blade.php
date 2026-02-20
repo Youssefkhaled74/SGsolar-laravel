@@ -69,6 +69,27 @@
         --lead-select-pill-bg: rgba(0,0,0,.05);
         --lead-select-pill-border: rgba(0,0,0,.15);
         --lead-select-pill-text: rgba(0,0,0,.70);
+        --lead-pill-ok-bg: #dcfce7;
+        --lead-pill-ok-border: #86efac;
+        --lead-pill-ok-text: #166534;
+        --lead-pill-warn-bg: #fef3c7;
+        --lead-pill-warn-border: #fcd34d;
+        --lead-pill-warn-text: #92400e;
+        --lead-pill-bad-bg: #fee2e2;
+        --lead-pill-bad-border: #fca5a5;
+        --lead-pill-bad-text: #991b1b;
+    }
+
+    .dark{
+        --lead-pill-ok-bg: rgba(16,185,129,.14);
+        --lead-pill-ok-border: #a7f3d0;
+        --lead-pill-ok-text: #c7f9e9;
+        --lead-pill-warn-bg: rgba(245,158,11,.12);
+        --lead-pill-warn-border: #fde68a;
+        --lead-pill-warn-text: #ffe9b5;
+        --lead-pill-bad-bg: rgba(239,68,68,.12);
+        --lead-pill-bad-border: #fecaca;
+        --lead-pill-bad-text: #ffd0d0;
     }
 
     .lead-shell{
@@ -97,7 +118,7 @@
 
     .card{
         position:relative;
-        z-index:1;
+        z-index:auto;
         border-radius:16px;
         border:1px solid var(--lead-card-border);
         background: var(--lead-card-bg);
@@ -105,6 +126,7 @@
         backdrop-filter: blur(10px);
         padding:14px;
     }
+    .card:focus-within{z-index:7000}
     .card + .card{margin-top:12px}
 
     .head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
@@ -174,9 +196,9 @@
         font-size:12px;font-weight:900;color: var(--lead-pill-text);
         white-space:nowrap;
     }
-    .pill.ok{border-color:#a7f3d0;background:rgba(16,185,129,.14);color:#c7f9e9}
-    .pill.warn{border-color:#fde68a;background:rgba(245,158,11,.12);color:#ffe9b5}
-    .pill.bad{border-color:#fecaca;background:rgba(239,68,68,.12);color:#ffd0d0}
+    .pill.ok{border-color:var(--lead-pill-ok-border);background:var(--lead-pill-ok-bg);color:var(--lead-pill-ok-text)}
+    .pill.warn{border-color:var(--lead-pill-warn-border);background:var(--lead-pill-warn-bg);color:var(--lead-pill-warn-text)}
+    .pill.bad{border-color:var(--lead-pill-bad-border);background:var(--lead-pill-bad-bg);color:var(--lead-pill-bad-text)}
 
     .toast{position:fixed;right:18px;bottom:18px;z-index:9999;max-width:420px}
     .toast-card{
